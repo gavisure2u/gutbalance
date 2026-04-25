@@ -1579,7 +1579,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   }
 })();
 
-// ── 3D Video Carousel — lazy-load, only centre ±1 slot ever buffered ──
+// ── 3D Video Carousel — lazy-load, paused-frame preview, plays only at centre ──
 (function(){
   const stage   = document.getElementById('vcStage');
   const track   = document.getElementById('vcTrack');
@@ -1603,32 +1603,31 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   ];
   const N = SRCS.length;
 
-  // LOAD_RADIUS: how many slots away from centre to preload (1 = prev + next only)
-  const LOAD_RADIUS   = 1;
-  // UNLOAD_RADIUS: how many slots away before we strip src to free memory
-  const UNLOAD_RADIUS = 2;
+  // Load src when card is within this many slots of centre (gives buffer time)
+  const LOAD_RADIUS   = 2;
+  // Strip src when card moves beyond this many slots (free memory)
+  const UNLOAD_RADIUS = 3;
 
-  /* ── Build cards — video src intentionally NOT set yet ── */
+  /* ── Build cards — NO src on video elements yet ── */
   SRCS.forEach(src => {
     const card = document.createElement('div');
     card.className = 'vc-card';
 
     const vid = document.createElement('video');
-    vid.dataset.src  = src;   // stored here; assigned lazily
-    vid.muted        = true;
-    vid.loop         = true;
-    vid.playsInline  = true;
+    vid.dataset.src = src;        // real src stored here only
+    vid.muted       = true;
+    vid.loop        = true;
+    vid.playsInline = true;
     vid.setAttribute('playsinline', '');
-    vid.preload      = 'none'; // browser must not fetch anything yet
+    vid.preload     = 'none';     // browser fetches NOTHING until we assign src
 
     const dim   = document.createElement('div'); dim.className = 'vc-dim';
     const shine = document.createElement('div'); shine.className = 'vc-shine';
-
     card.append(vid, dim, shine);
     track.appendChild(card);
   });
 
-  /* ── Build dots ── */
+  /* ── Dots ── */
   for(let i = 0; i < N; i++){
     const d = document.createElement('button');
     d.className = 'vc-dot';
@@ -1645,9 +1644,15 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   let dragLastX   = 0;
   let rafId       = null;
   let lastActive  = -1;
-  const SPEED     = 2;
+  const SPEED     = 1.0;   // slower = more buffer time before a card hits centre
 
-  /* ── Layout helpers ── */
+  /* ── Per-card tracking (avoids redundant DOM calls every frame) ── */
+  const cardState = Array.from({length: N}, () => ({
+    loaded:  false,   // src has been assigned
+    playing: false,   // currently playing
+  }));
+
+  /* ── Layout ── */
   function spacing(){
     const w = window.innerWidth;
     return w < 400 ? 195 : w < 640 ? 240 : 298;
@@ -1679,33 +1684,49 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     pendingJump += diff * sp;
   }
 
-  /* ── Video lifecycle: load / play / pause / unload ── */
-  function manageVideo(card, slotsAway, isActive){
-    const vid = card.querySelector('video');
-    if(!vid) return;
+  /* ── Load a video and paint its first frame when ready ── */
+  function loadCard(i){
+    const state = cardState[i];
+    if(state.loaded) return;
+    state.loaded = true;
 
-    const shouldLoad   = slotsAway <= LOAD_RADIUS;
-    const shouldUnload = slotsAway >  UNLOAD_RADIUS;
+    const vid = track.children[i].querySelector('video');
+    vid.setAttribute('src', vid.dataset.src);
+    vid.load();
 
-    // Lazy-load: assign src only when close enough
-    if(shouldLoad && !vid.src && vid.dataset.src){
-      vid.src = vid.dataset.src;
-      vid.load();
-    }
+    // Once the first frame is decoded, show it (paused preview)
+    vid.addEventListener('loadeddata', () => {
+      if(vid.paused) vid.currentTime = 0;
+    }, { once: true });
+  }
 
-    // Play centre card; pause everything else
-    if(isActive && vid.src){
-      vid.play().catch(() => {});
-    } else {
-      vid.pause();
-    }
+  /* ── Unload a video to free memory ── */
+  function unloadCard(i){
+    const state = cardState[i];
+    if(!state.loaded) return;
+    state.loaded  = false;
+    state.playing = false;
 
-    // Free memory for distant cards
-    if(shouldUnload && vid.src){
-      vid.pause();
-      vid.removeAttribute('src');
-      vid.load(); // aborts any ongoing fetch
-    }
+    const vid = track.children[i].querySelector('video');
+    vid.pause();
+    vid.removeAttribute('src');
+    vid.load();   // aborts any in-flight fetch
+  }
+
+  /* ── Play / pause helpers (state-gated to avoid repeated calls) ── */
+  function playCard(i){
+    const state = cardState[i];
+    if(state.playing) return;
+    if(!state.loaded) return;
+    state.playing = true;
+    track.children[i].querySelector('video').play().catch(() => {});
+  }
+
+  function pauseCard(i){
+    const state = cardState[i];
+    if(!state.playing) return;
+    state.playing = false;
+    track.children[i].querySelector('video').pause();
   }
 
   /* ── Main rAF loop ── */
@@ -1724,20 +1745,21 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     const cards = track.children;
 
     for(let i = 0; i < N; i++){
-      const x       = wrap(i * sp - offset);
-      const dist    = Math.abs(x);
-      const slotsAway = dist / sp;            // fractional slot distance from centre
+      const x         = wrap(i * sp - offset);
+      const dist      = Math.abs(x);
+      const slotsAway = dist / sp;
 
       if(dist < closestDist){ closestDist = dist; newActive = i; }
 
-      const norm    = x / sp;
-      const absN    = Math.abs(norm);
-      const sc      = Math.max(0.36,  1 - absN * 0.128);
-      const ry      = -norm * 11;
-      const op      = Math.max(0,     1 - absN * 0.275);
-      const zi      = Math.max(1, Math.round(50 - absN * 7));
-      const dim     = Math.min(0.55,  absN * 0.15);
-      const sh      = absN < 0.6
+      /* ── Visual transform ── */
+      const norm  = x / sp;
+      const absN  = Math.abs(norm);
+      const sc    = Math.max(0.36,  1 - absN * 0.128);
+      const ry    = -norm * 11;
+      const op    = Math.max(0,     1 - absN * 0.275);
+      const zi    = Math.max(1, Math.round(50 - absN * 7));
+      const dim   = Math.min(0.55,  absN * 0.15);
+      const sh    = absN < 0.6
         ? '0 32px 80px rgba(0,0,0,.28), 0 8px 24px rgba(0,0,0,.12)'
         : absN < 1.8
           ? '0 18px 48px rgba(0,0,0,.16)'
@@ -1751,23 +1773,17 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
       card.querySelector('.vc-dim').style.background = `rgba(0,0,0,${dim})`;
       card.querySelector('.vc-shine').style.opacity  = absN < 0.45 ? '1' : '0';
 
-      // Manage load/play/unload per card every frame (cheap — just attribute checks)
-      manageVideo(card, slotsAway, false); // play decision made below after newActive is known
+      /* ── Lazy load / unload ── */
+      if(slotsAway <= LOAD_RADIUS)   loadCard(i);
+      if(slotsAway >  UNLOAD_RADIUS) unloadCard(i);
     }
 
-    // Now handle play/pause with final newActive
+    /* ── Play centre, pause everything else ── */
     if(newActive !== lastActive){
+      if(lastActive >= 0) pauseCard(lastActive);
       lastActive = newActive;
-      for(let i = 0; i < N; i++){
-        const card = cards[i];
-        const vid  = card.querySelector('video');
-        if(!vid) continue;
-        if(i === newActive){
-          if(vid.src) vid.play().catch(() => {});
-        } else {
-          vid.pause();
-        }
-      }
+      playCard(newActive);
+
       dotsEl.querySelectorAll('.vc-dot').forEach((d, i) =>
         d.classList.toggle('active', i === newActive)
       );
@@ -1779,7 +1795,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   function startRaf(){ if(!rafId) rafId = requestAnimationFrame(frame); }
   function stopRaf() { cancelAnimationFrame(rafId); rafId = null; }
 
-  /* ── Hover ── */
+  /* ── Hover pause auto-scroll ── */
   stage.addEventListener('mouseenter', () => hovering = true);
   stage.addEventListener('mouseleave', () => hovering = false);
 
@@ -1792,15 +1808,14 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   });
   stage.addEventListener('pointermove', e => {
     if(!dragging) return;
-    const dx  = e.clientX - dragLastX;
-    offset   -= dx;
+    offset   -= e.clientX - dragLastX;
     dragLastX = e.clientX;
   });
   const endDrag = () => { dragging = false; stage.style.cursor = ''; };
   stage.addEventListener('pointerup',     endDrag);
   stage.addEventListener('pointercancel', endDrag);
 
-  /* ── Arrow buttons ── */
+  /* ── Arrows ── */
   prevBtn.addEventListener('click', () => { pendingJump -= spacing(); });
   nextBtn.addEventListener('click', () => { pendingJump += spacing(); });
 
@@ -1818,7 +1833,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     if(idx >= 0 && idx !== activeIdx()) jumpToCard(idx);
   });
 
-  /* ── Pause rAF when scrolled off-screen ── */
+  /* ── Pause rAF when off-screen ── */
   new IntersectionObserver(entries => {
     entries[0].isIntersecting ? startRaf() : stopRaf();
   }, { threshold: 0.1 }).observe(stage);
