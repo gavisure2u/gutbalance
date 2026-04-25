@@ -1579,7 +1579,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   }
 })();
 
-// ── 3D Video Carousel — continuous conveyor loop ──
+// ── 3D Video Carousel — lazy-load, only centre ±1 slot ever buffered ──
 (function(){
   const stage   = document.getElementById('vcStage');
   const track   = document.getElementById('vcTrack');
@@ -1603,18 +1603,25 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   ];
   const N = SRCS.length;
 
-  /* ── Build cards ── */
+  // LOAD_RADIUS: how many slots away from centre to preload (1 = prev + next only)
+  const LOAD_RADIUS   = 1;
+  // UNLOAD_RADIUS: how many slots away before we strip src to free memory
+  const UNLOAD_RADIUS = 2;
+
+  /* ── Build cards — video src intentionally NOT set yet ── */
   SRCS.forEach(src => {
     const card = document.createElement('div');
     card.className = 'vc-card';
 
     const vid = document.createElement('video');
-    vid.src = src; vid.muted = true; vid.loop = true;
-    vid.playsInline = true;
-    vid.setAttribute('playsinline','');
-    vid.preload = 'metadata';
+    vid.dataset.src  = src;   // stored here; assigned lazily
+    vid.muted        = true;
+    vid.loop         = true;
+    vid.playsInline  = true;
+    vid.setAttribute('playsinline', '');
+    vid.preload      = 'none'; // browser must not fetch anything yet
 
-    const dim   = document.createElement('div'); dim.className   = 'vc-dim';
+    const dim   = document.createElement('div'); dim.className = 'vc-dim';
     const shine = document.createElement('div'); shine.className = 'vc-shine';
 
     card.append(vid, dim, shine);
@@ -1631,14 +1638,14 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   }
 
   /* ── State ── */
-  let offset      = 0;       // master scroll position (px, grows → cards go left)
-  let pendingJump = 0;       // smooth nudge from arrows/dots/drag release
+  let offset      = 0;
+  let pendingJump = 0;
   let hovering    = false;
   let dragging    = false;
   let dragLastX   = 0;
   let rafId       = null;
   let lastActive  = -1;
-  const SPEED     = 2;   // px per frame (auto-scroll)
+  const SPEED     = 2;
 
   /* ── Layout helpers ── */
   function spacing(){
@@ -1647,15 +1654,13 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   }
   function total(){ return N * spacing(); }
 
-  /* ── Wrap x into (−total/2 , +total/2] ── */
   function wrap(x){
     const t = total();
-    x = ((x % t) + t) % t;          // → [0, t)
-    if(x > t / 2) x -= t;           // → (−t/2, t/2]
+    x = ((x % t) + t) % t;
+    if(x > t / 2) x -= t;
     return x;
   }
 
-  /* ── Find which card index is closest to x=0 ── */
   function activeIdx(){
     let best = 0, bestDist = Infinity;
     for(let i = 0; i < N; i++){
@@ -1665,23 +1670,48 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     return best;
   }
 
-  /* ── Jump to a specific card (smooth) ── */
   function jumpToCard(idx){
     const sp  = spacing();
     const cur = activeIdx();
-    // shortest path around the loop
     let diff = idx - cur;
     if(diff >  N/2) diff -= N;
     if(diff < -N/2) diff += N;
     pendingJump += diff * sp;
   }
 
+  /* ── Video lifecycle: load / play / pause / unload ── */
+  function manageVideo(card, slotsAway, isActive){
+    const vid = card.querySelector('video');
+    if(!vid) return;
+
+    const shouldLoad   = slotsAway <= LOAD_RADIUS;
+    const shouldUnload = slotsAway >  UNLOAD_RADIUS;
+
+    // Lazy-load: assign src only when close enough
+    if(shouldLoad && !vid.src && vid.dataset.src){
+      vid.src = vid.dataset.src;
+      vid.load();
+    }
+
+    // Play centre card; pause everything else
+    if(isActive && vid.src){
+      vid.play().catch(() => {});
+    } else {
+      vid.pause();
+    }
+
+    // Free memory for distant cards
+    if(shouldUnload && vid.src){
+      vid.pause();
+      vid.removeAttribute('src');
+      vid.load(); // aborts any ongoing fetch
+    }
+  }
+
   /* ── Main rAF loop ── */
   function frame(){
-    // Auto-scroll
     if(!hovering && !dragging) offset += SPEED;
 
-    // Smooth-jump from arrows / dots
     if(pendingJump !== 0){
       const step = Math.sign(pendingJump) * Math.min(18, Math.abs(pendingJump));
       offset      += step;
@@ -1689,50 +1719,56 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
       if(Math.abs(pendingJump) < 0.5){ offset += pendingJump; pendingJump = 0; }
     }
 
-    /* position every card */
     const sp = spacing();
     let newActive = 0, closestDist = Infinity;
     const cards = track.children;
 
     for(let i = 0; i < N; i++){
-      const x    = wrap(i * sp - offset);   // px from centre
-      const dist = Math.abs(x);
+      const x       = wrap(i * sp - offset);
+      const dist    = Math.abs(x);
+      const slotsAway = dist / sp;            // fractional slot distance from centre
+
       if(dist < closestDist){ closestDist = dist; newActive = i; }
 
-      // Continuous transform curves — everything driven by x / sp
-      const norm = x / sp;                  // −N/2 … +N/2  (float)
-      const absN = Math.abs(norm);
-
-      const sc  = Math.max(0.36,  1 - absN * 0.128);
-      const ry  = -norm * 11;               // rotateY degrees (−ve = face right)
-      const op  = Math.max(0,     1 - absN * 0.275);
-      const zi  = Math.max(1, Math.round(50 - absN * 7));
-      const dim = Math.min(0.55,  absN * 0.15);
-      const sh  = absN < 0.6
+      const norm    = x / sp;
+      const absN    = Math.abs(norm);
+      const sc      = Math.max(0.36,  1 - absN * 0.128);
+      const ry      = -norm * 11;
+      const op      = Math.max(0,     1 - absN * 0.275);
+      const zi      = Math.max(1, Math.round(50 - absN * 7));
+      const dim     = Math.min(0.55,  absN * 0.15);
+      const sh      = absN < 0.6
         ? '0 32px 80px rgba(0,0,0,.28), 0 8px 24px rgba(0,0,0,.12)'
         : absN < 1.8
           ? '0 18px 48px rgba(0,0,0,.16)'
           : '0 10px 28px rgba(0,0,0,.09)';
 
       const card = cards[i];
-      card.style.transform  = `translateX(calc(-50% + ${x}px)) translateY(-50%) scale(${sc}) rotateY(${ry}deg)`;
-      card.style.opacity    = op;
-      card.style.zIndex     = zi;
-      card.style.boxShadow  = sh;
-      card.querySelector('.vc-dim').style.background  = `rgba(0,0,0,${dim})`;
-      card.querySelector('.vc-shine').style.opacity   = absN < 0.45 ? '1' : '0';
+      card.style.transform = `translateX(calc(-50% + ${x}px)) translateY(-50%) scale(${sc}) rotateY(${ry}deg)`;
+      card.style.opacity   = op;
+      card.style.zIndex    = zi;
+      card.style.boxShadow = sh;
+      card.querySelector('.vc-dim').style.background = `rgba(0,0,0,${dim})`;
+      card.querySelector('.vc-shine').style.opacity  = absN < 0.45 ? '1' : '0';
+
+      // Manage load/play/unload per card every frame (cheap — just attribute checks)
+      manageVideo(card, slotsAway, false); // play decision made below after newActive is known
     }
 
-    /* Video: only the front card plays */
+    // Now handle play/pause with final newActive
     if(newActive !== lastActive){
       lastActive = newActive;
       for(let i = 0; i < N; i++){
-        const vid = cards[i].querySelector('video');
+        const card = cards[i];
+        const vid  = card.querySelector('video');
         if(!vid) continue;
-        i === newActive ? vid.play().catch(()=>{}) : vid.pause();
+        if(i === newActive){
+          if(vid.src) vid.play().catch(() => {});
+        } else {
+          vid.pause();
+        }
       }
-      /* Dots */
-      dotsEl.querySelectorAll('.vc-dot').forEach((d,i) =>
+      dotsEl.querySelectorAll('.vc-dot').forEach((d, i) =>
         d.classList.toggle('active', i === newActive)
       );
     }
@@ -1743,7 +1779,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   function startRaf(){ if(!rafId) rafId = requestAnimationFrame(frame); }
   function stopRaf() { cancelAnimationFrame(rafId); rafId = null; }
 
-  /* ── Hover — pause auto-scroll ── */
+  /* ── Hover ── */
   stage.addEventListener('mouseenter', () => hovering = true);
   stage.addEventListener('mouseleave', () => hovering = false);
 
@@ -1757,7 +1793,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   stage.addEventListener('pointermove', e => {
     if(!dragging) return;
     const dx  = e.clientX - dragLastX;
-    offset   -= dx;                  // drag right → offset falls → cards move right
+    offset   -= dx;
     dragLastX = e.clientX;
   });
   const endDrag = () => { dragging = false; stage.style.cursor = ''; };
@@ -1774,7 +1810,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     if(e.key === 'ArrowRight') pendingJump += spacing();
   });
 
-  /* ── Card click — jump to that card ── */
+  /* ── Card click → jump ── */
   stage.addEventListener('click', e => {
     const card = e.target.closest('.vc-card');
     if(!card) return;
@@ -1782,14 +1818,13 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     if(idx >= 0 && idx !== activeIdx()) jumpToCard(idx);
   });
 
-  /* ── Pause when off-screen (battery saving) ── */
+  /* ── Pause rAF when scrolled off-screen ── */
   new IntersectionObserver(entries => {
     entries[0].isIntersecting ? startRaf() : stopRaf();
   }, { threshold: 0.1 }).observe(stage);
 
   startRaf();
 })();
-
 // ── Gallery Carousel ──
 (function(){
   const strip = document.getElementById('galleryStrip');
