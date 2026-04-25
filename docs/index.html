@@ -1,0 +1,1932 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gavisure 为宁好 — 压力胃专属修复方案</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --white:   #FFFDF7;
+  --bg:      #F7F0E4;
+  --bg2:     #EFE5CF;
+  --bg-dark: #1E3320;
+  --border:  #DDD0B8;
+  --border2: #C8B898;
+  --text:    #1C1208;
+  --text2:   #5A4A30;
+  --text3:   #9A8868;
+  --green:   #1A5C35;
+  --green-l: #237A45;
+  --green-xl:#E2F0E8;
+  --amber:   #B86A10;
+  --amber-l: #D98520;
+  --amber-bg:#FBF3E0;
+  --red:     #B84020;
+  --red-bg:  #FCF0EB;
+  --sage:    #5A9868;
+  --pill-bg: #EAE0CC;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;overflow-x:hidden;max-width:100%;}
+body{font-family:'Inter','Noto Sans SC',sans-serif;background:var(--white);color:var(--text);overflow-x:hidden;max-width:100%;-webkit-font-smoothing:antialiased;}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(255,253,247,.93);backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  padding:0 24px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{font-weight:900;font-size:16px;letter-spacing:-.3px;color:var(--text);}
+.nav-logo span{color:var(--green);}
+.nav-cta{background:var(--green);color:white;font-weight:700;font-size:13px;padding:8px 18px;border-radius:100px;border:none;cursor:pointer;}
+.nav-cta:hover{background:var(--green-l);}
+.nav-links{display:flex;gap:24px;align-items:center;}
+.nav-links a{font-size:13px;color:var(--text2);text-decoration:none;}
+.nav-links a:hover{color:var(--text);}
+
+/* ── TICKER ── */
+.ticker{margin-top:60px;background:var(--bg-dark);padding:10px 0;overflow:hidden;position:relative;width:100%;max-width:100vw;}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:40px;z-index:2;}
+.ticker::before{left:0;background:linear-gradient(90deg,var(--bg-dark),transparent);}
+.ticker::after{right:0;background:linear-gradient(-90deg,var(--bg-dark),transparent);}
+.ticker-track{display:flex;gap:48px;width:max-content;animation:tick 28s linear infinite;}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+.tick-item{display:flex;align-items:center;gap:8px;color:rgba(255,248,232,.8);font-size:12px;font-weight:600;white-space:nowrap;flex-shrink:0;}
+.tick-star{color:#F0B840;}
+
+/* ── HERO ── */
+.hero{padding:80px 24px 0;text-align:center;background:var(--white);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;top:-10%;left:50%;transform:translateX(-50%);width:700px;height:500px;border-radius:50%;background:radial-gradient(ellipse,rgba(184,106,16,.07) 0%,transparent 70%);pointer-events:none;}
+.hero-pill{display:inline-flex;align-items:center;gap:6px;background:var(--amber-bg);color:var(--amber);font-size:12px;font-weight:700;padding:6px 14px;border-radius:100px;margin-bottom:24px;border:1px solid rgba(184,106,16,.2);}
+.hero h1{font-weight:900;font-size:clamp(32px,7vw,64px);line-height:1.1;letter-spacing:-1.5px;margin-bottom:18px;color:var(--text);max-width:640px;margin-left:auto;margin-right:auto;}
+.hero h1 .grad{background:linear-gradient(135deg,var(--green),#2D8A50,var(--amber-l));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero-sub{max-width:460px;margin:0 auto 32px;font-size:clamp(15px,3vw,18px);color:var(--text2);line-height:1.7;}
+.hero-btns{display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:48px;}
+.btn-main{width:100%;max-width:340px;padding:15px 28px;border-radius:100px;border:none;background:var(--green);color:white;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 6px 24px rgba(26,92,53,.28);}
+.btn-main:hover{background:var(--green-l);transform:translateY(-1px);}
+.btn-sec{width:100%;max-width:340px;padding:14px 28px;border-radius:100px;border:1.5px solid var(--border2);background:transparent;color:var(--text2);font-weight:600;font-size:15px;cursor:pointer;}
+.btn-sec:hover{border-color:var(--green);color:var(--green);}
+.hero-trust-row{display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;font-size:12px;color:var(--text3);margin-bottom:56px;}
+.hero-trust-row span{display:flex;align-items:center;gap:5px;}
+
+/* ── HERO PRODUCT ── */
+.hero-product{position:relative;max-width:340px;margin:0 auto;}
+.hero-product .product-float{
+  width:100%;border-radius:24px;
+  box-shadow:0 32px 80px rgba(90,74,48,.15),0 8px 24px rgba(90,74,48,.08);
+  background:linear-gradient(145deg,var(--bg),var(--bg2));
+  aspect-ratio:1;overflow:hidden;border:1px solid var(--border);
+}
+.hero-product .product-float img{
+  width:100%;height:100%;object-fit:cover;border-radius:24px;display:block;
+}
+.float-card{position:absolute;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:10px 14px;font-size:12px;font-weight:700;color:var(--text);box-shadow:0 8px 28px rgba(90,74,48,.12);white-space:nowrap;}
+.float-card.fc1{top:10%;left:-30px;animation:float1 3s ease-in-out infinite;}
+.float-card.fc2{top:55%;right:-25px;animation:float2 3.5s ease-in-out infinite;}
+.float-card.fc3{bottom:8%;left:5%;animation:float1 4s ease-in-out infinite;}
+@keyframes float1{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes float2{0%,100%{transform:translateY(0);}50%{transform:translateY(8px);}}
+.fc-green{color:var(--green);}
+
+/* ── TRUST LOGOS ── */
+.trust-logos{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:28px 24px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--bg2);}
+.trust-badge-item{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:100px;background:var(--white);border:1px solid var(--border);font-size:12px;font-weight:700;color:var(--text2);}
+
+/* ── SHARED ── */
+section{padding:72px 24px;position:relative;}
+.s-pill{display:inline-flex;align-items:center;gap:5px;background:var(--pill-bg);color:var(--text2);font-size:11px;font-weight:700;padding:5px 12px;border-radius:100px;margin-bottom:12px;letter-spacing:.5px;text-transform:uppercase;border:1px solid var(--border);}
+.s-h{font-weight:900;font-size:clamp(26px,5.5vw,44px);line-height:1.15;letter-spacing:-1px;margin-bottom:12px;}
+.s-sub{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:36px;}
+.s-h span{color:var(--green);}
+.center{text-align:center;}
+.center .s-h{max-width:540px;margin-left:auto;margin-right:auto;}
+.reveal{opacity:0;transform:translateY(20px);transition:all .6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── PAIN ── */
+.pain-sec{background:var(--bg);}
+.pain-if{max-width:540px;margin:0 auto 32px;background:var(--red-bg);border:1px solid rgba(184,64,32,.15);border-radius:20px;padding:24px;text-align:center;}
+.pain-if h3{font-size:clamp(18px,4vw,26px);font-weight:900;line-height:1.3;margin-bottom:10px;color:var(--text);}
+.pain-if h3 em{color:var(--red);font-style:normal;}
+.pain-if p{font-size:14px;color:var(--text2);line-height:1.65;}
+.pain-list{max-width:540px;margin:0 auto;display:flex;flex-direction:column;gap:2px;}
+.p-row{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;border-radius:14px;transition:background .2s;}
+.p-row:hover{background:var(--white);}
+.p-x{flex-shrink:0;width:26px;height:26px;border-radius:50%;border:1.5px solid rgba(184,64,32,.3);background:var(--red-bg);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:var(--red);margin-top:1px;}
+.p-body .p-t{font-weight:700;font-size:14px;color:var(--text);margin-bottom:3px;}
+.p-body .p-d{font-size:13px;color:var(--text2);line-height:1.6;}
+.pain-verdict{max-width:540px;margin:24px auto 0;background:var(--bg-dark);border-radius:18px;padding:22px;text-align:center;color:white;}
+.pain-verdict h4{font-size:17px;font-weight:900;margin-bottom:8px;}
+.pain-verdict p{font-size:14px;color:rgba(255,248,232,.7);line-height:1.65;}
+.pain-verdict strong{color:#F0C060;}
+
+/* ── WHO ── */
+.who-sec{background:var(--white);}
+.who-chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:540px;margin:0 auto 24px;}
+.chip{display:flex;align-items:center;gap:7px;background:var(--bg);border:1.5px solid var(--border);border-radius:100px;padding:10px 18px;font-size:13px;font-weight:600;color:var(--text2);transition:all .2s;}
+.chip:hover{border-color:var(--green);color:var(--green);background:var(--green-xl);}
+.who-result{max-width:540px;margin:0 auto;background:var(--bg-dark);border-radius:18px;padding:22px;display:flex;gap:14px;align-items:flex-start;color:white;}
+.who-result .wr-icon{font-size:28px;flex-shrink:0;}
+.who-result p{font-size:14px;line-height:1.7;}
+.who-result strong{color:#F0C060;}
+
+/* ── HOW ── */
+.how-sec{background:var(--bg);}
+.steps{max-width:540px;margin:0 auto;}
+.step{display:flex;gap:20px;align-items:flex-start;padding:24px 0;border-bottom:1px solid var(--border);}
+.step:last-child{border-bottom:none;}
+.step-num{flex-shrink:0;width:44px;height:44px;border-radius:12px;background:var(--white);border:1.5px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:var(--text3);}
+.step.active .step-num{background:var(--green);border-color:var(--green);color:white;}
+.step-body h4{font-weight:800;font-size:16px;color:var(--text);margin-bottom:6px;}
+.step-body p{font-size:13px;color:var(--text2);line-height:1.65;}
+.step-tag{display:inline-block;background:var(--amber-bg);color:var(--amber);font-size:10px;font-weight:700;padding:3px 9px;border-radius:100px;margin-top:8px;border:1px solid rgba(184,106,16,.2);}
+
+/* ── INGREDIENTS ── */
+.ing-sec{background:var(--white);}
+.ing-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px;margin:0 auto;}
+.ing-card{background:var(--bg);border:1.5px solid var(--border);border-radius:20px;padding:22px 18px;position:relative;overflow:hidden;transition:border-color .2s,transform .2s,box-shadow .2s;}
+.ing-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 12px 32px rgba(90,74,48,.1);}
+.ing-card.star{background:var(--amber-bg);border-color:rgba(184,106,16,.35);}
+.ing-num{font-size:11px;font-weight:800;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+.ing-card.star .ing-num{color:var(--amber);}
+.ing-icon{font-size:28px;margin-bottom:10px;}
+.ing-name{font-weight:800;font-size:14px;color:var(--text);margin-bottom:6px;}
+.ing-desc{font-size:12px;color:var(--text2);line-height:1.6;}
+.ing-badge{position:absolute;top:14px;right:14px;background:var(--amber);color:white;font-size:9px;font-weight:800;padding:3px 10px;border-radius:100px;}
+
+/* ── SPLIT ── */
+.split-sec{background:var(--bg2);}
+.split-wrap{max-width:600px;margin:0 auto;display:flex;flex-direction:column;gap:56px;}
+.split-row{display:flex;flex-direction:column;gap:24px;}
+.split-img-box{
+  border-radius:22px;overflow:hidden;border:1px solid var(--border);
+  background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+}
+.split-img-box img{
+  width:100%;height:100%;object-fit:cover;display:block;
+  border-radius:22px;
+}
+.split-txt .badge2{display:inline-block;background:var(--pill-bg);color:var(--text2);font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;margin-bottom:12px;border:1px solid var(--border);text-transform:uppercase;}
+.split-txt h3{font-weight:900;font-size:clamp(20px,5vw,30px);line-height:1.25;margin-bottom:12px;letter-spacing:-.5px;}
+.split-txt h3 span{color:var(--green);}
+.split-txt p{font-size:14px;color:var(--text2);line-height:1.75;margin-bottom:14px;}
+.feat-list{list-style:none;display:flex;flex-direction:column;gap:8px;}
+.feat-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text2);background:var(--white);border:1px solid var(--border);border-radius:10px;padding:10px 14px;}
+.feat-list li .ck{color:var(--green);font-weight:900;flex-shrink:0;margin-top:1px;}
+
+/* ── COMPARISON ── */
+.cmp-sec{background:var(--white);}
+.cmp-tbl{max-width:560px;margin:0 auto;border:1.5px solid var(--border);border-radius:20px;overflow:hidden;}
+.cmp-hd{display:grid;grid-template-columns:1.3fr 1fr 1fr;}
+.cmp-hd div{padding:14px 12px;font-weight:800;font-size:13px;text-align:center;background:var(--bg2);border-bottom:1.5px solid var(--border);}
+.cmp-hd .us{background:var(--bg-dark);color:white;border-bottom-color:var(--bg-dark);}
+.cmp-r{display:grid;grid-template-columns:1.3fr 1fr 1fr;border-bottom:1px solid var(--border);}
+.cmp-r:nth-child(odd){background:var(--white);}
+.cmp-r:nth-child(even){background:var(--bg);}
+.cmp-r:last-child{border-bottom:none;}
+.cmp-r div{padding:13px 12px;font-size:13px;text-align:center;display:flex;align-items:center;justify-content:center;}
+.cmp-r .cf{text-align:left;justify-content:flex-start;font-size:12px;color:var(--text2);}
+.cmp-r .cg{color:var(--green);font-weight:700;}
+.ck2{color:var(--green);font-size:16px;font-weight:900;}
+.cx2{color:var(--border2);font-size:16px;}
+
+/* ── TIMELINE ── */
+.tl-sec{background:var(--bg);}
+.tl-wrap{max-width:520px;margin:0 auto;position:relative;}
+.tl-wrap::before{content:'';position:absolute;left:27px;top:20px;bottom:20px;width:1.5px;background:linear-gradient(180deg,var(--red),var(--amber-l),var(--green));}
+.tl-item{display:flex;gap:22px;align-items:flex-start;margin-bottom:24px;}
+.tl-dot{width:56px;height:56px;border-radius:50%;background:var(--white);border:2px solid var(--border2);flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;box-shadow:0 4px 16px rgba(90,74,48,.08);}
+.tl-dot .dd{font-weight:900;font-size:14px;color:var(--red);line-height:1;}
+.tl-dot .du{font-size:9px;color:var(--text3);}
+.tl-item:nth-child(2) .tl-dot .dd{color:var(--amber-l);}
+.tl-item:nth-child(3) .tl-dot .dd{color:var(--green);}
+.tl-body{flex:1;background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:16px 18px;margin-top:4px;}
+.tl-body h4{font-weight:800;font-size:15px;color:var(--text);margin-bottom:8px;}
+.tl-body ul{list-style:none;display:flex;flex-direction:column;gap:5px;}
+.tl-body ul li{font-size:13px;color:var(--text2);display:flex;gap:8px;align-items:flex-start;}
+.tl-body ul li::before{content:'→';color:var(--green);font-weight:700;flex-shrink:0;}
+
+/* ── TESTIMONIALS ── */
+.test-sec{background:var(--white);}
+.test-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:560px;margin:0 auto 16px;}
+.tc{border-radius:18px;overflow:hidden;position:relative;aspect-ratio:4/5;background:var(--bg2);border:1px solid var(--border);}
+.tc img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
+.tc-ov{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(30,51,32,.78));padding:20px 14px 14px;}
+.tc-q{font-size:12px;font-weight:600;color:white;line-height:1.45;}
+.tc-n{font-size:10px;color:rgba(255,248,232,.55);margin-top:3px;}
+.test-wide{max-width:560px;margin:0 auto 16px;background:var(--bg);border:1.5px solid var(--border);border-radius:18px;padding:20px;display:flex;gap:14px;align-items:flex-start;}
+.ta{width:64px;height:64px;border-radius:50%;border:2px solid var(--amber-l);flex-shrink:0;overflow:hidden;background:var(--bg2);}
+.ta img{width:100%;height:100%;object-fit:cover;object-position:top;display:block;}
+.ts{color:var(--amber);font-size:14px;margin-bottom:6px;}
+.tt{font-size:13px;color:var(--text2);line-height:1.7;font-style:italic;}
+.tau{margin-top:8px;font-size:11px;color:var(--text3);font-weight:600;}
+
+/* ── VIDEO ── */
+.video-wrap{
+  max-width:560px;margin:0 auto;
+  border-radius:18px;overflow:hidden;
+  border:1.5px solid var(--border);
+  background:var(--bg-dark);
+  box-shadow:0 8px 32px rgba(90,74,48,.12);
+  position:relative;
+}
+.video-wrap video{
+  width:100%;display:block;
+  border-radius:18px;
+  max-height:420px;
+  object-fit:cover;
+}
+.video-label{
+  position:absolute;top:12px;left:12px;
+  background:rgba(30,51,32,.85);color:white;
+  font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;
+  backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.15);
+}
+
+/* ── OFFER ── */
+.offer-sec{background:var(--bg2);}
+.cd-banner{max-width:560px;margin:0 auto 24px;background:var(--bg-dark);border-radius:16px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.cd-banner .cd-txt h4{color:white;font-weight:900;font-size:15px;margin-bottom:2px;}
+.cd-banner .cd-txt p{color:rgba(255,248,232,.55);font-size:12px;}
+.timer{display:flex;gap:6px;align-items:center;}
+.tb{background:rgba(255,255,255,.12);border-radius:8px;padding:5px 10px;font-weight:900;font-size:22px;color:white;min-width:42px;text-align:center;line-height:1;}
+.tl3{font-size:9px;display:block;color:rgba(255,248,232,.55);margin-top:2px;}
+.tc3{font-size:18px;font-weight:900;color:rgba(255,255,255,.35);}
+.star-deal{max-width:560px;margin:0 auto 20px;background:var(--white);border:2px solid var(--amber);border-radius:22px;padding:28px 22px;text-align:center;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(184,106,16,.1);}
+.star-deal::before{content:'⭐  最受欢迎新人优惠  ⭐';position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--amber);color:white;font-size:11px;font-weight:800;padding:5px 20px;border-radius:0 0 12px 12px;white-space:nowrap;}
+.sd-t{font-size:18px;font-weight:900;margin:18px 0 18px;color:var(--text);}
+.sd-math{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:16px;}
+.sdb{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px 16px;text-align:center;}
+.sdb .ql{font-size:11px;color:var(--text3);margin-bottom:5px;}
+.sdb .pr{font-weight:900;font-size:26px;color:var(--green);}
+.sdb .or{font-size:10px;color:var(--text3);text-decoration:line-through;}
+.sdpl{font-size:22px;font-weight:900;color:var(--text3);}
+.sdar{font-size:18px;color:var(--text3);}
+.sdtot{background:var(--green);border-radius:12px;padding:14px 18px;text-align:center;}
+.sdtot .ql{font-size:11px;color:rgba(255,255,255,.7);margin-bottom:5px;font-weight:700;}
+.sdtot .pr{font-weight:900;font-size:30px;color:white;}
+.sdtot .sv{font-size:12px;color:rgba(255,248,232,.9);font-weight:800;}
+.sd-lim{background:var(--red-bg);border:1px solid rgba(184,64,32,.2);border-radius:10px;padding:10px 14px;font-size:13px;color:var(--red);font-weight:700;display:flex;align-items:center;justify-content:center;gap:6px;}
+.nb{max-width:560px;margin:0 auto 20px;background:var(--green-xl);border:1px solid rgba(26,92,53,.2);border-radius:14px;padding:14px 18px;display:flex;gap:12px;align-items:center;}
+.nb p{font-size:14px;color:var(--text);line-height:1.6;}
+.nb strong{color:var(--green);}
+.pkgs{max-width:560px;margin:0 auto 28px;display:flex;flex-direction:column;gap:10px;}
+.pkg{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center;transition:border-color .2s,box-shadow .2s;}
+.pkg:hover{border-color:var(--green);box-shadow:0 4px 20px rgba(90,74,48,.08);}
+.pkg.hot{border-color:rgba(184,64,32,.3);background:var(--red-bg);}
+.pkg.vip{border-color:rgba(184,106,16,.35);background:var(--amber-bg);}
+.pkl{flex:1;}
+.pkqty{font-size:11px;color:var(--text3);margin-bottom:3px;}
+.pknm{font-weight:800;font-size:15px;color:var(--text);}
+.pkbo{font-size:12px;color:var(--green);margin-top:3px;}
+.pkr{text-align:right;}
+.pkor{font-size:11px;color:var(--text3);text-decoration:line-through;}
+.pkpr{font-weight:900;font-size:26px;color:var(--green);line-height:1.1;}
+.pksv{font-size:11px;color:var(--green);font-weight:700;}
+.ptag{display:inline;font-size:9px;font-weight:800;padding:2px 8px;border-radius:100px;margin-left:6px;}
+.ptag.hot{background:var(--red);color:white;}
+.ptag.vip{background:var(--amber);color:white;}
+.trust-row{max-width:560px;margin:0 auto 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+.trb{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:14px 8px;text-align:center;}
+.trb .ti{font-size:22px;margin-bottom:6px;}
+.trb p{font-size:10px;color:var(--text2);line-height:1.5;font-weight:600;}
+.final{max-width:560px;margin:0 auto;text-align:center;}
+.fc-h{font-size:clamp(22px,5vw,34px);font-weight:900;line-height:1.25;margin-bottom:20px;letter-spacing:-.5px;}
+.fc-h span{color:var(--green);}
+
+/* ── FAQ ── */
+.faq-sec{background:var(--white);}
+.faqs{max-width:540px;margin:0 auto;display:flex;flex-direction:column;gap:8px;}
+.fi{background:var(--bg);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;}
+.fq{padding:17px 20px;font-weight:700;font-size:14px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:10px;transition:color .2s;}
+.fq:hover{color:var(--green);}
+.ftog{font-size:18px;color:var(--text3);flex-shrink:0;transition:transform .3s;}
+.fa{padding:0 20px;max-height:0;overflow:hidden;transition:all .35s ease;font-size:13px;line-height:1.75;color:var(--text2);}
+.fi.open .fa{max-height:240px;padding:0 20px 18px;}
+.fi.open .ftog{transform:rotate(45deg);}
+.fi.open .fq{color:var(--green);}
+.fi.open{background:var(--green-xl);border-color:rgba(26,92,53,.2);}
+
+/* ── PHARMACY MAP ── */
+.map-sec{background:var(--bg);}
+.map-sec .s-h span{color:var(--green);}
+.map-trust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:560px;margin:0 auto 36px;}
+.mtc{background:var(--white);border:1.5px solid var(--border);border-radius:16px;padding:18px 16px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;transition:border-color .2s,transform .2s;}
+.mtc:hover{border-color:var(--green);transform:translateY(-3px);}
+.mtc .mi{font-size:28px;}
+.mtc h4{font-weight:800;font-size:13px;color:var(--text);margin-bottom:2px;}
+.mtc p{font-size:11px;color:var(--text2);line-height:1.5;}
+.map-card{max-width:560px;margin:0 auto 28px;background:var(--white);border:1.5px solid var(--border);border-radius:22px;overflow:hidden;box-shadow:0 8px 32px rgba(90,74,48,.1);}
+.map-header{padding:16px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.map-header h3{font-weight:800;font-size:15px;color:var(--text);}
+.map-header p{font-size:12px;color:var(--text3);}
+.map-inner{padding:16px;background:var(--bg);display:flex;align-items:center;justify-content:center;}
+.map-inner svg{width:100%;max-width:320px;height:auto;filter:drop-shadow(0 6px 20px rgba(90,74,48,.12));}
+.map-legend{padding:12px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.ml-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text2);font-weight:500;}
+.ml-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.ml-dot.green{background:var(--green);}
+.ml-dot.amber{background:var(--amber);}
+.ml-count{background:var(--green);color:white;font-size:10px;font-weight:800;padding:2px 9px;border-radius:100px;}
+/* ── PHARMACY STATE TABS ── */
+.state-tabs-wrap{max-width:560px;margin:0 auto 0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+.state-tabs-wrap::-webkit-scrollbar{display:none;}
+.state-tabs{display:flex;gap:0;border:1.5px solid var(--border);border-radius:16px;overflow:hidden;background:var(--white);box-shadow:0 4px 18px rgba(90,74,48,.07);}
+.state-tab{flex:1;min-width:76px;padding:12px 6px;font-family:inherit;font-size:10px;font-weight:700;color:var(--text2);background:var(--white);border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .22s;border-right:1px solid var(--border);position:relative;}
+.state-tab:last-child{border-right:none;}
+.state-tab .st-emoji{font-size:18px;line-height:1;}
+.state-tab .st-name{font-size:10px;font-weight:800;letter-spacing:.2px;line-height:1.2;}
+.state-tab .st-en{font-size:9px;font-weight:500;color:var(--text3);}
+.state-tab .st-count{font-size:9px;font-weight:800;background:var(--pill-bg);color:var(--text3);padding:2px 7px;border-radius:100px;margin-top:1px;transition:background .22s,color .22s;}
+.state-tab.active{background:var(--bg-dark);color:white;}
+.state-tab.active .st-name{color:rgba(255,248,232,.95);}
+.state-tab.active .st-en{color:rgba(255,248,232,.5);}
+.state-tab.active .st-count{background:var(--green);color:white;}
+.state-tab:hover:not(.active){background:var(--bg);}
+
+/* ── PHARMACY DROPDOWN PANEL ── */
+.pha-panel-wrap{max-width:560px;margin:0 auto 28px;}
+.pha-panel{display:none;padding:18px 0 4px;}
+.pha-panel.active{display:block;animation:panelIn .32s ease;}
+@keyframes panelIn{from{opacity:0;transform:translateY(-10px);}to{opacity:1;transform:none;}}
+.pha-panel-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding:0 2px;}
+.pha-panel-header h4{font-size:13px;font-weight:800;color:var(--text);}
+.pha-count-badge{background:var(--green);color:white;font-size:10px;font-weight:800;padding:3px 11px;border-radius:100px;}
+.pha-items{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.pha-item{background:var(--white);border:1.5px solid var(--border);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:7px;transition:border-color .2s,transform .2s,box-shadow .2s;}
+.pha-item:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 8px 24px rgba(90,74,48,.09);}
+.pi-top{display:flex;align-items:center;gap:9px;}
+.pi-icon{width:34px;height:34px;border-radius:9px;background:var(--green-xl);border:1px solid rgba(26,92,53,.15);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.pi-name{font-size:12px;font-weight:800;color:var(--text);line-height:1.35;}
+.pi-area{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px;}
+.pi-area::before{content:'📍';font-size:10px;}
+.map-cta-box{max-width:560px;margin:0 auto;background:var(--bg-dark);border-radius:18px;padding:24px 20px;text-align:center;}
+.map-cta-box h3{font-size:18px;font-weight:900;color:white;margin-bottom:8px;}
+.map-cta-box p{font-size:14px;color:rgba(255,248,232,.65);line-height:1.6;margin-bottom:18px;}
+.map-cta-box .note{margin-top:10px;font-size:12px;color:rgba(255,248,232,.45);}
+.btn-amber{display:inline-block;padding:14px 28px;border-radius:100px;border:none;background:linear-gradient(135deg,var(--amber-l),var(--amber));color:white;font-weight:800;font-size:15px;cursor:pointer;box-shadow:0 6px 20px rgba(184,106,16,.3);width:100%;max-width:320px;}
+.btn-amber:hover{transform:translateY(-1px);}
+
+/* ── BOTTOM CTA ── */
+.final-cta-sec{background:var(--bg-dark);padding:72px 24px;text-align:center;}
+.fcs-h{font-weight:900;font-size:clamp(28px,6vw,48px);color:white;letter-spacing:-1px;line-height:1.15;margin-bottom:12px;}
+.fcs-sub{font-size:16px;color:rgba(255,248,232,.5);margin-bottom:32px;line-height:1.6;}
+.fcs-h span{color:#F0C060;}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24px 100px;text-align:center;font-size:12px;color:var(--text3);line-height:1.8;}
+.flogo{font-weight:900;font-size:20px;color:var(--text);margin-bottom:6px;}
+.flogo span{color:var(--green);}
+.footer-company{margin:14px 0 4px;font-size:11.5px;color:var(--text2);font-weight:600;line-height:1.9;}
+.footer-disclaimer{margin:12px auto;max-width:480px;font-size:11px;color:var(--text3);line-height:1.85;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:12px 0;}
+.flinks{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:14px 0 4px;}
+.flinks a{color:var(--text3);text-decoration:none;font-size:12px;}
+.flinks a:hover{color:var(--green);}
+.flink-toggle{
+  background:none;border:none;padding:0;
+  color:var(--text3);font-size:12px;font-family:inherit;
+  cursor:pointer;display:inline-flex;align-items:center;gap:3px;
+}
+.flink-toggle:hover{color:var(--green);}
+.flink-toggle .ftarrow{
+  display:inline-block;font-size:10px;
+  transition:transform .25s ease;
+}
+.flink-toggle.open .ftarrow{transform:rotate(180deg);}
+.footer-detail{
+  max-height:0;overflow:hidden;
+  transition:max-height .35s ease, opacity .3s ease, padding .3s ease;
+  opacity:0;
+  max-width:420px;margin:0 auto;
+  font-size:11.5px;color:var(--text2);line-height:1.85;
+  background:var(--white);border-radius:10px;
+  padding:0 16px;
+  border:1px solid transparent;
+}
+.footer-detail.open{
+  max-height:200px;opacity:1;
+  padding:12px 16px;margin:6px auto;
+  border-color:var(--border);
+}
+
+/* ── FLOAT BAR ── */
+.fbar{position:fixed;bottom:0;left:0;right:0;z-index:100;background:rgba(255,253,247,.96);backdrop-filter:blur(18px);border-top:1px solid var(--border);padding:12px 20px;display:flex;gap:12px;align-items:center;box-shadow:0 -8px 32px rgba(90,74,48,.1);}
+.fb-t{flex:1;}
+.fb-t .top{font-weight:800;font-size:14px;color:var(--text);}
+.fb-t .bot{font-size:11px;color:var(--text3);margin-top:2px;}
+.fb-btn{flex-shrink:0;background:var(--green);color:white;font-weight:800;font-size:14px;padding:12px 22px;border-radius:100px;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(26,92,53,.3);white-space:nowrap;}
+.fb-btn:hover{background:var(--green-l);transform:translateY(-1px);}
+
+@media(max-width:480px){
+  .trust-row{grid-template-columns:repeat(2,1fr);}
+  .sd-math{gap:8px;}
+  nav .nav-links{display:none;}
+  .map-trust{grid-template-columns:1fr;}
+  .pha-items{grid-template-columns:1fr 1fr;}
+  .state-tab{min-width:60px;padding:10px 4px;}
+}
+
+/* ── IMAGE GALLERY CAROUSEL ── */
+.gallery-sec{
+  padding:72px 0 80px;
+  background:var(--white);
+  text-align:center;
+  overflow:hidden;
+}
+.gallery-sec .center{padding:0 24px;margin-bottom:8px;}
+.gallery-sec .s-h span{
+  background:linear-gradient(135deg,var(--green),#2D8A50,var(--amber-l));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.gallery-pause-hint{
+  font-size:12px;color:var(--text3);font-weight:600;
+  margin:10px 0 18px;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  cursor:pointer;
+}
+.gallery-strip{
+  overflow:hidden;
+  cursor:pointer;
+  user-select:none;
+  position:relative;
+  padding:16px 0 20px;
+}
+/* fade edges */
+.gallery-strip::before,.gallery-strip::after{
+  content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none;
+}
+.gallery-strip::before{left:0;background:linear-gradient(90deg,var(--white) 20%,transparent 100%);}
+.gallery-strip::after{right:0;background:linear-gradient(-90deg,var(--white) 20%,transparent 100%);}
+.gallery-track{
+  display:flex;
+  gap:16px;
+  width:max-content;
+  will-change:transform;
+  padding:0 60px;
+}
+.gallery-card{
+  flex-shrink:0;
+  width:clamp(200px,48vw,260px);
+  aspect-ratio:1/1;
+  border-radius:14px;
+  overflow:hidden;
+  box-shadow:0 10px 36px rgba(90,74,48,.16),0 2px 8px rgba(90,74,48,.07);
+  will-change:transform;
+  transform-origin:center center;
+  background:var(--bg2);
+}
+.gallery-card img{
+  width:100%;height:100%;
+  object-fit:cover;display:block;
+  pointer-events:none;
+}
+.gallery-status{
+  display:none;
+  font-size:12px;font-weight:700;
+  color:var(--white);
+  background:var(--text);
+  padding:5px 16px;border-radius:100px;
+  margin:14px auto 0;
+  width:fit-content;
+}
+
+/* ── SCRATCH CARD ── */
+.scratch-sec{
+  padding:72px 24px 80px;
+  background:linear-gradient(180deg,var(--white) 0%,var(--bg) 100%);
+  text-align:center;
+}
+.scratch-intro{
+  margin-bottom:36px;
+}
+.scratch-intro .s-h{
+  font-size:clamp(26px,5vw,40px);
+  font-weight:900;
+  letter-spacing:-1px;
+  line-height:1.15;
+  margin-bottom:10px;
+}
+.scratch-intro .s-h span{
+  background:linear-gradient(135deg,var(--green),#2D8A50,var(--amber-l));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.scratch-intro p{
+  font-size:14px;
+  color:var(--text3);
+  margin-top:6px;
+}
+.scratch-scene{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+.scratch-hint-label{
+  font-size:13px;
+  color:var(--text3);
+  font-weight:600;
+  animation:pulse-hint 1.5s ease-in-out infinite;
+}
+@keyframes pulse-hint{0%,100%{opacity:.6;}50%{opacity:1;}}
+.scratch-hands{
+  position:relative;
+  width:min(340px,90vw);
+  user-select:none;
+}
+.scratch-card-wrap{
+  position:relative;
+  width:100%;
+  aspect-ratio:3/2;
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 24px 64px rgba(90,74,48,.18),0 6px 20px rgba(90,74,48,.1);
+  border:2px dashed rgba(255,255,255,.7);
+}
+.scratch-reward{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#6B8DD6 0%,#C45FA0 55%,#E05550 100%);
+  padding:20px;gap:6px;
+}
+.scratch-reward .reward-icon{font-size:28px;line-height:1;}
+.scratch-reward .reward-title{
+  font-size:clamp(13px,3.5vw,17px);font-weight:900;color:#fff;letter-spacing:.5px;text-transform:uppercase;
+}
+.scratch-reward .reward-code{
+  font-size:clamp(20px,6vw,32px);font-weight:900;color:#FFF176;letter-spacing:3px;
+  text-shadow:0 2px 12px rgba(0,0,0,.3);
+  background:rgba(0,0,0,.18);padding:6px 18px;border-radius:10px;
+}
+.scratch-reward .reward-desc{
+  font-size:12px;color:rgba(255,255,255,.85);line-height:1.5;text-align:center;
+}
+.scratch-reward .reward-btn{
+  margin-top:6px;
+  background:#fff;color:var(--green);
+  font-weight:800;font-size:13px;
+  padding:9px 22px;border-radius:100px;border:none;cursor:pointer;
+  box-shadow:0 4px 16px rgba(0,0,0,.18);
+}
+.scratch-reward .reward-btn:hover{background:var(--green-xl);}
+#scratchCanvas{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  cursor:crosshair;
+  border-radius:18px;
+}
+.scratch-hands-img{
+  display:flex;justify-content:center;margin-top:-8px;pointer-events:none;
+}
+.scratch-hands-img svg{width:min(280px,78vw);}
+.scratch-already-done{
+  display:none;
+  font-size:12px;color:var(--text3);margin-top:4px;
+}
+
+/* ── 3D VIDEO CAROUSEL ── */
+.vidcar-sec{
+  padding:88px 0 84px;
+  background:linear-gradient(180deg,var(--white) 0%,var(--bg) 100%);
+  text-align:center;
+  overflow:hidden;
+  position:relative;
+}
+.vidcar-sec .center{padding:0 24px;}
+.vidcar-sec .s-h span{
+  background:linear-gradient(135deg,var(--green),#2D8A50,var(--amber-l));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+/* Stage — the viewport */
+.vc-stage{
+  position:relative;
+  width:100%;
+  height:430px;
+  margin:52px 0 0;
+  overflow:visible;
+  cursor:grab;
+  touch-action:pan-y;
+}
+.vc-stage:active{cursor:grabbing;}
+/* 3D track */
+.vc-track{
+  position:relative;
+  width:100%;height:100%;
+  perspective:1500px;
+  transform-style:preserve-3d;
+}
+/* Individual card — rAF drives all motion, no CSS transition needed */
+.vc-card{
+  position:absolute;
+  top:50%;left:50%;
+  width:220px;
+  aspect-ratio:9/16;
+  border-radius:28px;
+  overflow:hidden;
+  background:#111;
+  will-change:transform,opacity;
+  transition:none;
+}
+.vc-card video{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  border-radius:26px;
+}
+/* darkening overlay for non-center cards */
+.vc-dim{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0);
+  border-radius:26px;
+  transition:background .55s ease;
+  pointer-events:none;
+}
+/* subtle shine on center card */
+.vc-shine{
+  position:absolute;inset:0;
+  background:linear-gradient(145deg,rgba(255,255,255,.09) 0%,transparent 55%);
+  border-radius:26px;
+  pointer-events:none;
+}
+/* Navigation row */
+.vc-nav{
+  display:flex;align-items:center;justify-content:center;
+  gap:18px;margin-top:36px;
+}
+.vc-arrow{
+  width:46px;height:46px;border-radius:50%;
+  border:1.5px solid var(--border2);
+  background:var(--white);
+  color:var(--text);font-size:22px;
+  cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 14px rgba(90,74,48,.1);
+  transition:background .2s,border-color .2s,transform .15s,color .2s;
+}
+.vc-arrow:hover{
+  background:var(--green);border-color:var(--green);
+  color:#fff;transform:scale(1.1);
+}
+/* Dot indicators */
+.vc-dots{
+  display:flex;align-items:center;justify-content:center;gap:7px;
+}
+.vc-dot{
+  width:7px;height:7px;border-radius:50%;
+  background:var(--border2);border:none;padding:0;
+  cursor:pointer;
+  transition:background .3s,width .3s,border-radius .3s;
+}
+.vc-dot.active{
+  background:var(--green);width:22px;border-radius:4px;
+}
+@media(max-width:640px){
+  .vc-stage{height:340px;margin-top:40px;}
+  .vc-card{width:170px;}
+  .vc-arrow{width:40px;height:40px;font-size:20px;}
+}
+@media(max-width:400px){
+  .vc-stage{height:290px;}
+  .vc-card{width:145px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Gavisure <span>为宁好</span></div>
+  <div class="nav-links">
+    <a href="#solution">产品</a>
+    <a href="#how">使用方法</a>
+    <a href="#reviews">评价</a>
+    <a href="#pharmacies">线下门店</a>
+    <a href="#offer">优惠</a>
+  </div>
+  <button class="nav-cta" onclick="document.getElementById('offer').scrollIntoView({behavior:'smooth'})">查看优惠 →</button>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <div class="tick-item"><span class="tick-star">★★★★★</span> 以前压力大就胃痛，现在稳定多了</div>
+    <div class="tick-item">·</div>
+    <div class="tick-item"><span class="tick-star">★★★★★</span> 吃东西没那么容易顶住了！</div>
+    <div class="tick-item">·</div>
+    <div class="tick-item"><span class="tick-star">★★★★★</span> 感觉胃没那么敏感了，已推荐给家人</div>
+    <div class="tick-item">·</div>
+    <div class="tick-item"><span class="tick-star">★★★★★</span> 一紧张就胃痛的情况减少很多</div>
+    <div class="tick-item">·</div>
+    <div class="tick-item"><span class="tick-star">★★★★★</span> 胃酸倒流改善了，终于睡得着了</div>
+    <div class="tick-item">·</div>
+    <div class="tick-item"><span class="tick-star">★★★★★</span> 以前压力大就胃痛，现在稳定多了</div>
+    <div class="tick-item">·</div>
+    <div class="tick-item"><span class="tick-star">★★★★★</span> 吃东西没那么容易顶住了！</div>
+    <div class="tick-item">·</div>
+    <div class="tick-item"><span class="tick-star">★★★★★</span> 感觉胃没那么敏感了，已推荐给家人</div>
+    <div class="tick-item">·</div>
+    <div class="tick-item"><span class="tick-star">★★★★★</span> 一紧张就胃痛的情况减少很多</div>
+    <div class="tick-item">·</div>
+    <div class="tick-item"><span class="tick-star">★★★★★</span> 胃酸倒流改善了，终于睡得着了</div>
+    <div class="tick-item">·</div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-pill">🇲🇾 马来西亚压力胃专属方案</div>
+  <h1>胃一直不好？<br><span class="grad">找对根源，才能修复</span></h1>
+  <p class="hero-sub">很多人的胃问题不是吃错东西，是长期压力正在破坏胃黏膜。<br>Gavisure 为宁好，从脑肠轴根本调理。</p>
+  <div class="hero-btns">
+    <button class="btn-main" onclick="document.getElementById('offer').scrollIntoView({behavior:'smooth'})">🔥 查看最新限定优惠</button>
+    <button class="btn-sec" onclick="window.open('https://wa.me/60136951819?text='+encodeURIComponent('Hi, 我要了解关于Gavisure为宁好护胃营养餐。'),'_blank')">💬 私信咨询了解更多</button>
+  </div>
+  <div class="hero-trust-row">
+    <span>🏅 MeSTI 认证</span><span>·</span>
+    <span>🌿 食品级非药物</span><span>·</span>
+    <span>🛡️ GMP 生产</span>
+  </div>
+
+  <div class="hero-product">
+    <div class="product-float">
+      <img
+        src="Gavisure landing page image.jpg"
+        alt="Gavisure 为宁好 产品正面"
+        onerror="this.parentElement.style.padding='40px';this.outerHTML='<p style=color:#999;font-size:13px>📦 产品主图<br><small>Gavisure landing page image.jpg</small></p>'"
+      >
+    </div>
+    <div class="float-card fc1"><span>🌿</span> <span class="fc-green">舒压护胃</span></div>
+    <div class="float-card fc2"><span>🛡️</span> <span class="fc-green">修复胃黏膜</span></div>
+    <div class="float-card fc3"><span>⭐</span> 3大专利成分</div>
+  </div>
+</section>
+
+<!-- TRUST LOGOS -->
+<div class="trust-logos reveal">
+  <div class="trust-badge-item">🏅 MeSTI 认证</div>
+  <div class="trust-badge-item">🛡️ GMP 生产</div>
+  <div class="trust-badge-item">✅ HACCP 食安</div>
+  <div class="trust-badge-item">🌿 植物基配方</div>
+  <div class="trust-badge-item">💊 非药物</div>
+</div>
+
+<!-- PAIN -->
+<section class="pain-sec" id="pain">
+  <div class="center reveal">
+    <div class="s-pill">识别你的胃</div>
+    <div class="s-h">如果你是这样的人——</div>
+    <p class="s-sub">读完下面每一条，看看你中了几个</p>
+  </div>
+  <div class="pain-if reveal">
+    <h3>你的胃，为什么<em>一直反复不好？</em></h3>
+    <p>不是你不够努力保养，而是根本原因没有被解决。压力正在一点一点破坏你的胃黏膜。</p>
+  </div>
+  <div class="pain-list">
+    <div class="p-row reveal"><div class="p-x">✕</div><div class="p-body"><div class="p-t">饭后总是胀顶，吃一点就难受</div><div class="p-d">每顿饭都是折磨，越吃越少，营养跟不上，整个人精神每况愈下。</div></div></div>
+    <div class="p-row reveal"><div class="p-x">✕</div><div class="p-body"><div class="p-t">胃酸倒流、喉咙酸，夜晚睡不着</div><div class="p-d">躺下就反酸，灼烧感挥之不去，半夜惊醒。睡差→精神差→工作崩溃。</div></div></div>
+    <div class="p-row reveal"><div class="p-x">✕</div><div class="p-body"><div class="p-t">一紧张一有压力，胃就开始抗议</div><div class="p-d">会议前、截止日期前……胃必然发作。吃胃药只是治标，压力来了又回原点。</div></div></div>
+    <div class="p-row reveal"><div class="p-x">✕</div><div class="p-body"><div class="p-t">试过很多产品，但胃还是一直反复</div><div class="p-d">花了大把时间和金钱，但始终停在「缓解」，没有真正「修复」。</div></div></div>
+  </div>
+  <div class="pain-verdict reveal">
+    <h4>❌ 问题的根源在这里</h4>
+    <p>压力 → 胃酸分泌异常 → 胃黏膜受损 → 越来越敏感<br><strong>这个循环只有从「脑肠轴修复」才能真正打破。</strong></p>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="who-sec">
+  <div class="center reveal">
+    <div class="s-pill">适合人群</div>
+    <div class="s-h">你是<span>「压力胃」</span>体质吗？</div>
+    <p class="s-sub">有 2 个或以上的情况，Gavisure 就是为你准备的</p>
+  </div>
+  <div class="who-chips reveal">
+    <div class="chip">🔥 经常胃酸倒流</div>
+    <div class="chip">😮‍💨 吃一点就胀</div>
+    <div class="chip">😪 喉咙酸 / 夜咳</div>
+    <div class="chip">😰 一紧张就不适</div>
+    <div class="chip">💼 长期工作压力大</div>
+    <div class="chip">🌙 睡不好总是疲惫</div>
+  </div>
+  <div class="who-result reveal">
+    <span class="wr-icon">💡</span>
+    <p>这就是<strong>「压力胃」体质</strong>。你需要的不只是「缓解」，而是<strong>「修复 + 舒压」双管齐下</strong>的方案。Gavisure 为宁好，正是为此而生。</p>
+  </div>
+</section>
+
+<!-- HOW -->
+<section class="how-sec" id="how">
+  <div class="center reveal">
+    <div class="s-pill">使用方法</div>
+    <div class="s-h">每天<span>4 个简单步骤</span></div>
+    <p class="s-sub">忙碌的马来西亚人，也能轻松坚持</p>
+  </div>
+  <div class="steps reveal">
+    <div class="step active">
+      <div class="step-num">01</div>
+      <div class="step-body"><h4>每天早上，空腹或饭前</h4><p>建议在早餐前 15–30 分钟饮用，让成分更好地被吸收。</p><span class="step-tag">最佳时机</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body"><h4>撕开一包，倒入杯中</h4><p>每盒 15 包，每包 25g，一次一包刚刚好。</p><span class="step-tag">简单方便</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body"><h4>加入 125-150ml 温水搅拌</h4><p>水温不超过 50°C。温和谷粮香味，不苦不涩，口感顺滑。</p><span class="step-tag">即溶即饮</span></div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-body"><h4>坚持饮用，感受变化</h4><p>1–3 天开始感受，7–10 天胃开始稳定。越早开始，越早告别压力胃。</p><span class="step-tag">看见改变</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- INGREDIENTS -->
+<section class="ing-sec" id="solution">
+  <div class="center reveal">
+    <div class="s-pill">科学配方</div>
+    <div class="s-h">3 大专利成分 + 消化酵素 + 谷粮营养，<span>就是你需要的  黄金组合</span></div>
+    <p class="s-sub">每一个成分都经过临床验证，缺一不可</p>
+  </div>
+  <div class="ing-grid reveal">
+    <div class="ing-card star">
+      <div class="ing-badge">⭐ 核心差异</div>
+      <div class="ing-num">成分 01</div>
+      <div class="ing-icon">🍄</div>
+      <div class="ing-name">OriNaceus™ 猴头菇精华</div>
+      <div class="ing-desc">调节脑肠轴 · 舒压护胃 · 促进胃黏膜修复。这是其他产品做不到的根本差异。</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-num">成分 02</div>
+      <div class="ing-icon">🌱</div>
+      <div class="ing-name">Gastro-AD® 发酵大豆</div>
+      <div class="ing-desc">专利成分 · 帮助调节胃酸平衡 · 临床验证缓解胃酸不适</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-num">成分 03</div>
+      <div class="ing-icon">🔬</div>
+      <div class="ing-name">POSBION® 专利后生元</div>
+      <div class="ing-desc">调整肠道环境 · 改善整体消化系统 · 从内而外稳定</div>
+    </div>
+    <div class="ing-card">
+      <div class="ing-num">成分 04</div>
+      <div class="ing-icon">🍍</div>
+      <div class="ing-name">Bromelain 酵素</div>
+      <div class="ing-desc">促进蛋白质消化 · 减轻胃负担 · 配合多谷植物营养温和养护</div>
+    </div>
+  </div>
+</section>
+
+<!-- 3D VIDEO CAROUSEL -->
+<section class="vidcar-sec" id="vidcar">
+  <div class="center reveal">
+    <div class="s-pill">🎬 真实示范</div>
+    <div class="s-h">看看 Gavisure 如何<span>改变每一天</span></div>
+    <p class="s-sub">从早晨一包开始，压力胃慢慢告别你</p>
+  </div>
+  <!-- Stage: cards injected by JS -->
+  <div class="vc-stage" id="vcStage">
+    <div class="vc-track" id="vcTrack"></div>
+  </div>
+  <!-- Controls -->
+  <div class="vc-nav">
+    <button class="vc-arrow" id="vcPrev" aria-label="Previous">&#8249;</button>
+    <div class="vc-dots" id="vcDots"></div>
+    <button class="vc-arrow" id="vcNext" aria-label="Next">&#8250;</button>
+  </div>
+</section>
+
+<!-- SPLIT PRODUCT SECTIONS -->
+<section class="split-sec">
+  <div class="split-wrap">
+
+    <div class="split-row reveal">
+      <div class="split-img-box">
+        <img
+          src="photo_2026-04-04_17-45-35.jpg"
+          alt="Gavisure 为宁好 产品正面"
+          onerror="this.outerHTML='<div style=padding:60px 20px;text-align:center;color:#9A8868;font-size:13px>📦 产品正面图<br><small>photo_2026-04-04_17-45-35.jpg</small></div>'"
+        >
+      </div>
+      <div class="split-txt">
+        <div class="badge2">产品特色</div>
+        <h3>不只养胃——<span>更舒压修复</span></h3>
+        <p>市面上大多数养胃产品只停留在「消化」层面。但Gavisure为宁好 更深入，同时从脑肠轴调理压力对胃的影响。</p>
+        <ul class="feat-list">
+          <li><span class="ck">✓</span>调节胃酸 + 舒缓不适，饭后不再顶住</li>
+          <li><span class="ck">✓</span>舒压护胃，调节脑肠轴——市面罕见差异</li>
+          <li><span class="ck">✓</span>修复胃黏膜，减少反复，长期稳定</li>
+          <li><span class="ck">✓</span>食品级配方，适合长期饮用，无副作用</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="split-row reveal">
+      <div class="split-img-box">
+        <img
+          src="photo_2026-04-04_17-45-34.jpg"
+          alt="Gavisure 为宁好 产品认证侧面"
+          onerror="this.outerHTML='<div style=padding:60px 20px;text-align:center;color:#9A8868;font-size:13px>🏅 产品认证图<br><small>photo_2026-04-04_17-45-34.jpg</small></div>'"
+        >
+      </div>
+      <div class="split-txt">
+        <div class="badge2">安全认证</div>
+        <h3>严格认证，<span>安心长期饮用</span></h3>
+        <p>Gavisure 为宁好的每一批产品都经过多重认证，不是普通养胃产品可以相比的。</p>
+        <ul class="feat-list">
+          <li><span class="ck">✓</span>MeSTI 食品安全认证</li>
+          <li><span class="ck">✓</span>GMP 优良制造规范</li>
+          <li><span class="ck">✓</span>HACCP 食品安全管理</li>
+          <li><span class="ck">✓</span>植物基 · 低糖 · 非药物配方</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="split-row reveal">
+      <div class="split-img-box">
+        <img
+          src="gavisuresachet.jpg"
+          alt="Gavisure 为宁好 单包装"
+          onerror="this.outerHTML='<div style=padding:60px 20px;text-align:center;color:#9A8868;font-size:13px>🌿 单包装图<br><small>gavisuresachet.jpg</small></div>'"
+        >
+      </div>
+      <div class="split-txt">
+        <div class="badge2">使用便利</div>
+        <h3>随身携带，<span>一包开始改变</span></h3>
+        <p>每盒 15 包，每包 25g，冲泡即饮，口感温和。不论工作多忙，都能轻松坚持。</p>
+        <ul class="feat-list">
+          <li><span class="ck">✓</span>温水冲泡，即溶即饮，30 秒搞定</li>
+          <li><span class="ck">✓</span>温和植物香气，不苦不涩</li>
+          <li><span class="ck">✓</span>独立包装，随身携带方便</li>
+          <li><span class="ck">✓</span>早晚皆宜，配合生活节奏</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="cmp-sec">
+  <div class="center reveal">
+    <div class="s-pill">对比分析</div>
+    <div class="s-h">深度调理 vs <span style="color:var(--text3);">表面缓解</span></div>
+    <p class="s-sub">看清楚差别，才能做对选择</p>
+  </div>
+  <div class="cmp-tbl reveal">
+    <div class="cmp-hd"><div>对比项目</div><div>一般养胃产品</div><div class="us">✅ Gavisure 为宁好</div></div>
+    <div class="cmp-r"><div class="cf">针对压力胃根源</div><div><span class="cx2">✗</span></div><div class="cg"><span class="ck2">✓</span> 脑肠轴调节</div></div>
+    <div class="cmp-r"><div class="cf">修复胃黏膜</div><div><span class="cx2">✗</span></div><div class="cg"><span class="ck2">✓</span> 猴头菇精华</div></div>
+    <div class="cmp-r"><div class="cf">长期稳定效果</div><div style="font-size:11px;color:var(--text3);">暂时缓解</div><div class="cg"><span class="ck2">✓</span> 根本调理</div></div>
+    <div class="cmp-r"><div class="cf">可长期安心饮用</div><div style="font-size:11px;color:var(--text3);">药物成分</div><div class="cg"><span class="ck2">✓</span> 食品级植物基</div></div>
+    <div class="cmp-r"><div class="cf">4 大国际专利成分</div><div><span class="cx2">✗</span></div><div class="cg"><span class="ck2">✓</span> 全部具备</div></div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="tl-sec">
+  <div class="center reveal">
+    <div class="s-pill">效果时间轴</div>
+    <div class="s-h">服用后，<span>身体会怎样变化？</span></div>
+    <p class="s-sub" style="font-size:14px;color:var(--text3);">重点：不是瞬间好，是慢慢变稳定 ✅</p>
+  </div>
+  <div class="tl-wrap reveal">
+    <div class="tl-item">
+      <div class="tl-dot"><span class="dd">1–3</span><span class="du">天</span></div>
+      <div class="tl-body"><h4>初期感受</h4><ul><li>胃没那么「顶」，饭后轻松一点</li><li>胃部不适感开始减轻</li><li>肠胃有被「照顾到」的感觉</li></ul></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"><span class="dd">7–10</span><span class="du">天</span></div>
+      <div class="tl-body"><h4>中期改善</h4><ul><li>胃开始稳定，不再总是不适</li><li>饭后更轻松，胃酸情况改善</li><li>睡眠质量开始提升</li></ul></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-dot"><span class="dd">持续</span><span class="du">使用</span></div>
+      <div class="tl-body"><h4>长期效果</h4><ul><li>胃不再容易被刺激，稳定度大幅提升</li><li>整体消化状态显著改善</li><li>一紧张就胃痛的情况明显减少</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="test-sec" id="reviews">
+  <div class="center reveal">
+    <div class="s-pill">真实反馈</div>
+    <div class="s-h">他们的胃，<span>已经开始改变</span></div>
+    <p class="s-sub">来自马来西亚真实用户的亲身体验</p>
+  </div>
+
+  <div class="test-grid reveal">
+    <div class="tc">
+      <img src="3.jpg" alt="用户好评 1" onerror="this.style.display='none'">
+      <div class="tc-ov">
+        <div class="tc-q">「以前压力大就胃痛，现在稳定多了」</div>
+        <div class="tc-n">— KL</div>
+      </div>
+    </div>
+    <div class="tc">
+      <img src="testimony6.jpg" alt="用户好评 2" onerror="this.style.display='none'">
+      <div class="tc-ov">
+        <div class="tc-q">「吃东西没那么容易顶住了，开心！」</div>
+        <div class="tc-n">— 马六甲</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="test-wide reveal">
+    <div class="ta">
+      <img src="testimony7.jpg" alt="用户头像" onerror="this.parentElement.innerHTML='<span style=font-size:28px;line-height:64px>😊</span>'">
+    </div>
+    <div>
+      <div class="ts">★★★★★</div>
+      <div class="tt">「感觉胃没那么敏感了，以前一紧张就不舒服，现在好很多。已经推荐给家人一起喝了！」</div>
+      <div class="tau">— 甲洞</div>
+    </div>
+  </div>
+  <div class="test-wide reveal">
+    <div class="ta">
+      <img src="testimony8.jpg" alt="用户头像" onerror="this.parentElement.innerHTML='<span style=font-size:28px;line-height:64px>😊</span>'">
+    </div>
+    <div>
+      <div class="ts">★★★★★</div>
+      <div class="tt">「Uncle的胃酸问题已经是很多很多年的了。试了这个3个月，现在没有再吃胃药了！」</div>
+      <div class="tau">— 柔佛</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- OFFER -->
+<section class="offer-sec" id="offer">
+  <div class="center reveal">
+    <div class="s-pill">最特别限定优惠</div>
+    <div class="s-h">今天就<span>开始修复</span>你的胃</div>
+    <p class="s-sub">特别优惠显示7天 · 售完为止</p>
+  </div>
+  <div class="cd-banner reveal">
+    <div class="cd-txt"><h4>⏳ 优惠截止倒计时</h4><p>限量 100 套</p></div>
+    <div class="timer">
+      <div class="tb"><span id="d">7</span><span class="tl3">天</span></div>
+      <span class="tc3">:</span>
+      <div class="tb"><span id="h">00</span><span class="tl3">时</span></div>
+      <span class="tc3">:</span>
+      <div class="tb"><span id="m">00</span><span class="tl3">分</span></div>
+      <span class="tc3">:</span>
+      <div class="tb"><span id="s">00</span><span class="tl3">秒</span></div>
+    </div>
+  </div>
+  <div class="star-deal reveal">
+    <div class="sd-t">💥 买 2 盒 + 加 RM58 直接得第 3 盒</div>
+    <div class="sd-math">
+      <div class="sdb"><div class="ql">2 盒套餐</div><div class="pr">RM288</div><div class="or">原价 RM336</div></div>
+      <span class="sdpl">+</span>
+      <div class="sdb"><div class="ql">第 3 盒加购</div><div class="pr">RM58</div><div class="or">原价 RM158</div></div>
+      <span class="sdar">→</span>
+      <div class="sdtot"><div class="ql">3 盒总计</div><div class="pr">RM346</div><div class="sv">节省 RM128！</div></div>
+    </div>
+    <div class="sd-lim">⚡ 限量 100 套 · 先到先得 · 每人限购 2 套</div>
+  </div>
+  <div class="nb reveal">
+    <span style="font-size:22px;flex-shrink:0;">🎁</span>
+    <p><strong>首次购买者专属：</strong>1 盒 <strong>RM158</strong>（原价 RM188）— 先体验效果，再决定！</p>
+  </div>
+  <div class="pkgs reveal">
+    <div class="pkg"><div class="pkl"><div class="pkqty">1 盒 · 15 包</div><div class="pknm">新人入门体验</div><div class="pkbo">✅ 首次购买专属价</div></div><div class="pkr"><div class="pkor">RM188</div><div class="pkpr">RM158</div><div class="pksv">省 RM30</div></div></div>
+    <div class="pkg"><div class="pkl"><div class="pkqty">2 盒 · 30 包</div><div class="pknm">普通配套</div><div class="pkbo">✅ 看到效果</div></div><div class="pkr"><div class="pkor">RM376</div><div class="pkpr">RM288</div><div class="pksv">省 RM88</div></div></div>
+    <div class="pkg hot"><div class="pkl"><div class="pkqty">2 盒 + 加RM58得第3盒</div><div class="pknm">限量明星套餐(每位新顾客只限两套!)<span class="ptag hot">🔥 HOT</span></div><div class="pkbo">✅ 附赠 RM30 数码礼券</div></div><div class="pkr"><div class="pkor">RM564</div><div class="pkpr">RM346</div><div class="pksv">省 RM218</div></div></div>
+    <div class="pkg vip"><div class="pkl"><div class="pkqty">4 盒 · 60 包</div><div class="pknm">VIP 黄金套餐<span class="ptag vip">VIP</span></div><div class="pkbo">✅ 摇摇杯 + Gavisure 袋+ 升级 VIP</div></div><div class="pkr"><div class="pkor">RM752</div><div class="pkpr">RM488</div><div class="pksv">省 RM264</div></div></div>
+    <div class="pkg vip"><div class="pkl"><div class="pkqty">6 盒 · 90 包</div><div class="pknm">VIP 超值套餐<span class="ptag vip">VIP</span></div><div class="pkbo">✅ 摇摇杯 + Gavisure 袋+ 升级 VIP</div></div><div class="pkr"><div class="pkor">RM1128</div><div class="pkpr">RM648</div><div class="pksv">省 RM480</div></div></div>
+    <div class="pkg vip" style="border-color:rgba(192,112,32,.4);"><div class="pkl"><div class="pkqty">8 盒 · 120 包</div><div class="pknm">VIP 旗舰配套<span class="ptag vip" style="background:var(--amber);">最超值</span></div><div class="pkbo">✅ 摇摇杯 + Gavisure 袋 + VIP 特权</div></div><div class="pkr"><div class="pkor">RM1504</div><div class="pkpr">RM799</div><div class="pksv">省 RM705</div></div></div>
+  </div>
+  <div class="trust-row reveal">
+    <div class="trb"><div class="ti">🏅</div><p>MeSTI<br>认证</p></div>
+    <div class="trb"><div class="ti">🌿</div><p>食品级<br>非药物</p></div>
+    <div class="trb"><div class="ti">🛡️</div><p>GMP<br>生产</p></div>
+    <div class="trb"><div class="ti">🚚</div><p>西马<br>免费配送</p></div>
+  </div>
+  <div class="final reveal">
+    <div class="fc-h">不要再让胃<br><span>拖累你的生活</span></div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+      <button class="btn-main" style="max-width:380px;" onclick="window.open('https://wa.me/60136951819?text='+encodeURIComponent('Hi, 我要购买Gavisure护胃营养餐。 可以解释产品跟价格吗？'),'_blank')">🔥 立即抢购限定优惠</button>
+      <button class="btn-sec" style="max-width:380px;" onclick="window.open('https://wa.me/60136951819?text='+encodeURIComponent('Hi, 我要了解关于Gavisure为宁好护胃营养餐。'),'_blank')">💬 WhatsApp 咨询</button>
+    </div>
+    <p style="margin-top:14px;font-size:12px;color:var(--text3);">⚡ 限量 100 套 · 先到先得 · </p>
+  </div>
+</section>
+
+<!-- PHARMACY MAP -->
+<section class="map-sec" id="pharmacies">
+  <div class="center reveal">
+    <div class="s-pill">全马授权药剂行</div>
+    <div class="s-h">不习惯网购？<span>亲自来找我们</span></div>
+    <p class="s-sub">我们完全理解——有些朋友更放心亲身到实体店购买。<br>Gavisure 为宁好已进驻全马超过20间区域授权药剂行，欢迎亲眼看、亲身问。</p>
+  </div>
+  <div class="map-trust reveal">
+    <div class="mtc"><div class="mi">🏪</div><h4>亲眼看产品</h4><p>到实体店拿起产品，确认正品后再买，完全安心</p></div>
+    <div class="mtc"><div class="mi">👨‍⚕️</div><h4>药剂师咨询</h4><p>当场向专业药剂师咨询，了解是否适合你的情况</p></div>
+    <div class="mtc"><div class="mi">🛡️</div><h4>官方授权正品</h4><p>所有合作药剂行均为 Gavisure 官方授权，假一赔十</p></div>
+  </div>
+  <div class="map-card reveal">
+    <div class="map-header"><h3>📍 授权药剂行分布地图</h3><p>马来西亚半岛</p></div>
+    <div class="map-inner">
+      <img src="map.jpg" alt="Gavisure 授权药剂行分布地图" style="width:100%;border-radius:12px;display:block;">
+    </div>
+    <div class="map-legend">
+      <div class="ml-item"><span class="ml-dot red"></span>Gavisure 授权药剂行</div>
+    </div>
+  </div>
+  <!-- State tab selector -->
+  <div class="state-tabs-wrap reveal">
+    <div class="state-tabs" id="stateTabs">
+      <button class="state-tab" data-state="penang">
+        <span class="st-emoji">🏖️</span>
+        <span class="st-name">槟城</span>
+        <span class="st-en">Penang</span>
+        <span class="st-count">1</span>
+      </button>
+      <button class="state-tab" data-state="perak">
+        <span class="st-emoji">⛰️</span>
+        <span class="st-name">霹雳</span>
+        <span class="st-en">Perak</span>
+        <span class="st-count">3</span>
+      </button>
+      <button class="state-tab" data-state="selangor">
+        <span class="st-emoji">🌆</span>
+        <span class="st-name">雪兰莪</span>
+        <span class="st-en">Selangor</span>
+        <span class="st-count">5</span>
+      </button>
+      <button class="state-tab active" data-state="kl">
+        <span class="st-emoji">🏙️</span>
+        <span class="st-name">吉隆坡</span>
+        <span class="st-en">KL</span>
+        <span class="st-count">5</span>
+      </button>
+      <button class="state-tab" data-state="melaka">
+        <span class="st-emoji">⚓</span>
+        <span class="st-name">马六甲</span>
+        <span class="st-en">Melaka</span>
+        <span class="st-count">1</span>
+      </button>
+      <button class="state-tab" data-state="johor">
+        <span class="st-emoji">🦁</span>
+        <span class="st-name">柔佛</span>
+        <span class="st-en">Johor</span>
+        <span class="st-count">8</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Pharmacy panels — one per state -->
+  <div class="pha-panel-wrap">
+
+    <!-- PENANG -->
+    <div class="pha-panel" id="pha-penang">
+      <div class="pha-panel-header">
+        <h4>🏖️ 槟城 Penang — 授权药剂行</h4>
+        <span class="pha-count-badge">1 间</span>
+      </div>
+      <div class="pha-items">
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Aldor Pharmacy</div></div>
+          <div class="pi-area">Bayan Lepas, Penang Island</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERAK -->
+    <div class="pha-panel" id="pha-perak">
+      <div class="pha-panel-header">
+        <h4>⛰️ 霹雳 Perak — 授权药剂行</h4>
+        <span class="pha-count-badge">3 间</span>
+      </div>
+      <div class="pha-items">
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Publico Pharmacy</div></div>
+          <div class="pi-area">Ipoh</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Gracious Pharmacy</div></div>
+          <div class="pi-area">Tanjung Malim</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Kampar Medical Supplies</div></div>
+          <div class="pi-area">Kampar</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SELANGOR -->
+    <div class="pha-panel" id="pha-selangor">
+      <div class="pha-panel-header">
+        <h4>🌆 雪兰莪 Selangor — 授权药剂行</h4>
+        <span class="pha-count-badge">5 间</span>
+      </div>
+      <div class="pha-items">
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Champs Pharmacy</div></div>
+          <div class="pi-area">Klang</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Medlife Pharmacy</div></div>
+          <div class="pi-area">Sungai Buloh / Kota Damansara</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Smiles Pharmacy</div></div>
+          <div class="pi-area">Klang</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Medicare Pharmacy</div></div>
+          <div class="pi-area">Bandar Baru Ampang</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Slim Pharmacy</div></div>
+          <div class="pi-area">Bandar Country Homes, Rawang</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KL (default open) -->
+    <div class="pha-panel active" id="pha-kl">
+      <div class="pha-panel-header">
+        <h4>🏙️ 吉隆坡 Kuala Lumpur — 授权药剂行</h4>
+        <span class="pha-count-badge">5 间</span>
+      </div>
+      <div class="pha-items">
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Maxcare Pharmacy</div></div>
+          <div class="pi-area">Setapak</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">IT Good Pharmacy</div></div>
+          <div class="pi-area">OUG</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Urban Health Pharmacy</div></div>
+          <div class="pi-area">Kepong</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Wellove Pharmacy</div></div>
+          <div class="pi-area">Taman Desa</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">A Plus Pharmacy</div></div>
+          <div class="pi-area">Pandan Perdana</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MELAKA -->
+    <div class="pha-panel" id="pha-melaka">
+      <div class="pha-panel-header">
+        <h4>⚓ 马六甲 Melaka — 授权药剂行</h4>
+        <span class="pha-count-badge">1 间</span>
+      </div>
+      <div class="pha-items">
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Big Tree Pharmacy</div></div>
+          <div class="pi-area">Bachang</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOHOR -->
+    <div class="pha-panel" id="pha-johor">
+      <div class="pha-panel-header">
+        <h4>🦁 柔佛 Johor — 授权药剂行</h4>
+        <span class="pha-count-badge">8 间</span>
+      </div>
+      <div class="pha-items">
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Well Pharmacy</div></div>
+          <div class="pi-area">Gelang Patah</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Well Pharmacy</div></div>
+          <div class="pi-area">Austin Crest</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Well Pharmacy</div></div>
+          <div class="pi-area">Eco Botanic</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Well Pharmacy</div></div>
+          <div class="pi-area">Mutiara Rini</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Well Pharmacy</div></div>
+          <div class="pi-area">Bukit Indah</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Well Pharmacy</div></div>
+          <div class="pi-area">Kulai Indahpura</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">Well Pharmacy</div></div>
+          <div class="pi-area">Permas Jaya</div>
+        </div>
+        <div class="pha-item">
+          <div class="pi-top"><div class="pi-icon">🏥</div><div class="pi-name">The One Pharmacy</div></div>
+          <div class="pi-area">Kluang</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="map-cta-box reveal">
+    <h3>📍 想找最近的授权药剂行？</h3>
+    <p>告诉我们你在哪里，我们帮你找最近的一间。<br>或者，你也可以直接选择 <strong style="color:#F0C060;">网购送上门</strong>，省时省力。</p>
+    <button class="btn-amber" onclick="window.open('https://wa.me/60136951819?text='+encodeURIComponent('Hi, 我想知道最靠近我家的Gavisure为宁好护胃营养餐授权药剂行在哪里。'),'_blank')">💬 WhatsApp 查询最近药剂行</button>
+    <p class="note"> 线上咨询时间：周一至周日 9am–11pm</p>
+  </div>
+</section>
+
+<!-- IMAGE GALLERY CAROUSEL -->
+<section class="gallery-sec">
+  <div class="center reveal">
+    <div class="s-pill">📸 真实用户照片</div>
+    <div class="s-h">药剂师把关，<span>确保“胃宁好”</span></div>
+    <p class="s-sub">来自全马超过20间药剂行的关怀</p>
+  </div>
+  <p class="gallery-pause-hint"><span id="galleryHint">⏸ 点击暂停轮播</span></p>
+  <div class="gallery-strip" id="galleryStrip">
+    <div class="gallery-track" id="galleryTrack">
+      <!-- Cards injected by JS -->
+    </div>
+  </div>
+  <p class="gallery-status" id="galleryStatus">⏸ 已暂停 · 再次点击继续</p>
+</section>
+
+<!-- FAQ -->
+<section class="faq-sec">
+  <div class="center reveal">
+    <div class="s-pill">常见疑问</div>
+    <div class="s-h">还有顾虑？<span>我们来解答</span></div>
+  </div>
+  <div class="faqs reveal">
+    <div class="fi"><div class="fq" onclick="tf(this)"><span>❓ Gavisure 是药物吗？会有副作用吗？</span><span class="ftog">+</span></div><div class="fa">Gavisure 为宁好是<strong>食品级营养餐</strong>，不是药物。配方以植物基成分为主，经 MeSTI 认证，适合长期饮用，无需担心药物依赖或副作用。目前有服用胃药的朋友也可配合使用，如有顾虑请咨询医生。</div></div>
+    <div class="fi"><div class="fq" onclick="tf(this)"><span>❓ 要喝多久才会看到效果？</span><span class="ftog">+</span></div><div class="fa">根据用户反馈，一般 <strong>1–3 天</strong>开始感受到胃部不适减轻，<strong>7–10 天</strong>胃开始稳定。建议持续饮用至少一盒（15天）感受完整效果。压力胃需要时间修复，越早开始越好！</div></div>
+    <div class="fi"><div class="fq" onclick="tf(this)"><span>❓ 我以前试过很多产品都没效，Gavisure 会不一样吗？</span><span class="ftog">+</span></div><div class="fa">这正是关键！大部分养胃产品只针对消化问题，没有处理<strong>压力对胃的影响</strong>。Gavisure 独家含有 OriNaceus™ 猴头菇精华，专门调节脑肠轴，解决压力导致胃黏膜受损的根本原因。</div></div>
+    <div class="fi"><div class="fq" onclick="tf(this)"><span>❓ 促销过了后还能买到同样价格吗？</span><span class="ftog">+</span></div><div class="fa"><strong>不能！</strong>优惠只到限定日期哦，「RM288 + RM58 得第3盒」的特惠更是<strong>限量 100 套</strong>，先到先得。优惠结束后恢复原价，建议现在就锁定！</div></div>
+  </div>
+</section>
+
+<!-- SCRATCH CARD -->
+<section class="scratch-sec">
+  <div class="scratch-intro reveal">
+    <div class="s-pill">🎁 专属惊喜</div>
+    <div class="s-h">你有一份<span>惊喜礼物！</span></div>
+    <p>每位访客限刮一次 · 今日有效</p>
+  </div>
+  <div class="scratch-scene reveal">
+    <div class="scratch-hint-label">👆 用手指或鼠标刮开卡片</div>
+    <div class="scratch-hands">
+      <div class="scratch-card-wrap">
+        <!-- Reward revealed underneath -->
+        <div class="scratch-reward">
+          <div class="reward-icon">🎉</div>
+          <div class="reward-title">新人优惠码解锁！</div>
+          <div class="reward-code">GAVI10</div>
+          <div class="reward-desc">新人第一次购买即享额外 <strong>RM10 折扣</strong><br>限今日使用，WhatsApp 报码即可</div>
+          <button class="reward-btn" onclick="window.open('https://wa.me/60136951819?text='+encodeURIComponent('Hi, 我要领取我的优惠券 (GAVI10)。'),'_blank')">立即使用 →</button>
+        </div>
+        <!-- Scratch overlay canvas -->
+        <canvas id="scratchCanvas"></canvas>
+      </div>
+    </div>
+    <!-- Decorative hands SVG -->
+    <div class="scratch-hands-img" aria-hidden="true">
+      <svg viewBox="0 0 280 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="80" cy="60" rx="62" ry="28" fill="#E8E0D0" opacity=".7"/>
+        <ellipse cx="200" cy="60" rx="62" ry="28" fill="#E8E0D0" opacity=".7"/>
+        <rect x="48" y="30" width="28" height="50" rx="14" fill="#DDD4C0"/>
+        <rect x="196" y="30" width="28" height="50" rx="14" fill="#DDD4C0"/>
+        <rect x="60" y="18" width="18" height="42" rx="9" fill="#E8E0D0"/>
+        <rect x="202" y="18" width="18" height="42" rx="9" fill="#E8E0D0"/>
+      </svg>
+    </div>
+    <p class="scratch-already-done" id="scratchDone">✅ 优惠码：<strong>GAVI10</strong> — 截图保存，WhatsApp 时出示</p>
+  </div>
+  <div style="display:flex;justify-content:center;margin-top:28px;">
+    <button class="btn-main" style="max-width:320px;background:linear-gradient(135deg,var(--green),#2D8A50);box-shadow:0 8px 28px rgba(26,92,53,.32);" onclick="window.open('https://wa.me/60136951819?text='+encodeURIComponent('Hi, 我要领取我的优惠券(GAV10)。'),'_blank')">🎁 现在领取我的礼物</button>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="final-cta-sec">
+  <div class="fcs-h">准备好改变你的胃了吗？<br><span>现在就开始</span></div>
+  <p class="fcs-sub">超过数百位马来西亚人已经开始感受变化<br>最新限定优惠 · 限量 100 套 · 售完即止</p>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:10px;">
+    <button class="btn-main" style="background:var(--white);color:var(--green);max-width:340px;box-shadow:0 6px 24px rgba(0,0,0,.15);" onclick="window.open('https://wa.me/60136951819?text='+encodeURIComponent('Hi, 我要购买Gavisure护胃营养餐限定优惠。 可以解释产品跟价格吗？'),'_blank')">🔥 立即抢购限定优惠</button>
+    <button class="btn-sec" style="border-color:rgba(255,253,247,.2);color:rgba(255,253,247,.55);max-width:340px;" onclick="window.open('https://wa.me/60136951819?text='+encodeURIComponent('Hi, 我要了解关于Gavisure为宁好护胃营养餐。'),'_blank')">💬 WhatsApp 咨询</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo">Gavisure <span>为宁好护胃营养餐</span></div>
+  <p>Your Partner in Plant-Based Beverage · Ikigai Essence Series</p>
+
+  <!-- Company registration -->
+  <div class="footer-company">
+    <p>My Ikigai Enterprise</p>
+    <p>BRN：202403086909 (003590619-X)</p>
+  </div>
+
+  <!-- Disclaimer -->
+  <div class="footer-disclaimer">
+    <p>本产品为食品类营养补充品，并非药物。不用于诊断、治疗或预防任何疾病。</p>
+    <p>本页面所提供的信息仅供一般健康参考，效果因个人体质不同而有所差异。</p>
+    <p>如有持续或严重不适，请咨询医生或专业医疗人员。</p>
+  </div>
+
+  <!-- Links row -->
+  <div class="flinks">
+    <button class="flink-toggle" id="btnPrivacy" onclick="toggleFooterDetail('privacy')">
+      隐私政策 <span class="ftarrow">▾</span>
+    </button>
+    <button class="flink-toggle" id="btnTerms" onclick="toggleFooterDetail('terms')">
+      条款与条件 <span class="ftarrow">▾</span>
+    </button>
+    <a href="https://wa.me/60136951819?text=Hi, 我想询问关于Gavisure为宁好护胃营养餐。">联系我们</a>
+  </div>
+
+  <!-- Expandable: 隐私政策 -->
+  <div class="footer-detail" id="footer-privacy">
+    我们尊重并保护您的个人资料，仅用于订单处理与客户服务用途。
+  </div>
+
+  <!-- Expandable: 条款与条件 -->
+  <div class="footer-detail" id="footer-terms">
+    所有订单一经确认恕不退款（除非产品存在质量问题）。配送时间视地区而定。
+  </div>
+
+  <p style="margin-top:16px;">© 2026 Gavisure 为宁好 · My Ikigai Enterprise. All Rights Reserved.</p>
+</footer>
+
+<!-- FLOATING BAR -->
+<div class="fbar">
+  <div class="fb-t">
+    <div class="top">🔥 买2盒 + RM58 得第3盒</div>
+    <div class="bot">限量100套 · 四月限定 · 先到先得</div>
+  </div>
+  <button class="fb-btn" onclick="window.open('https://wa.me/60136951819?text='+encodeURIComponent('Hi, 我要购买Gavisure护胃营养餐。 可以解释产品跟价格吗？'),'_blank')">立即抢购 →</button>
+</div>
+
+<script>
+// Countdown
+function tick(){
+  const diff=new Date('2026-04-30T23:59:59+08:00')-new Date();
+  if(diff<=0)return;
+  const f=n=>String(Math.floor(n)).padStart(2,'0');
+  document.getElementById('d').textContent=f(diff/86400000);
+  document.getElementById('h').textContent=f((diff%86400000)/3600000);
+  document.getElementById('m').textContent=f((diff%3600000)/60000);
+  document.getElementById('s').textContent=f((diff%60000)/1000);
+}
+tick();setInterval(tick,1000);
+
+// Scroll reveal
+const io=new IntersectionObserver(es=>{
+  es.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('visible'),i*60);io.unobserve(e.target);}});
+},{threshold:.08});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// Scratch Card
+(function(){
+  const canvas = document.getElementById('scratchCanvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let revealed = false;
+
+  function init(){
+    const wrap = canvas.parentElement;
+    canvas.width = wrap.offsetWidth;
+    canvas.height = wrap.offsetHeight;
+    const g = ctx.createLinearGradient(0,0,canvas.width,canvas.height);
+    g.addColorStop(0,'#4A6FA5');
+    g.addColorStop(.5,'#A84898');
+    g.addColorStop(1,'#C84040');
+    ctx.fillStyle = g;
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+    // Dashed border
+    ctx.strokeStyle='rgba(255,255,255,.6)';
+    ctx.lineWidth=2;
+    ctx.setLineDash([8,6]);
+    ctx.strokeRect(6,6,canvas.width-12,canvas.height-12);
+    // Hint text
+    ctx.setLineDash([]);
+    ctx.fillStyle='rgba(255,255,255,.55)';
+    ctx.font='bold '+Math.round(canvas.width*.062)+'px Inter,sans-serif';
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    ctx.fillText('🎁 刮刮看！',canvas.width/2,canvas.height/2);
+    ctx.globalCompositeOperation='destination-out';
+  }
+
+  function pos(e){
+    const r=canvas.getBoundingClientRect();
+    const sx=canvas.width/r.width, sy=canvas.height/r.height;
+    const src=e.touches?e.touches[0]:e;
+    return{x:(src.clientX-r.left)*sx, y:(src.clientY-r.top)*sy};
+  }
+
+  function draw(e){
+    if(!isDown||revealed) return;
+    e.preventDefault();
+    const p=pos(e);
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,Math.round(canvas.width*.088),0,Math.PI*2);
+    ctx.fill();
+    check();
+  }
+
+  function check(){
+    const d=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+    let t=0;
+    for(let i=3;i<d.length;i+=4) if(d[i]<128) t++;
+    if(t/(canvas.width*canvas.height)>.5) finish();
+  }
+
+  function finish(){
+    revealed=true;
+    canvas.style.transition='opacity .6s';
+    canvas.style.opacity='0';
+    canvas.style.pointerEvents='none';
+    setTimeout(()=>{canvas.style.display='none';},650);
+    const done=document.getElementById('scratchDone');
+    if(done){done.style.display='block';}
+    const hint=document.querySelector('.scratch-hint-label');
+    if(hint){hint.style.display='none';}
+  }
+
+  let isDown=false;
+  canvas.addEventListener('mousedown',e=>{isDown=true;draw(e);});
+  canvas.addEventListener('mousemove',draw);
+  window.addEventListener('mouseup',()=>isDown=false);
+  canvas.addEventListener('touchstart',e=>{isDown=true;draw(e);},{passive:false});
+  canvas.addEventListener('touchmove',draw,{passive:false});
+  canvas.addEventListener('touchend',()=>isDown=false);
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init);
+  } else {
+    init();
+  }
+})();
+
+// ── 3D Video Carousel — continuous conveyor loop ──
+(function(){
+  const stage   = document.getElementById('vcStage');
+  const track   = document.getElementById('vcTrack');
+  const dotsEl  = document.getElementById('vcDots');
+  const prevBtn = document.getElementById('vcPrev');
+  const nextBtn = document.getElementById('vcNext');
+  if(!stage || !track) return;
+
+  const SRCS = [
+    'GavisureProduction.mp4',
+    'Gavisure Packing into box.mp4',
+    'loading.mp4',
+    'enterPharmacy.mp4',
+    'flexGavisure.mp4',
+    'SellingGavisure2.mp4',
+    'Gavisure FB ads image.mp4',
+    'stirGavisure.mp4',
+    'ManDriinkGavisure.mp4',
+    'WomanDrinkGavisure.mp4',
+    'DrinkGavisure.mp4',
+    'Testimony1.mp4',
+  ];
+  const N = SRCS.length;
+
+  /* ── Build cards ── */
+  SRCS.forEach(src => {
+    const card = document.createElement('div');
+    card.className = 'vc-card';
+
+    const vid = document.createElement('video');
+    vid.src = src; vid.muted = true; vid.loop = true;
+    vid.playsInline = true;
+    vid.setAttribute('playsinline','');
+    vid.preload = 'metadata';
+
+    const dim   = document.createElement('div'); dim.className   = 'vc-dim';
+    const shine = document.createElement('div'); shine.className = 'vc-shine';
+
+    card.append(vid, dim, shine);
+    track.appendChild(card);
+  });
+
+  /* ── Build dots ── */
+  for(let i = 0; i < N; i++){
+    const d = document.createElement('button');
+    d.className = 'vc-dot';
+    d.setAttribute('aria-label', 'Slide '+(i+1));
+    d.addEventListener('click', () => jumpToCard(i));
+    dotsEl.appendChild(d);
+  }
+
+  /* ── State ── */
+  let offset      = 0;       // master scroll position (px, grows → cards go left)
+  let pendingJump = 0;       // smooth nudge from arrows/dots/drag release
+  let hovering    = false;
+  let dragging    = false;
+  let dragLastX   = 0;
+  let rafId       = null;
+  let lastActive  = -1;
+  const SPEED     = 2;   // px per frame (auto-scroll)
+
+  /* ── Layout helpers ── */
+  function spacing(){
+    const w = window.innerWidth;
+    return w < 400 ? 195 : w < 640 ? 240 : 298;
+  }
+  function total(){ return N * spacing(); }
+
+  /* ── Wrap x into (−total/2 , +total/2] ── */
+  function wrap(x){
+    const t = total();
+    x = ((x % t) + t) % t;          // → [0, t)
+    if(x > t / 2) x -= t;           // → (−t/2, t/2]
+    return x;
+  }
+
+  /* ── Find which card index is closest to x=0 ── */
+  function activeIdx(){
+    let best = 0, bestDist = Infinity;
+    for(let i = 0; i < N; i++){
+      const d = Math.abs(wrap(i * spacing() - offset));
+      if(d < bestDist){ bestDist = d; best = i; }
+    }
+    return best;
+  }
+
+  /* ── Jump to a specific card (smooth) ── */
+  function jumpToCard(idx){
+    const sp  = spacing();
+    const cur = activeIdx();
+    // shortest path around the loop
+    let diff = idx - cur;
+    if(diff >  N/2) diff -= N;
+    if(diff < -N/2) diff += N;
+    pendingJump += diff * sp;
+  }
+
+  /* ── Main rAF loop ── */
+  function frame(){
+    // Auto-scroll
+    if(!hovering && !dragging) offset += SPEED;
+
+    // Smooth-jump from arrows / dots
+    if(pendingJump !== 0){
+      const step = Math.sign(pendingJump) * Math.min(18, Math.abs(pendingJump));
+      offset      += step;
+      pendingJump -= step;
+      if(Math.abs(pendingJump) < 0.5){ offset += pendingJump; pendingJump = 0; }
+    }
+
+    /* position every card */
+    const sp = spacing();
+    let newActive = 0, closestDist = Infinity;
+    const cards = track.children;
+
+    for(let i = 0; i < N; i++){
+      const x    = wrap(i * sp - offset);   // px from centre
+      const dist = Math.abs(x);
+      if(dist < closestDist){ closestDist = dist; newActive = i; }
+
+      // Continuous transform curves — everything driven by x / sp
+      const norm = x / sp;                  // −N/2 … +N/2  (float)
+      const absN = Math.abs(norm);
+
+      const sc  = Math.max(0.36,  1 - absN * 0.128);
+      const ry  = -norm * 11;               // rotateY degrees (−ve = face right)
+      const op  = Math.max(0,     1 - absN * 0.275);
+      const zi  = Math.max(1, Math.round(50 - absN * 7));
+      const dim = Math.min(0.55,  absN * 0.15);
+      const sh  = absN < 0.6
+        ? '0 32px 80px rgba(0,0,0,.28), 0 8px 24px rgba(0,0,0,.12)'
+        : absN < 1.8
+          ? '0 18px 48px rgba(0,0,0,.16)'
+          : '0 10px 28px rgba(0,0,0,.09)';
+
+      const card = cards[i];
+      card.style.transform  = `translateX(calc(-50% + ${x}px)) translateY(-50%) scale(${sc}) rotateY(${ry}deg)`;
+      card.style.opacity    = op;
+      card.style.zIndex     = zi;
+      card.style.boxShadow  = sh;
+      card.querySelector('.vc-dim').style.background  = `rgba(0,0,0,${dim})`;
+      card.querySelector('.vc-shine').style.opacity   = absN < 0.45 ? '1' : '0';
+    }
+
+    /* Video: only the front card plays */
+    if(newActive !== lastActive){
+      lastActive = newActive;
+      for(let i = 0; i < N; i++){
+        const vid = cards[i].querySelector('video');
+        if(!vid) continue;
+        i === newActive ? vid.play().catch(()=>{}) : vid.pause();
+      }
+      /* Dots */
+      dotsEl.querySelectorAll('.vc-dot').forEach((d,i) =>
+        d.classList.toggle('active', i === newActive)
+      );
+    }
+
+    rafId = requestAnimationFrame(frame);
+  }
+
+  function startRaf(){ if(!rafId) rafId = requestAnimationFrame(frame); }
+  function stopRaf() { cancelAnimationFrame(rafId); rafId = null; }
+
+  /* ── Hover — pause auto-scroll ── */
+  stage.addEventListener('mouseenter', () => hovering = true);
+  stage.addEventListener('mouseleave', () => hovering = false);
+
+  /* ── Drag / swipe ── */
+  stage.addEventListener('pointerdown', e => {
+    dragging  = true;
+    dragLastX = e.clientX;
+    stage.setPointerCapture(e.pointerId);
+    stage.style.cursor = 'grabbing';
+  });
+  stage.addEventListener('pointermove', e => {
+    if(!dragging) return;
+    const dx  = e.clientX - dragLastX;
+    offset   -= dx;                  // drag right → offset falls → cards move right
+    dragLastX = e.clientX;
+  });
+  const endDrag = () => { dragging = false; stage.style.cursor = ''; };
+  stage.addEventListener('pointerup',     endDrag);
+  stage.addEventListener('pointercancel', endDrag);
+
+  /* ── Arrow buttons ── */
+  prevBtn.addEventListener('click', () => { pendingJump -= spacing(); });
+  nextBtn.addEventListener('click', () => { pendingJump += spacing(); });
+
+  /* ── Keyboard ── */
+  document.addEventListener('keydown', e => {
+    if(e.key === 'ArrowLeft')  pendingJump -= spacing();
+    if(e.key === 'ArrowRight') pendingJump += spacing();
+  });
+
+  /* ── Card click — jump to that card ── */
+  stage.addEventListener('click', e => {
+    const card = e.target.closest('.vc-card');
+    if(!card) return;
+    const idx = Array.from(track.children).indexOf(card);
+    if(idx >= 0 && idx !== activeIdx()) jumpToCard(idx);
+  });
+
+  /* ── Pause when off-screen (battery saving) ── */
+  new IntersectionObserver(entries => {
+    entries[0].isIntersecting ? startRaf() : stopRaf();
+  }, { threshold: 0.1 }).observe(stage);
+
+  startRaf();
+})();
+
+// ── Gallery Carousel ──
+(function(){
+  const strip = document.getElementById('galleryStrip');
+  const track = document.getElementById('galleryTrack');
+  if(!strip || !track) return;
+
+  const imgs = [
+    'photo_2026-04-10_23-56-30.jpg',
+    'photo_2026-04-10_23-56-35.jpg',
+    'photo_2026-04-10_23-56-35 (2).jpg',
+    'photo_2026-04-10_23-56-36.jpg',
+    'photo_2026-04-10_23-56-36 (2).jpg',
+    'photo_2026-04-10_23-56-37.jpg',
+    'photo_2026-04-10_23-56-37 (2).jpg',
+    'photo_2026-04-10_23-56-38.jpg',
+    'photo_2026-04-10_23-56-38 (2).jpg',
+    'photo_2026-04-10_23-56-39.jpg',
+    'photo_2026-04-10_23-56-39 (2).jpg',
+    'photo_2026-04-10_23-56-40.jpg',
+    'photo_2026-04-10_23-56-40 (2).jpg',
+    'photo_2026-04-10_23-56-41.jpg',
+    'photo_2026-04-10_23-56-41 (2).jpg',
+    'photo_2026-04-10_23-56-42.jpg',
+    'photo_2026-04-10_23-56-43.jpg',
+    'photo_2026-04-10_23-56-43 (2).jpg'
+  ];
+
+  // Build cards twice for seamless infinite loop
+  [...imgs, ...imgs].forEach(src => {
+    const card = document.createElement('div');
+    card.className = 'gallery-card';
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Gavisure 用户照片';
+    img.loading = 'lazy';
+    card.appendChild(img);
+    track.appendChild(card);
+  });
+
+  const cards = track.querySelectorAll('.gallery-card');
+  let scrollX = 0;
+  let paused = false;
+  const SPEED = 0.55; // px per frame
+
+  function halfWidth(){ return track.scrollWidth / 2; }
+
+  function updateCards(){
+    const sr = strip.getBoundingClientRect();
+    const cx = sr.width / 2;
+    cards.forEach(card => {
+      const r = card.getBoundingClientRect();
+      const cardCx = r.left - sr.left + r.width / 2;
+      const d = (cardCx - cx) / cx; // -1..1 normalised (may exceed ±1 at edges)
+      const clamped = Math.max(-1.6, Math.min(1.6, d));
+      const rotY  = clamped * 38;                         // max ±38° at far edges
+      const sc    = 1 - Math.abs(clamped) * 0.11;        // subtle shrink at edges
+      card.style.transform = `perspective(900px) rotateY(${rotY}deg) scale(${sc})`;
+    });
+  }
+
+  function animate(){
+    if(!paused){
+      scrollX += SPEED;
+      if(scrollX >= halfWidth()) scrollX -= halfWidth();
+      track.style.transform = `translateX(-${scrollX}px)`;
+    }
+    updateCards();
+    requestAnimationFrame(animate);
+  }
+
+  function setUI(isPaused){
+    const hint   = document.getElementById('galleryHint');
+    const status = document.getElementById('galleryStatus');
+    if(hint)   hint.textContent   = isPaused ? '▶ 点击 / 触碰 继续播放' : '⏸ 点击 / 触碰 暂停轮播';
+    if(status) status.style.display = isPaused ? 'block' : 'none';
+  }
+
+  function togglePause(){ paused = !paused; setUI(paused); }
+
+  // Mouse click
+  strip.addEventListener('click', togglePause);
+
+  // Touch — only toggle if vertical movement < 12px (tap, not scroll)
+  let _ty0 = 0;
+  strip.addEventListener('touchstart', e => { _ty0 = e.touches[0].clientY; }, {passive:true});
+  strip.addEventListener('touchend',   e => {
+    if(Math.abs(e.changedTouches[0].clientY - _ty0) < 12) togglePause();
+  });
+
+  requestAnimationFrame(animate);
+})();
+
+// Footer expandable details
+function toggleFooterDetail(key){
+  const detail = document.getElementById('footer-'+key);
+  const btn    = document.getElementById('btn-'+key==='privacy'?'btnPrivacy':'btnTerms');
+  const isOpen = detail.classList.contains('open');
+  // Close all first
+  document.querySelectorAll('.footer-detail').forEach(d=>d.classList.remove('open'));
+  document.querySelectorAll('.flink-toggle').forEach(b=>b.classList.remove('open'));
+  // Open this one if it was closed
+  if(!isOpen){
+    detail.classList.add('open');
+    (key==='privacy'
+      ? document.getElementById('btnPrivacy')
+      : document.getElementById('btnTerms')
+    ).classList.add('open');
+  }
+}
+
+// FAQ toggle
+function tf(el){
+  const it=el.parentElement,op=it.classList.contains('open');
+  document.querySelectorAll('.fi').forEach(i=>i.classList.remove('open'));
+  if(!op)it.classList.add('open');
+}
+
+// Pharmacy state tabs
+document.querySelectorAll('.state-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const state = tab.dataset.state;
+    document.querySelectorAll('.state-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.pha-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    const panel = document.getElementById('pha-' + state);
+    if (panel) {
+      panel.classList.add('active');
+      // Smooth scroll to keep the panel in view on mobile
+      const wrap = document.querySelector('.pha-panel-wrap');
+      if (wrap) {
+        const top = wrap.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    }
+  });
+});
+</script>
+</body>
+</html>
