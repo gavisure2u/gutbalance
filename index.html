@@ -1,9 +1,30 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-Hans-MY">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gavisure 为宁好 — 压力胃专属修复方案</title>
+
+<!-- ══ SEO META TAGS ══ -->
+<meta name="description" content="Gavisure 为宁好 — 马来西亚压力胃专属修复方案。含OriNaceus™猴头菇精华、Gastro-AD®专利成分，调理脑肠轴，改善胃酸倒流、饭后胀顶。MeSTI认证，全马超过20间授权药剂行有售。">
+<meta name="keywords" content="Gavisure,为宁好,养胃,胃酸倒流,压力胃,猴头菇,马来西亚,护胃,植物基,脑肠轴,stomach,gastric,Malaysia">
+<link rel="canonical" href="https://gavisure.com/">
+
+<!-- ══ OPEN GRAPH (WhatsApp / Facebook 分享预览) ══ -->
+<meta property="og:title" content="Gavisure 为宁好 — 压力胃专属修复方案">
+<meta property="og:description" content="不是吃错东西，是压力正在破坏你的胃黏膜。Gavisure 从脑肠轴根本调理，改善胃酸倒流、饭后胀顶。MeSTI认证 · 全马超过20间药剂行有售。">
+<meta property="og:image" content="https://gavisure.com/gavisure-header.jpg">
+<meta property="og:url" content="https://gavisure.com/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="zh_MY">
+<meta property="og:site_name" content="Gavisure 为宁好">
+
+<!-- ══ TWITTER CARD ══ -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Gavisure 为宁好 — 压力胃专属修复方案">
+<meta name="twitter:description" content="不是吃错东西，是压力正在破坏你的胃黏膜。Gavisure 从脑肠轴根本调理。">
+<meta name="twitter:image" content="https://gavisure.com/gavisure-header.jpg">
+
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
@@ -458,7 +479,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
   position:relative;
   padding:16px 0 20px;
 }
-/* fade edges */
 .gallery-strip::before,.gallery-strip::after{
   content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none;
 }
@@ -603,7 +623,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
   background:linear-gradient(135deg,var(--green),#2D8A50,var(--amber-l));
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-/* Stage — the viewport */
 .vc-stage{
   position:relative;
   width:100%;
@@ -614,14 +633,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
   touch-action:pan-y;
 }
 .vc-stage:active{cursor:grabbing;}
-/* 3D track */
 .vc-track{
   position:relative;
   width:100%;height:100%;
   perspective:1500px;
   transform-style:preserve-3d;
 }
-/* Individual card — rAF drives all motion, no CSS transition needed */
 .vc-card{
   position:absolute;
   top:50%;left:50%;
@@ -639,7 +656,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
   display:block;
   border-radius:26px;
 }
-/* darkening overlay for non-center cards */
 .vc-dim{
   position:absolute;inset:0;
   background:rgba(0,0,0,0);
@@ -647,14 +663,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
   transition:background .55s ease;
   pointer-events:none;
 }
-/* subtle shine on center card */
 .vc-shine{
   position:absolute;inset:0;
   background:linear-gradient(145deg,rgba(255,255,255,.09) 0%,transparent 55%);
   border-radius:26px;
   pointer-events:none;
 }
-/* Navigation row */
 .vc-nav{
   display:flex;align-items:center;justify-content:center;
   gap:18px;margin-top:36px;
@@ -673,7 +687,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
   background:var(--green);border-color:var(--green);
   color:#fff;transform:scale(1.1);
 }
-/* Dot indicators */
 .vc-dots{
   display:flex;align-items:center;justify-content:center;gap:7px;
 }
@@ -886,11 +899,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
     <div class="s-h">看看 Gavisure 如何<span>改变每一天</span></div>
     <p class="s-sub">从早晨一包开始，压力胃慢慢告别你</p>
   </div>
-  <!-- Stage: cards injected by JS -->
   <div class="vc-stage" id="vcStage">
     <div class="vc-track" id="vcTrack"></div>
   </div>
-  <!-- Controls -->
   <div class="vc-nav">
     <button class="vc-arrow" id="vcPrev" aria-label="Previous">&#8249;</button>
     <div class="vc-dots" id="vcDots"></div>
@@ -1135,7 +1146,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
       <div class="ml-item"><span class="ml-dot red"></span>Gavisure 授权药剂行</div>
     </div>
   </div>
-  <!-- State tab selector -->
   <div class="state-tabs-wrap reveal">
     <div class="state-tabs" id="stateTabs">
       <button class="state-tab" data-state="penang">
@@ -1177,10 +1187,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
     </div>
   </div>
 
-  <!-- Pharmacy panels — one per state -->
   <div class="pha-panel-wrap">
 
-    <!-- PENANG -->
     <div class="pha-panel" id="pha-penang">
       <div class="pha-panel-header">
         <h4>🏖️ 槟城 Penang — 授权药剂行</h4>
@@ -1194,7 +1202,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
       </div>
     </div>
 
-    <!-- PERAK -->
     <div class="pha-panel" id="pha-perak">
       <div class="pha-panel-header">
         <h4>⛰️ 霹雳 Perak — 授权药剂行</h4>
@@ -1216,7 +1223,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
       </div>
     </div>
 
-    <!-- SELANGOR -->
     <div class="pha-panel" id="pha-selangor">
       <div class="pha-panel-header">
         <h4>🌆 雪兰莪 Selangor — 授权药剂行</h4>
@@ -1246,7 +1252,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
       </div>
     </div>
 
-    <!-- KL (default open) -->
     <div class="pha-panel active" id="pha-kl">
       <div class="pha-panel-header">
         <h4>🏙️ 吉隆坡 Kuala Lumpur — 授权药剂行</h4>
@@ -1276,7 +1281,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
       </div>
     </div>
 
-    <!-- MELAKA -->
     <div class="pha-panel" id="pha-melaka">
       <div class="pha-panel-header">
         <h4>⚓ 马六甲 Melaka — 授权药剂行</h4>
@@ -1290,7 +1294,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
       </div>
     </div>
 
-    <!-- JOHOR -->
     <div class="pha-panel" id="pha-johor">
       <div class="pha-panel-header">
         <h4>🦁 柔佛 Johor — 授权药剂行</h4>
@@ -1345,14 +1348,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
 <section class="gallery-sec">
   <div class="center reveal">
     <div class="s-pill">📸 真实用户照片</div>
-    <div class="s-h">药剂师把关，<span>确保“胃宁好”</span></div>
+    <div class="s-h">药剂师把关，<span>确保"胃宁好"</span></div>
     <p class="s-sub">来自全马超过20间药剂行的关怀</p>
   </div>
   <p class="gallery-pause-hint"><span id="galleryHint">⏸ 点击暂停轮播</span></p>
   <div class="gallery-strip" id="galleryStrip">
-    <div class="gallery-track" id="galleryTrack">
-      <!-- Cards injected by JS -->
-    </div>
+    <div class="gallery-track" id="galleryTrack"></div>
   </div>
   <p class="gallery-status" id="galleryStatus">⏸ 已暂停 · 再次点击继续</p>
 </section>
@@ -1382,7 +1383,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
     <div class="scratch-hint-label">👆 用手指或鼠标刮开卡片</div>
     <div class="scratch-hands">
       <div class="scratch-card-wrap">
-        <!-- Reward revealed underneath -->
         <div class="scratch-reward">
           <div class="reward-icon">🎉</div>
           <div class="reward-title">新人优惠码解锁！</div>
@@ -1390,11 +1390,9 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
           <div class="reward-desc">新人第一次购买即享额外 <strong>RM10 折扣</strong><br>限今日使用，WhatsApp 报码即可</div>
           <button class="reward-btn" onclick="window.open('https://wa.me/60136951819?text='+encodeURIComponent('Hi, 我要领取我的优惠券 (GAVI10)。'),'_blank')">立即使用 →</button>
         </div>
-        <!-- Scratch overlay canvas -->
         <canvas id="scratchCanvas"></canvas>
       </div>
     </div>
-    <!-- Decorative hands SVG -->
     <div class="scratch-hands-img" aria-hidden="true">
       <svg viewBox="0 0 280 90" fill="none" xmlns="http://www.w3.org/2000/svg">
         <ellipse cx="80" cy="60" rx="62" ry="28" fill="#E8E0D0" opacity=".7"/>
@@ -1426,21 +1424,15 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
 <footer>
   <div class="flogo">Gavisure <span>为宁好护胃营养餐</span></div>
   <p>Your Partner in Plant-Based Beverage · Ikigai Essence Series</p>
-
-  <!-- Company registration -->
   <div class="footer-company">
     <p>My Ikigai Enterprise</p>
     <p>BRN：202403086909 (003590619-X)</p>
   </div>
-
-  <!-- Disclaimer -->
   <div class="footer-disclaimer">
     <p>本产品为食品类营养补充品，并非药物。不用于诊断、治疗或预防任何疾病。</p>
     <p>本页面所提供的信息仅供一般健康参考，效果因个人体质不同而有所差异。</p>
     <p>如有持续或严重不适，请咨询医生或专业医疗人员。</p>
   </div>
-
-  <!-- Links row -->
   <div class="flinks">
     <button class="flink-toggle" id="btnPrivacy" onclick="toggleFooterDetail('privacy')">
       隐私政策 <span class="ftarrow">▾</span>
@@ -1450,17 +1442,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 24p
     </button>
     <a href="https://wa.me/60136951819?text=Hi, 我想询问关于Gavisure为宁好护胃营养餐。">联系我们</a>
   </div>
-
-  <!-- Expandable: 隐私政策 -->
   <div class="footer-detail" id="footer-privacy">
     我们尊重并保护您的个人资料，仅用于订单处理与客户服务用途。
   </div>
-
-  <!-- Expandable: 条款与条件 -->
   <div class="footer-detail" id="footer-terms">
     所有订单一经确认恕不退款（除非产品存在质量问题）。配送时间视地区而定。
   </div>
-
   <p style="margin-top:16px;">© 2026 Gavisure 为宁好 · My Ikigai Enterprise. All Rights Reserved.</p>
 </footer>
 
@@ -1509,12 +1496,10 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     g.addColorStop(1,'#C84040');
     ctx.fillStyle = g;
     ctx.fillRect(0,0,canvas.width,canvas.height);
-    // Dashed border
     ctx.strokeStyle='rgba(255,255,255,.6)';
     ctx.lineWidth=2;
     ctx.setLineDash([8,6]);
     ctx.strokeRect(6,6,canvas.width-12,canvas.height-12);
-    // Hint text
     ctx.setLineDash([]);
     ctx.fillStyle='rgba(255,255,255,.55)';
     ctx.font='bold '+Math.round(canvas.width*.062)+'px Inter,sans-serif';
@@ -1575,7 +1560,7 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   }
 })();
 
-// ── 3D Video Carousel — continuous conveyor loop ──
+// ── 3D Video Carousel ──
 (function(){
   const stage   = document.getElementById('vcStage');
   const track   = document.getElementById('vcTrack');
@@ -1600,25 +1585,20 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
   ];
   const N = SRCS.length;
 
-  /* ── Build cards ── */
   SRCS.forEach(src => {
     const card = document.createElement('div');
     card.className = 'vc-card';
-
     const vid = document.createElement('video');
     vid.src = src; vid.muted = true; vid.loop = true;
     vid.playsInline = true;
     vid.setAttribute('playsinline','');
     vid.preload = 'metadata';
-
     const dim   = document.createElement('div'); dim.className   = 'vc-dim';
     const shine = document.createElement('div'); shine.className = 'vc-shine';
-
     card.append(vid, dim, shine);
     track.appendChild(card);
   });
 
-  /* ── Build dots ── */
   for(let i = 0; i < N; i++){
     const d = document.createElement('button');
     d.className = 'vc-dot';
@@ -1627,273 +1607,122 @@ document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
     dotsEl.appendChild(d);
   }
 
-  /* ── State ── */
-  let offset      = 0;       // master scroll position (px, grows → cards go left)
-  let pendingJump = 0;       // smooth nudge from arrows/dots/drag release
-  let hovering    = false;
-  let dragging    = false;
-  let dragLastX   = 0;
-  let rafId       = null;
-  let lastActive  = -1;
-  const SPEED     = 2;   // px per frame (auto-scroll)
+  let offset=0, pendingJump=0, hovering=false, dragging=false, dragLastX=0, rafId=null, lastActive=-1;
+  const SPEED=2;
 
-  /* ── Layout helpers ── */
-  function spacing(){
-    const w = window.innerWidth;
-    return w < 400 ? 195 : w < 640 ? 240 : 298;
-  }
-  function total(){ return N * spacing(); }
+  function spacing(){ const w=window.innerWidth; return w<400?195:w<640?240:298; }
+  function total(){ return N*spacing(); }
+  function wrap(x){ const t=total(); x=((x%t)+t)%t; if(x>t/2)x-=t; return x; }
+  function activeIdx(){ let best=0,bestDist=Infinity; for(let i=0;i<N;i++){const d=Math.abs(wrap(i*spacing()-offset));if(d<bestDist){bestDist=d;best=i;}} return best; }
+  function jumpToCard(idx){ const sp=spacing(),cur=activeIdx(); let diff=idx-cur; if(diff>N/2)diff-=N; if(diff<-N/2)diff+=N; pendingJump+=diff*sp; }
 
-  /* ── Wrap x into (−total/2 , +total/2] ── */
-  function wrap(x){
-    const t = total();
-    x = ((x % t) + t) % t;          // → [0, t)
-    if(x > t / 2) x -= t;           // → (−t/2, t/2]
-    return x;
-  }
-
-  /* ── Find which card index is closest to x=0 ── */
-  function activeIdx(){
-    let best = 0, bestDist = Infinity;
-    for(let i = 0; i < N; i++){
-      const d = Math.abs(wrap(i * spacing() - offset));
-      if(d < bestDist){ bestDist = d; best = i; }
-    }
-    return best;
-  }
-
-  /* ── Jump to a specific card (smooth) ── */
-  function jumpToCard(idx){
-    const sp  = spacing();
-    const cur = activeIdx();
-    // shortest path around the loop
-    let diff = idx - cur;
-    if(diff >  N/2) diff -= N;
-    if(diff < -N/2) diff += N;
-    pendingJump += diff * sp;
-  }
-
-  /* ── Main rAF loop ── */
   function frame(){
-    // Auto-scroll
-    if(!hovering && !dragging) offset += SPEED;
-
-    // Smooth-jump from arrows / dots
-    if(pendingJump !== 0){
-      const step = Math.sign(pendingJump) * Math.min(18, Math.abs(pendingJump));
-      offset      += step;
-      pendingJump -= step;
-      if(Math.abs(pendingJump) < 0.5){ offset += pendingJump; pendingJump = 0; }
+    if(!hovering&&!dragging) offset+=SPEED;
+    if(pendingJump!==0){ const step=Math.sign(pendingJump)*Math.min(18,Math.abs(pendingJump)); offset+=step; pendingJump-=step; if(Math.abs(pendingJump)<0.5){offset+=pendingJump;pendingJump=0;} }
+    const sp=spacing(); let newActive=0,closestDist=Infinity;
+    const cards=track.children;
+    for(let i=0;i<N;i++){
+      const x=wrap(i*sp-offset); const dist=Math.abs(x);
+      if(dist<closestDist){closestDist=dist;newActive=i;}
+      const norm=x/sp; const absN=Math.abs(norm);
+      const sc=Math.max(0.36,1-absN*0.128);
+      const ry=-norm*11;
+      const op=Math.max(0,1-absN*0.275);
+      const zi=Math.max(1,Math.round(50-absN*7));
+      const dim=Math.min(0.55,absN*0.15);
+      const sh=absN<0.6?'0 32px 80px rgba(0,0,0,.28),0 8px 24px rgba(0,0,0,.12)':absN<1.8?'0 18px 48px rgba(0,0,0,.16)':'0 10px 28px rgba(0,0,0,.09)';
+      const card=cards[i];
+      card.style.transform=`translateX(calc(-50% + ${x}px)) translateY(-50%) scale(${sc}) rotateY(${ry}deg)`;
+      card.style.opacity=op; card.style.zIndex=zi; card.style.boxShadow=sh;
+      card.querySelector('.vc-dim').style.background=`rgba(0,0,0,${dim})`;
+      card.querySelector('.vc-shine').style.opacity=absN<0.45?'1':'0';
     }
-
-    /* position every card */
-    const sp = spacing();
-    let newActive = 0, closestDist = Infinity;
-    const cards = track.children;
-
-    for(let i = 0; i < N; i++){
-      const x    = wrap(i * sp - offset);   // px from centre
-      const dist = Math.abs(x);
-      if(dist < closestDist){ closestDist = dist; newActive = i; }
-
-      // Continuous transform curves — everything driven by x / sp
-      const norm = x / sp;                  // −N/2 … +N/2  (float)
-      const absN = Math.abs(norm);
-
-      const sc  = Math.max(0.36,  1 - absN * 0.128);
-      const ry  = -norm * 11;               // rotateY degrees (−ve = face right)
-      const op  = Math.max(0,     1 - absN * 0.275);
-      const zi  = Math.max(1, Math.round(50 - absN * 7));
-      const dim = Math.min(0.55,  absN * 0.15);
-      const sh  = absN < 0.6
-        ? '0 32px 80px rgba(0,0,0,.28), 0 8px 24px rgba(0,0,0,.12)'
-        : absN < 1.8
-          ? '0 18px 48px rgba(0,0,0,.16)'
-          : '0 10px 28px rgba(0,0,0,.09)';
-
-      const card = cards[i];
-      card.style.transform  = `translateX(calc(-50% + ${x}px)) translateY(-50%) scale(${sc}) rotateY(${ry}deg)`;
-      card.style.opacity    = op;
-      card.style.zIndex     = zi;
-      card.style.boxShadow  = sh;
-      card.querySelector('.vc-dim').style.background  = `rgba(0,0,0,${dim})`;
-      card.querySelector('.vc-shine').style.opacity   = absN < 0.45 ? '1' : '0';
+    if(newActive!==lastActive){
+      lastActive=newActive;
+      for(let i=0;i<N;i++){ const vid=cards[i].querySelector('video'); if(!vid)continue; i===newActive?vid.play().catch(()=>{}):vid.pause(); }
+      dotsEl.querySelectorAll('.vc-dot').forEach((d,i)=>d.classList.toggle('active',i===newActive));
     }
-
-    /* Video: only the front card plays */
-    if(newActive !== lastActive){
-      lastActive = newActive;
-      for(let i = 0; i < N; i++){
-        const vid = cards[i].querySelector('video');
-        if(!vid) continue;
-        i === newActive ? vid.play().catch(()=>{}) : vid.pause();
-      }
-      /* Dots */
-      dotsEl.querySelectorAll('.vc-dot').forEach((d,i) =>
-        d.classList.toggle('active', i === newActive)
-      );
-    }
-
-    rafId = requestAnimationFrame(frame);
+    rafId=requestAnimationFrame(frame);
   }
 
-  function startRaf(){ if(!rafId) rafId = requestAnimationFrame(frame); }
-  function stopRaf() { cancelAnimationFrame(rafId); rafId = null; }
+  function startRaf(){ if(!rafId) rafId=requestAnimationFrame(frame); }
+  function stopRaf(){ cancelAnimationFrame(rafId); rafId=null; }
 
-  /* ── Hover — pause auto-scroll ── */
-  stage.addEventListener('mouseenter', () => hovering = true);
-  stage.addEventListener('mouseleave', () => hovering = false);
-
-  /* ── Drag / swipe ── */
-  stage.addEventListener('pointerdown', e => {
-    dragging  = true;
-    dragLastX = e.clientX;
-    stage.setPointerCapture(e.pointerId);
-    stage.style.cursor = 'grabbing';
-  });
-  stage.addEventListener('pointermove', e => {
-    if(!dragging) return;
-    const dx  = e.clientX - dragLastX;
-    offset   -= dx;                  // drag right → offset falls → cards move right
-    dragLastX = e.clientX;
-  });
-  const endDrag = () => { dragging = false; stage.style.cursor = ''; };
-  stage.addEventListener('pointerup',     endDrag);
-  stage.addEventListener('pointercancel', endDrag);
-
-  /* ── Arrow buttons ── */
-  prevBtn.addEventListener('click', () => { pendingJump -= spacing(); });
-  nextBtn.addEventListener('click', () => { pendingJump += spacing(); });
-
-  /* ── Keyboard ── */
-  document.addEventListener('keydown', e => {
-    if(e.key === 'ArrowLeft')  pendingJump -= spacing();
-    if(e.key === 'ArrowRight') pendingJump += spacing();
-  });
-
-  /* ── Card click — jump to that card ── */
-  stage.addEventListener('click', e => {
-    const card = e.target.closest('.vc-card');
-    if(!card) return;
-    const idx = Array.from(track.children).indexOf(card);
-    if(idx >= 0 && idx !== activeIdx()) jumpToCard(idx);
-  });
-
-  /* ── Pause when off-screen (battery saving) ── */
-  new IntersectionObserver(entries => {
-    entries[0].isIntersecting ? startRaf() : stopRaf();
-  }, { threshold: 0.1 }).observe(stage);
-
+  stage.addEventListener('mouseenter',()=>hovering=true);
+  stage.addEventListener('mouseleave',()=>hovering=false);
+  stage.addEventListener('pointerdown',e=>{dragging=true;dragLastX=e.clientX;stage.setPointerCapture(e.pointerId);stage.style.cursor='grabbing';});
+  stage.addEventListener('pointermove',e=>{if(!dragging)return;const dx=e.clientX-dragLastX;offset-=dx;dragLastX=e.clientX;});
+  const endDrag=()=>{dragging=false;stage.style.cursor='';};
+  stage.addEventListener('pointerup',endDrag);
+  stage.addEventListener('pointercancel',endDrag);
+  prevBtn.addEventListener('click',()=>{pendingJump-=spacing();});
+  nextBtn.addEventListener('click',()=>{pendingJump+=spacing();});
+  document.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')pendingJump-=spacing();if(e.key==='ArrowRight')pendingJump+=spacing();});
+  stage.addEventListener('click',e=>{const card=e.target.closest('.vc-card');if(!card)return;const idx=Array.from(track.children).indexOf(card);if(idx>=0&&idx!==activeIdx())jumpToCard(idx);});
+  new IntersectionObserver(entries=>{entries[0].isIntersecting?startRaf():stopRaf();},{threshold:0.1}).observe(stage);
   startRaf();
 })();
 
 // ── Gallery Carousel ──
 (function(){
-  const strip = document.getElementById('galleryStrip');
-  const track = document.getElementById('galleryTrack');
-  if(!strip || !track) return;
-
-  const imgs = [
-    'photo_2026-04-10_23-56-30.jpg',
-    'photo_2026-04-10_23-56-35.jpg',
-    'photo_2026-04-10_23-56-35 (2).jpg',
-    'photo_2026-04-10_23-56-36.jpg',
-    'photo_2026-04-10_23-56-36 (2).jpg',
-    'photo_2026-04-10_23-56-37.jpg',
-    'photo_2026-04-10_23-56-37 (2).jpg',
-    'photo_2026-04-10_23-56-38.jpg',
-    'photo_2026-04-10_23-56-38 (2).jpg',
-    'photo_2026-04-10_23-56-39.jpg',
-    'photo_2026-04-10_23-56-39 (2).jpg',
-    'photo_2026-04-10_23-56-40.jpg',
-    'photo_2026-04-10_23-56-40 (2).jpg',
-    'photo_2026-04-10_23-56-41.jpg',
-    'photo_2026-04-10_23-56-41 (2).jpg',
-    'photo_2026-04-10_23-56-42.jpg',
-    'photo_2026-04-10_23-56-43.jpg',
-    'photo_2026-04-10_23-56-43 (2).jpg'
+  const strip=document.getElementById('galleryStrip');
+  const track=document.getElementById('galleryTrack');
+  if(!strip||!track) return;
+  const imgs=[
+    'photo_2026-04-10_23-56-30.jpg','photo_2026-04-10_23-56-35.jpg',
+    'photo_2026-04-10_23-56-35 (2).jpg','photo_2026-04-10_23-56-36.jpg',
+    'photo_2026-04-10_23-56-36 (2).jpg','photo_2026-04-10_23-56-37.jpg',
+    'photo_2026-04-10_23-56-37 (2).jpg','photo_2026-04-10_23-56-38.jpg',
+    'photo_2026-04-10_23-56-38 (2).jpg','photo_2026-04-10_23-56-39.jpg',
+    'photo_2026-04-10_23-56-39 (2).jpg','photo_2026-04-10_23-56-40.jpg',
+    'photo_2026-04-10_23-56-40 (2).jpg','photo_2026-04-10_23-56-41.jpg',
+    'photo_2026-04-10_23-56-41 (2).jpg','photo_2026-04-10_23-56-42.jpg',
+    'photo_2026-04-10_23-56-43.jpg','photo_2026-04-10_23-56-43 (2).jpg'
   ];
-
-  // Build cards twice for seamless infinite loop
-  [...imgs, ...imgs].forEach(src => {
-    const card = document.createElement('div');
-    card.className = 'gallery-card';
-    const img = document.createElement('img');
-    img.src = src;
-    img.alt = 'Gavisure 用户照片';
-    img.loading = 'lazy';
-    card.appendChild(img);
-    track.appendChild(card);
+  [...imgs,...imgs].forEach(src=>{
+    const card=document.createElement('div'); card.className='gallery-card';
+    const img=document.createElement('img'); img.src=src; img.alt='Gavisure 用户照片'; img.loading='lazy';
+    card.appendChild(img); track.appendChild(card);
   });
-
-  const cards = track.querySelectorAll('.gallery-card');
-  let scrollX = 0;
-  let paused = false;
-  const SPEED = 0.55; // px per frame
-
-  function halfWidth(){ return track.scrollWidth / 2; }
-
+  const cards=track.querySelectorAll('.gallery-card');
+  let scrollX=0, paused=false;
+  const SPEED=0.55;
+  function halfWidth(){ return track.scrollWidth/2; }
   function updateCards(){
-    const sr = strip.getBoundingClientRect();
-    const cx = sr.width / 2;
-    cards.forEach(card => {
-      const r = card.getBoundingClientRect();
-      const cardCx = r.left - sr.left + r.width / 2;
-      const d = (cardCx - cx) / cx; // -1..1 normalised (may exceed ±1 at edges)
-      const clamped = Math.max(-1.6, Math.min(1.6, d));
-      const rotY  = clamped * 38;                         // max ±38° at far edges
-      const sc    = 1 - Math.abs(clamped) * 0.11;        // subtle shrink at edges
-      card.style.transform = `perspective(900px) rotateY(${rotY}deg) scale(${sc})`;
+    const sr=strip.getBoundingClientRect(); const cx=sr.width/2;
+    cards.forEach(card=>{
+      const r=card.getBoundingClientRect(); const cardCx=r.left-sr.left+r.width/2;
+      const d=(cardCx-cx)/cx; const clamped=Math.max(-1.6,Math.min(1.6,d));
+      const rotY=clamped*38; const sc=1-Math.abs(clamped)*0.11;
+      card.style.transform=`perspective(900px) rotateY(${rotY}deg) scale(${sc})`;
     });
   }
-
   function animate(){
-    if(!paused){
-      scrollX += SPEED;
-      if(scrollX >= halfWidth()) scrollX -= halfWidth();
-      track.style.transform = `translateX(-${scrollX}px)`;
-    }
-    updateCards();
-    requestAnimationFrame(animate);
+    if(!paused){ scrollX+=SPEED; if(scrollX>=halfWidth()) scrollX-=halfWidth(); track.style.transform=`translateX(-${scrollX}px)`; }
+    updateCards(); requestAnimationFrame(animate);
   }
-
   function setUI(isPaused){
-    const hint   = document.getElementById('galleryHint');
-    const status = document.getElementById('galleryStatus');
-    if(hint)   hint.textContent   = isPaused ? '▶ 点击 / 触碰 继续播放' : '⏸ 点击 / 触碰 暂停轮播';
-    if(status) status.style.display = isPaused ? 'block' : 'none';
+    const hint=document.getElementById('galleryHint'); const status=document.getElementById('galleryStatus');
+    if(hint) hint.textContent=isPaused?'▶ 点击 / 触碰 继续播放':'⏸ 点击 / 触碰 暂停轮播';
+    if(status) status.style.display=isPaused?'block':'none';
   }
-
-  function togglePause(){ paused = !paused; setUI(paused); }
-
-  // Mouse click
-  strip.addEventListener('click', togglePause);
-
-  // Touch — only toggle if vertical movement < 12px (tap, not scroll)
-  let _ty0 = 0;
-  strip.addEventListener('touchstart', e => { _ty0 = e.touches[0].clientY; }, {passive:true});
-  strip.addEventListener('touchend',   e => {
-    if(Math.abs(e.changedTouches[0].clientY - _ty0) < 12) togglePause();
-  });
-
+  function togglePause(){ paused=!paused; setUI(paused); }
+  strip.addEventListener('click',togglePause);
+  let _ty0=0;
+  strip.addEventListener('touchstart',e=>{_ty0=e.touches[0].clientY;},{passive:true});
+  strip.addEventListener('touchend',e=>{if(Math.abs(e.changedTouches[0].clientY-_ty0)<12)togglePause();});
   requestAnimationFrame(animate);
 })();
 
-// Footer expandable details
+// Footer expandable
 function toggleFooterDetail(key){
-  const detail = document.getElementById('footer-'+key);
-  const btn    = document.getElementById('btn-'+key==='privacy'?'btnPrivacy':'btnTerms');
-  const isOpen = detail.classList.contains('open');
-  // Close all first
+  const detail=document.getElementById('footer-'+key);
+  const isOpen=detail.classList.contains('open');
   document.querySelectorAll('.footer-detail').forEach(d=>d.classList.remove('open'));
   document.querySelectorAll('.flink-toggle').forEach(b=>b.classList.remove('open'));
-  // Open this one if it was closed
   if(!isOpen){
     detail.classList.add('open');
-    (key==='privacy'
-      ? document.getElementById('btnPrivacy')
-      : document.getElementById('btnTerms')
-    ).classList.add('open');
+    (key==='privacy'?document.getElementById('btnPrivacy'):document.getElementById('btnTerms')).classList.add('open');
   }
 }
 
@@ -1905,24 +1734,49 @@ function tf(el){
 }
 
 // Pharmacy state tabs
-document.querySelectorAll('.state-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    const state = tab.dataset.state;
-    document.querySelectorAll('.state-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.pha-panel').forEach(p => p.classList.remove('active'));
+document.querySelectorAll('.state-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    const state=tab.dataset.state;
+    document.querySelectorAll('.state-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.pha-panel').forEach(p=>p.classList.remove('active'));
     tab.classList.add('active');
-    const panel = document.getElementById('pha-' + state);
-    if (panel) {
+    const panel=document.getElementById('pha-'+state);
+    if(panel){
       panel.classList.add('active');
-      // Smooth scroll to keep the panel in view on mobile
-      const wrap = document.querySelector('.pha-panel-wrap');
-      if (wrap) {
-        const top = wrap.getBoundingClientRect().top + window.scrollY - 90;
-        window.scrollTo({ top, behavior: 'smooth' });
-      }
+      const wrap=document.querySelector('.pha-panel-wrap');
+      if(wrap){ const top=wrap.getBoundingClientRect().top+window.scrollY-90; window.scrollTo({top,behavior:'smooth'}); }
     }
   });
 });
 </script>
+
+<!-- ══ SCHEMA STRUCTURED DATA ══ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Gavisure 为宁好护胃营养餐",
+  "description": "马来西亚压力胃专属修复方案，含OriNaceus™猴头菇精华调节脑肠轴，改善胃酸倒流、饭后胀顶。MeSTI认证，全马超过20间授权药剂行有售。",
+  "image": "https://gavisure.com/gavisure-header.jpg",
+  "url": "https://gavisure.com/",
+  "brand": {
+    "@type": "Brand",
+    "name": "My Ikigai Enterprise"
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "158",
+    "priceCurrency": "MYR",
+    "availability": "https://schema.org/InStock",
+    "url": "https://gavisure.com/"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "50"
+  }
+}
+</script>
+
 </body>
 </html>
