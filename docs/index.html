@@ -2045,6 +2045,7 @@ document.querySelectorAll('.state-tab').forEach(tab => {
 
 
 <!-- GAVISURE OPTION 1 REFERRAL TRACKING SCRIPT START -->
+<!-- GAVISURE OPTION 1 REFERRAL TRACKING SCRIPT START -->
 <script>
 (function () {
   const WHATSAPP_NUMBER = "60136951819";
@@ -2076,7 +2077,6 @@ document.querySelectorAll('.state-tab').forEach(tab => {
   };
 
   /*
-    IMPORTANT:
     Correct referral link format:
     https://gavisure.com/?ref=itgood-oug
 
@@ -2087,11 +2087,7 @@ document.querySelectorAll('.state-tab').forEach(tab => {
   const urlParams = new URLSearchParams(window.location.search);
   const refFromUrl = urlParams.get("ref");
 
-  /*
-    Latest valid QR wins:
-    Every time customer scans a new valid pharmacy QR,
-    the new retailer code overwrites the previous saved referral.
-  */
+  // Latest valid QR wins.
   if (refFromUrl && retailerMap[refFromUrl]) {
     localStorage.setItem("gavisure_ref", refFromUrl);
     localStorage.setItem("gavisure_ref_name", retailerMap[refFromUrl]);
@@ -2101,12 +2097,11 @@ document.querySelectorAll('.state-tab').forEach(tab => {
   window.getGavisureReferral = function () {
     const code = localStorage.getItem("gavisure_ref") || "direct";
     const name = localStorage.getItem("gavisure_ref_name") || retailerMap[code] || "Direct / Unknown";
-
     return { code, name };
   };
 
   window.openGavisureWhatsApp = function (messageType = "general") {
-    const referral = getGavisureReferral();
+    const referral = window.getGavisureReferral();
 
     let baseMessage = "Hi, 我要了解关于 Gavisure 为宁好护胃营养餐。";
 
@@ -2126,11 +2121,8 @@ document.querySelectorAll('.state-tab').forEach(tab => {
       baseMessage = "Hi, 我想知道最靠近我家的 Gavisure 授权药剂行在哪里。";
     }
 
-    const fullMessage =
-      baseMessage +
-      "\n\nReferred by " + referral.code;
+    const fullMessage = baseMessage + "
 
-Referred by " + referral.code;
 
     window.open(
       "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(fullMessage),
@@ -2181,7 +2173,7 @@ Referred by " + referral.code;
 
       el.onclick = function (e) {
         e.preventDefault();
-        openGavisureWhatsApp(messageType);
+        window.openGavisureWhatsApp(messageType);
       };
     });
   }
@@ -2194,6 +2186,147 @@ Referred by " + referral.code;
 })();
 </script>
 <!-- GAVISURE OPTION 1 REFERRAL TRACKING SCRIPT END -->
+<!-- GAVISURE OPTION 1 REFERRAL TRACKING SCRIPT END -->
 
+<!-- GAVISURE OPTION 1 REFERRAL TRACKING SCRIPT START -->
+<script>
+(function () {
+  const WHATSAPP_NUMBER = "60136951819";
+
+  const retailerMap = {
+    "maxcare-setapak": "Maxcare Pharmacy, Setapak (KL)",
+    "champs-klang": "Champs Pharmacy, Klang (Selangor)",
+    "medlife-sb-kd": "Medlife Pharmacy, Sungai Buloh / Kota Damansara (Selangor)",
+    "aldor-penang": "Aldor Pharmacy, Penang",
+    "itgood-oug": "IT Good Pharmacy, OUG",
+    "urbanhealth-kepong": "Urban Health Pharmacy, Kepong (KL)",
+    "smiles-klang": "Smiles Pharmacy, Klang (Selangor)",
+    "wellove-tamandesa": "Wellove Pharmacy, Taman Desa (KL)",
+    "aplus-pandanperdana": "A Plus Pharmacy, Pandan Perdana",
+    "medicare-bbampang": "Medicare Pharmacy, Bandar Baru Ampang",
+    "slim-bch-rawang": "Slim Pharmacy, Bandar Country Homes, Rawang",
+    "bigtree-melaka": "Big Tree Pharmacy, Melaka",
+    "publico-ipoh": "Publico Pharmacy, Ipoh",
+    "well-gelangpatah": "Well Pharmacy, Gelang Patah (Johor)",
+    "well-austincrest": "Well Pharmacy, Austin Crest (Johor)",
+    "well-ecobotanic": "Well Pharmacy, Eco Botanic (Johor)",
+    "well-mutiararini": "Well Pharmacy, Mutiara Rini (Johor)",
+    "well-bukitindah": "Well Pharmacy, Bukit Indah (Johor)",
+    "well-kulai": "Well Pharmacy, Kulai Indahpura (Johor)",
+    "well-permasjaya": "Well Pharmacy, Permas Jaya (Johor)",
+    "gracious-tanjungmalim": "Gracious Pharmacy / Slim Pharmacy, Tanjung Malim (Perak)",
+    "kampar-medical": "Kampar Medical Supplies / Slim Pharmacy, Kampar (Perak)",
+    "morning-klang": "Morning Pharmacy Klang, Johor"
+  };
+
+  /*
+    Correct referral link format:
+    https://gavisure.com/?ref=itgood-oug
+
+    Wrong format:
+    https://gavisure.com/?ref-itgood-oug
+  */
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const refFromUrl = urlParams.get("ref");
+
+  // Latest valid QR wins.
+  if (refFromUrl && retailerMap[refFromUrl]) {
+    localStorage.setItem("gavisure_ref", refFromUrl);
+    localStorage.setItem("gavisure_ref_name", retailerMap[refFromUrl]);
+    localStorage.setItem("gavisure_ref_date", new Date().toISOString());
+  }
+
+  window.getGavisureReferral = function () {
+    const code = localStorage.getItem("gavisure_ref") || "direct";
+    const name = localStorage.getItem("gavisure_ref_name") || retailerMap[code] || "Direct / Unknown";
+    return { code, name };
+  };
+
+  window.openGavisureWhatsApp = function (messageType = "general") {
+    const referral = window.getGavisureReferral();
+
+    let baseMessage = "Hi, 我要了解关于 Gavisure 为宁好护胃营养餐。";
+
+    if (messageType === "offer") {
+      baseMessage = "Hi, 我想了解 Gavisure 为宁好的最新优惠。";
+    }
+
+    if (messageType === "buy") {
+      baseMessage = "Hi, 我要购买 Gavisure 为宁好。可以告诉我价格和配套吗？";
+    }
+
+    if (messageType === "voucher") {
+      baseMessage = "Hi, 我要领取我的 Gavisure 优惠券。";
+    }
+
+    if (messageType === "pharmacy") {
+      baseMessage = "Hi, 我想知道最靠近我家的 Gavisure 授权药剂行在哪里。";
+    }
+
+    const fullMessage = baseMessage + "\n\nReferred by " + referral.code;
+
+    window.open(
+      "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(fullMessage),
+      "_blank"
+    );
+  };
+
+  function detectMessageType(text) {
+    const t = (text || "").toLowerCase();
+
+    if (t.includes("优惠") || t.includes("offer") || t.includes("limited") || t.includes("限定")) {
+      return "offer";
+    }
+
+    if (t.includes("购买") || t.includes("buy") || t.includes("抢购")) {
+      return "buy";
+    }
+
+    if (t.includes("券") || t.includes("voucher") || t.includes("gavi10") || t.includes("礼物")) {
+      return "voucher";
+    }
+
+    if (t.includes("药剂行") || t.includes("pharmacy") || t.includes("门店")) {
+      return "pharmacy";
+    }
+
+    return "general";
+  }
+
+  function patchWhatsAppButtons() {
+    const elements = document.querySelectorAll(
+      'a[href*="wa.me"], button[onclick*="wa.me"], [onclick*="60136951819"]'
+    );
+
+    elements.forEach(function (el) {
+      const text =
+        (el.innerText || "") + " " +
+        (el.getAttribute("href") || "") + " " +
+        (el.getAttribute("onclick") || "");
+
+      const messageType = detectMessageType(text);
+
+      el.removeAttribute("onclick");
+
+      if (el.tagName.toLowerCase() === "a") {
+        el.setAttribute("href", "javascript:void(0)");
+      }
+
+      el.onclick = function (e) {
+        e.preventDefault();
+        window.openGavisureWhatsApp(messageType);
+      };
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", patchWhatsAppButtons);
+  } else {
+    patchWhatsAppButtons();
+  }
+})();
+</script>
+<!-- GAVISURE OPTION 1 REFERRAL TRACKING SCRIPT END -->
 </body>
 </html>
