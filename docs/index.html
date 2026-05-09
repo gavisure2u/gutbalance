@@ -2075,33 +2075,34 @@ document.querySelectorAll('.state-tab').forEach(tab => {
     "morning-klang": "Morning Pharmacy Klang, Johor"
   };
 
-  function getUrlReferralCode() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get("ref");
-  }
+  /*
+    IMPORTANT:
+    Correct referral link format:
+    https://gavisure.com/?ref=itgood-oug
 
-  function saveReferralFromUrl() {
-    const refFromUrl = getUrlReferralCode();
+    Wrong format:
+    https://gavisure.com/?ref-itgood-oug
+  */
 
-    if (refFromUrl && retailerMap[refFromUrl]) {
-      const existingRef = localStorage.getItem("gavisure_ref");
+  const urlParams = new URLSearchParams(window.location.search);
+  const refFromUrl = urlParams.get("ref");
 
-      // First-referral ownership rule:
-      // If customer already belongs to a retailer, do not overwrite it.
-      if (!existingRef || existingRef === "direct") {
-        localStorage.setItem("gavisure_ref", refFromUrl);
-        localStorage.setItem("gavisure_ref_name", retailerMap[refFromUrl]);
-        localStorage.setItem("gavisure_ref_date", new Date().toISOString());
-      }
-    }
+  /*
+    Latest valid QR wins:
+    Every time customer scans a new valid pharmacy QR,
+    the new retailer code overwrites the previous saved referral.
+  */
+  if (refFromUrl && retailerMap[refFromUrl]) {
+    localStorage.setItem("gavisure_ref", refFromUrl);
+    localStorage.setItem("gavisure_ref_name", retailerMap[refFromUrl]);
+    localStorage.setItem("gavisure_ref_date", new Date().toISOString());
   }
 
   window.getGavisureReferral = function () {
     const code = localStorage.getItem("gavisure_ref") || "direct";
     const name = localStorage.getItem("gavisure_ref_name") || retailerMap[code] || "Direct / Unknown";
-    const date = localStorage.getItem("gavisure_ref_date") || "N/A";
 
-    return { code, name, date };
+    return { code, name };
   };
 
   window.openGavisureWhatsApp = function (messageType = "general") {
@@ -2127,7 +2128,9 @@ document.querySelectorAll('.state-tab').forEach(tab => {
 
     const fullMessage =
       baseMessage +
-      "\n\nReferred by " + referral.name;
+      "
+
+Referred by " + referral.code;
 
     window.open(
       "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(fullMessage),
@@ -2138,11 +2141,11 @@ document.querySelectorAll('.state-tab').forEach(tab => {
   function detectMessageType(text) {
     const t = (text || "").toLowerCase();
 
-    if (t.includes("优惠") || t.includes("offer") || t.includes("限定") || t.includes("promo") || t.includes("promotion")) {
+    if (t.includes("优惠") || t.includes("offer") || t.includes("limited") || t.includes("限定")) {
       return "offer";
     }
 
-    if (t.includes("购买") || t.includes("buy") || t.includes("抢购") || t.includes("order") || t.includes("price")) {
+    if (t.includes("购买") || t.includes("buy") || t.includes("抢购")) {
       return "buy";
     }
 
@@ -2150,7 +2153,7 @@ document.querySelectorAll('.state-tab').forEach(tab => {
       return "voucher";
     }
 
-    if (t.includes("药剂行") || t.includes("pharmacy") || t.includes("门店") || t.includes("retailer")) {
+    if (t.includes("药剂行") || t.includes("pharmacy") || t.includes("门店")) {
       return "pharmacy";
     }
 
@@ -2163,14 +2166,12 @@ document.querySelectorAll('.state-tab').forEach(tab => {
     );
 
     elements.forEach(function (el) {
-      if (el.dataset.gavisureReferralPatched === "true") return;
-
-      const combinedText =
+      const text =
         (el.innerText || "") + " " +
         (el.getAttribute("href") || "") + " " +
         (el.getAttribute("onclick") || "");
 
-      const messageType = detectMessageType(combinedText);
+      const messageType = detectMessageType(text);
 
       el.removeAttribute("onclick");
 
@@ -2182,20 +2183,13 @@ document.querySelectorAll('.state-tab').forEach(tab => {
         e.preventDefault();
         openGavisureWhatsApp(messageType);
       };
-
-      el.dataset.gavisureReferralPatched = "true";
     });
   }
 
-  function initGavisureReferralTracking() {
-    saveReferralFromUrl();
-    patchWhatsAppButtons();
-  }
-
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initGavisureReferralTracking);
+    document.addEventListener("DOMContentLoaded", patchWhatsAppButtons);
   } else {
-    initGavisureReferralTracking();
+    patchWhatsAppButtons();
   }
 })();
 </script>
