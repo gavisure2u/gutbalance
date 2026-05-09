@@ -2127,10 +2127,7 @@ document.querySelectorAll('.state-tab').forEach(tab => {
 
     const fullMessage =
       baseMessage +
-      "\n\nReferral Code: " + referral.code +
-      "\nReferral Source: " + referral.name +
-      "\nReferral Stored Date: " + referral.date +
-      "\nVisited Page: " + window.location.href;
+      "\n\nReferred by " + referral.name;
 
     window.open(
       "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(fullMessage),
