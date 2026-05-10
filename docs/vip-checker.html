@@ -1,280 +1,214 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+const SPREADSHEET_ID = "10hmtuzL-sTay75wFhrBuq7s9EwkIKadObp4XvfI16v4";
+const SHEET_NAME = "VIP Database";
+const LOG_SHEET_NAME = "Check_Log";
 
-<title>Gavisure VIP Checker</title>
+function doGet(e) {
+  const phone = (e.parameter.phone || "").trim();
 
-<style>
-
-body{
-  margin:0;
-  padding:0;
-  background:#f7f5ef;
-  font-family:Arial,sans-serif;
-}
-
-.gv-wrapper{
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:24px;
-}
-
-.gv-card{
-  width:100%;
-  max-width:430px;
-  background:#fff;
-  border-radius:22px;
-  padding:32px;
-  box-shadow:0 12px 35px rgba(0,0,0,0.08);
-  border:1px solid #e6e0d4;
-}
-
-.gv-logo{
-  font-size:15px;
-  font-weight:700;
-  color:#486b43;
-  margin-bottom:12px;
-  letter-spacing:0.5px;
-}
-
-.gv-card h1{
-  margin:0;
-  font-size:28px;
-  color:#263b2b;
-}
-
-.gv-subtitle{
-  color:#6b6b6b;
-  font-size:14px;
-  margin-top:10px;
-  margin-bottom:28px;
-  line-height:1.6;
-}
-
-.gv-label{
-  display:block;
-  margin-bottom:8px;
-  font-size:14px;
-  color:#333;
-  font-weight:600;
-}
-
-.gv-input{
-  width:100%;
-  padding:15px;
-  font-size:16px;
-  border:1px solid #d6d0c5;
-  border-radius:12px;
-  box-sizing:border-box;
-}
-
-.gv-button{
-  width:100%;
-  margin-top:14px;
-  padding:15px;
-  background:#486b43;
-  border:none;
-  border-radius:12px;
-  color:white;
-  font-size:16px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.gv-button:hover{
-  background:#395737;
-}
-
-.gv-result{
-  margin-top:18px;
-  padding:16px;
-  border-radius:14px;
-  font-size:15px;
-  line-height:1.8;
-  display:none;
-}
-
-.vip{
-  background:#e8f5e9;
-  color:#1b5e20;
-  border:1px solid #b7dfba;
-}
-
-.expired{
-  background:#fff8e1;
-  color:#7a5200;
-  border:1px solid #f0d98c;
-}
-
-.notvip{
-  background:#ffebee;
-  color:#8a1f1f;
-  border:1px solid #efb6b6;
-}
-
-.gv-note{
-  margin-top:18px;
-  font-size:12px;
-  color:#888;
-  line-height:1.6;
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="gv-wrapper">
-
-  <div class="gv-card">
-
-    <div class="gv-logo">
-      Gavisure
-    </div>
-
-    <h1>VIP Checker</h1>
-
-    <div class="gv-subtitle">
-      For authorised Gavisure retail partners only.
-    </div>
-
-    <label class="gv-label">
-      Customer WhatsApp Number
-    </label>
-
-    <input
-      type="text"
-      id="phoneInput"
-      class="gv-input"
-      placeholder="Example: 60162559911"
-    >
-
-    <button
-      class="gv-button"
-      onclick="checkVIP()"
-    >
-      Check VIP Status
-    </button>
-
-    <div
-      id="resultBox"
-      class="gv-result"
-    ></div>
-
-    <div class="gv-note">
-      Please enter customer number in 601XXXXXXXX format without "+" or spaces.
-    </div>
-
-  </div>
-
-</div>
-
-<script>
-
-const API_URL = "https://script.google.com/macros/s/AKfycbzfr_EeqtV0-uAx4T_dLFD1Z6HimwjcmYwGfUfEhxJcKkyixuhfdTqfGRcWXRugi70D/exec";
-
-async function checkVIP(){
-
-  const phone =
-    document.getElementById("phoneInput")
-    .value
-    .trim();
-
-  const resultBox =
-    document.getElementById("resultBox");
-
-  resultBox.style.display = "block";
-  resultBox.className = "gv-result";
-  resultBox.innerHTML = "Checking VIP status...";
-
-  if(!/^601\d{7,10}$/.test(phone)){
-
-    resultBox.className =
-      "gv-result notvip";
-
-    resultBox.innerHTML =
-      "❌ Invalid number format.";
-
-    return;
+  if (!/^601\d{7,10}$/.test(phone)) {
+    return jsonOutput({
+      success: false,
+      message: "Invalid phone format"
+    });
   }
 
-  try{
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  const sheet = ss.getSheetByName(SHEET_NAME);
+  const data = sheet.getDataRange().getValues();
+  const header = data[0];
 
-    const response =
-      await fetch(
-        `${API_URL}?phone=${encodeURIComponent(phone)}`
-      );
+  const phoneIndex = header.indexOf("phone");
+  const vipStatusIndex = header.indexOf("vip_status");
+  const customerNameIndex = header.indexOf("customer_name");
+  const birthdayIndex = header.indexOf("vip_birthday");
+  const vipCodeIndex = header.indexOf("vip_code");
+  const vipStartDateIndex = header.indexOf("vip_start_date");
+  const sourceChannelIndex = header.indexOf("source_channel");
+  const retailerIndex = header.indexOf("retailer");
+  const locationIndex = header.indexOf("location");
+  const lastPurchaseDateIndex = header.indexOf("last_purchase_date");
 
-    const data =
-      await response.json();
+  let found = false;
+  let latestPurchaseDate = null;
+  let latestRow = null;
 
-    if(!data.success){
+  let savedCustomerName = "";
+  let savedBirthday = "";
+  let savedVipCode = "";
 
-      resultBox.className =
-        "gv-result notvip";
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    const rowPhone = String(row[phoneIndex]).trim();
 
-      resultBox.innerHTML =
-        "❌ Unable to check VIP status.";
+    if (rowPhone === phone) {
+      found = true;
 
-      return;
+      if (!savedCustomerName && row[customerNameIndex]) {
+        savedCustomerName = String(row[customerNameIndex]).trim();
+      }
+
+      if (!savedBirthday && row[birthdayIndex]) {
+        savedBirthday = row[birthdayIndex];
+      }
+
+      if (!savedVipCode && row[vipCodeIndex]) {
+        savedVipCode = String(row[vipCodeIndex]).trim();
+      }
+
+      let purchaseDate = parseDDMMYYYY(row[lastPurchaseDateIndex]);
+
+      if (!purchaseDate) {
+        purchaseDate = parseDDMMYYYY(row[vipStartDateIndex]);
+      }
+
+      if (purchaseDate && (!latestPurchaseDate || purchaseDate > latestPurchaseDate)) {
+        latestPurchaseDate = purchaseDate;
+        latestRow = row;
+      }
     }
-
-    if(data.vip_status === "VIP"){
-
-      resultBox.className =
-        "gv-result vip";
-
-      resultBox.innerHTML = `
-        <strong>✅ VIP Customer Confirmed</strong><br><br>
-
-        VIP Code:
-        ${data.vip_code || "-"}<br>
-
-        Birthday Month:
-        ${data.birthday_month || "-"}<br>
-
-        VIP Valid Until:
-        ${data.expiry_date || "-"}
-      `;
-
-      return;
-    }
-
-    if(data.vip_status === "EXPIRED"){
-
-      resultBox.className =
-        "gv-result expired";
-
-      resultBox.innerHTML = `
-        <strong>⚠️ VIP Expired</strong><br><br>
-
-        Please ask customer to renew VIP membership.
-      `;
-
-      return;
-    }
-
-    resultBox.className =
-      "gv-result notvip";
-
-    resultBox.innerHTML =
-      "❌ Not VIP Customer";
-
-  }catch(error){
-
-    resultBox.className =
-      "gv-result notvip";
-
-    resultBox.innerHTML =
-      "❌ System error.";
   }
+
+  let vipStatus = "NONVIP";
+  let birthdayMonth = "";
+  let expiryDate = "";
+  let latestPurchaseDisplay = "";
+  let sourceChannel = "";
+  let retailer = "";
+  let location = "";
+
+  if (found && latestPurchaseDate && latestRow) {
+    latestPurchaseDisplay = formatDDMMYYYY(latestPurchaseDate);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const expiryFullDate = addOneYear(latestPurchaseDate);
+
+    if (today <= expiryFullDate) {
+      vipStatus = "VIP";
+      birthdayMonth = getBirthdayMonth(savedBirthday);
+      expiryDate = formatMMYYYY(expiryFullDate);
+
+      sourceChannel = String(latestRow[sourceChannelIndex] || "").trim();
+      retailer = String(latestRow[retailerIndex] || "").trim();
+      location = String(latestRow[locationIndex] || "").trim();
+    } else {
+      vipStatus = "EXPIRED";
+      expiryDate = formatMMYYYY(expiryFullDate);
+    }
+  }
+
+  logCheck(phone, vipStatus, latestPurchaseDisplay);
+
+  return jsonOutput({
+    success: true,
+    found: found,
+    vip_status: vipStatus,
+    customer_name: vipStatus === "VIP" ? savedCustomerName : "",
+    vip_code: vipStatus === "VIP" ? savedVipCode : "",
+    birthday_month: vipStatus === "VIP" ? birthdayMonth : "",
+    latest_purchase_date: latestPurchaseDisplay,
+    expiry_date: expiryDate,
+    source_channel: vipStatus === "VIP" ? sourceChannel : "",
+    retailer: vipStatus === "VIP" ? retailer : "",
+    location: vipStatus === "VIP" ? location : ""
+  });
 }
 
-</script>
+function parseDDMMYYYY(value) {
+  if (!value) return null;
 
-</body>
-</html>
+  if (Object.prototype.toString.call(value) === "[object Date]") {
+    const d = new Date(value);
+    d.setHours(0, 0, 0, 0);
+    return d;
+  }
+
+  const text = String(value).trim();
+  const parts = text.split(".");
+
+  if (parts.length !== 3) return null;
+
+  const day = parseInt(parts[0], 10);
+  const month = parseInt(parts[1], 10);
+  const year = parseInt(parts[2], 10);
+
+  if (isNaN(day) || isNaN(month) || isNaN(year)) {
+    return null;
+  }
+
+  const date = new Date(year, month - 1, day);
+  date.setHours(0, 0, 0, 0);
+
+  return date;
+}
+
+function addOneYear(date) {
+  const newDate = new Date(date);
+  newDate.setFullYear(newDate.getFullYear() + 1);
+  newDate.setHours(0, 0, 0, 0);
+  return newDate;
+}
+
+function getBirthdayMonth(value) {
+  if (!value) return "";
+
+  const date = parseDDMMYYYY(value);
+  if (!date) return "";
+
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  return monthNames[date.getMonth()];
+}
+
+function formatMMYYYY(date) {
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  return (month < 10 ? "0" + month : String(month)) + "." + year;
+}
+
+function formatDDMMYYYY(date) {
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  return (
+    (day < 10 ? "0" + day : String(day)) +
+    "." +
+    (month < 10 ? "0" + month : String(month)) +
+    "." +
+    year
+  );
+}
+
+function logCheck(phone, vipStatus, latestPurchaseDisplay) {
+  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  let logSheet = ss.getSheetByName(LOG_SHEET_NAME);
+
+  if (!logSheet) {
+    logSheet = ss.insertSheet(LOG_SHEET_NAME);
+    logSheet.appendRow([
+      "time",
+      "phone_checked",
+      "result",
+      "latest_purchase_date"
+    ]);
+  }
+
+  logSheet.appendRow([
+    new Date(),
+    phone,
+    vipStatus,
+    latestPurchaseDisplay || ""
+  ]);
+}
+
+function jsonOutput(obj) {
+  return ContentService
+    .createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+}
