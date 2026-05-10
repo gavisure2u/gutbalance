@@ -7,7 +7,6 @@
 <title>Gavisure VIP Checker</title>
 
 <style>
-
 body{
   margin:0;
   padding:0;
@@ -25,7 +24,7 @@ body{
 
 .gv-card{
   width:100%;
-  max-width:430px;
+  max-width:460px;
   background:#fff;
   border-radius:22px;
   padding:32px;
@@ -51,12 +50,13 @@ body{
   color:#6b6b6b;
   font-size:14px;
   margin-top:10px;
-  margin-bottom:28px;
+  margin-bottom:24px;
   line-height:1.6;
 }
 
 .gv-label{
   display:block;
+  margin-top:14px;
   margin-bottom:8px;
   font-size:14px;
   color:#333;
@@ -74,7 +74,7 @@ body{
 
 .gv-button{
   width:100%;
-  margin-top:14px;
+  margin-top:18px;
   padding:15px;
   background:#486b43;
   border:none;
@@ -116,25 +116,26 @@ body{
   border:1px solid #efb6b6;
 }
 
+.gv-small{
+  font-size:13px;
+  color:#666;
+}
+
 .gv-note{
   margin-top:18px;
   font-size:12px;
   color:#888;
   line-height:1.6;
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="gv-wrapper">
-
   <div class="gv-card">
 
-    <div class="gv-logo">
-      Gavisure
-    </div>
+    <div class="gv-logo">Gavisure</div>
 
     <h1>VIP Checker</h1>
 
@@ -142,15 +143,28 @@ body{
       For authorised Gavisure retail partners only.
     </div>
 
-    <label class="gv-label">
-      Customer Phone Number
-    </label>
+    <label class="gv-label">Retailer Code</label>
+    <input
+      type="text"
+      id="retailerCodeInput"
+      class="gv-input"
+      placeholder="Example: SmilesRx"
+    >
 
+    <label class="gv-label">Password</label>
+    <input
+      type="password"
+      id="passwordInput"
+      class="gv-input"
+      placeholder="Enter password"
+    >
+
+    <label class="gv-label">Customer WhatsApp Number</label>
     <input
       type="text"
       id="phoneInput"
       class="gv-input"
-      placeholder="Example: 60123456789"
+      placeholder="Example: 60162559911"
     >
 
     <button
@@ -160,43 +174,29 @@ body{
       Check VIP Status
     </button>
 
-    <div
-      id="resultBox"
-      class="gv-result"
-    ></div>
+    <div id="resultBox" class="gv-result"></div>
 
     <div class="gv-note">
       Please enter customer number in 601XXXXXXXX format without "+" or spaces.
+      Each authorised retailer is limited to 30 checks per day unless approved by admin.
     </div>
 
   </div>
-
 </div>
 
 <script>
-
 const API_URL = "https://script.google.com/macros/s/AKfycbzfr_EeqtV0-uAx4T_dLFD1Z6HimwjcmYwGfUfEhxJcKkyixuhfdTqfGRcWXRugi70D/exec";
 
 async function checkVIP(){
 
-  // existing code here
+  const retailerCode =
+    document.getElementById("retailerCodeInput").value.trim();
 
-}
-
-document
-  .getElementById("phoneInput")
-  .addEventListener("keypress", function(event){
-
-    if(event.key === "Enter"){
-      checkVIP();
-    }
-
-});
+  const password =
+    document.getElementById("passwordInput").value.trim();
 
   const phone =
-    document.getElementById("phoneInput")
-    .value
-    .trim();
+    document.getElementById("phoneInput").value.trim();
 
   const resultBox =
     document.getElementById("resultBox");
@@ -205,42 +205,37 @@ document
   resultBox.className = "gv-result";
   resultBox.innerHTML = "Checking VIP status...";
 
+  if(!retailerCode || !password){
+    resultBox.className = "gv-result notvip";
+    resultBox.innerHTML = "❌ Retailer code and password are required.";
+    return;
+  }
+
   if(!/^601\d{7,10}$/.test(phone)){
-
-    resultBox.className =
-      "gv-result notvip";
-
-    resultBox.innerHTML =
-      "❌ Invalid number format.";
-
+    resultBox.className = "gv-result notvip";
+    resultBox.innerHTML = "❌ Invalid number format. Please enter like 60162559911.";
     return;
   }
 
   try{
 
-    const response =
-      await fetch(
-        `${API_URL}?phone=${encodeURIComponent(phone)}`
-      );
+    const url =
+      `${API_URL}?retailer_code=${encodeURIComponent(retailerCode)}&password=${encodeURIComponent(password)}&phone=${encodeURIComponent(phone)}`;
 
-    const data =
-      await response.json();
+    const response = await fetch(url);
+
+    const data = await response.json();
 
     if(!data.success){
-
-      resultBox.className =
-        "gv-result notvip";
-
-      resultBox.innerHTML =
-        "❌ Unable to check VIP status.";
-
+      resultBox.className = "gv-result notvip";
+      resultBox.innerHTML = `
+        ❌ ${data.message || "Unable to check VIP status."}
+      `;
       return;
     }
 
     if(data.vip_status === "VIP"){
-
-      resultBox.className =
-        "gv-result vip";
+      resultBox.className = "gv-result vip";
 
       resultBox.innerHTML = `
         <strong>✅ VIP Customer Confirmed</strong><br><br>
@@ -258,22 +253,20 @@ document
         ${data.latest_purchase_date || "-"}<br>
 
         VIP Valid Until:
-        ${data.expiry_date || "-"}<br>
+        ${data.expiry_date || "-"}<br><br>
 
-        Retailer:
-        ${data.retailer || "-"}<br>
+        Checked By:
+        ${data.retailer_name || "-"}<br>
 
-        Location:
-        ${data.location || "-"}
+        Remaining Checks Today:
+        ${data.remaining_today || "-"}
       `;
 
       return;
     }
 
     if(data.vip_status === "EXPIRED"){
-
-      resultBox.className =
-        "gv-result expired";
+      resultBox.className = "gv-result expired";
 
       resultBox.innerHTML = `
         <strong>⚠️ VIP Expired</strong><br><br>
@@ -287,29 +280,61 @@ document
         VIP Expired Since:
         ${data.expiry_date || "-"}<br><br>
 
+        Checked By:
+        ${data.retailer_name || "-"}<br>
+
+        Remaining Checks Today:
+        ${data.remaining_today || "-"}<br><br>
+
         Please ask customer to renew VIP membership.
       `;
 
       return;
     }
 
-    resultBox.className =
-      "gv-result notvip";
+    resultBox.className = "gv-result notvip";
 
-    resultBox.innerHTML =
-      "❌ Not VIP Customer";
+    resultBox.innerHTML = `
+      <strong>❌ Not VIP Customer</strong><br><br>
+
+      Checked By:
+      ${data.retailer_name || "-"}<br>
+
+      Remaining Checks Today:
+      ${data.remaining_today || "-"}
+    `;
 
   }catch(error){
 
-    resultBox.className =
-      "gv-result notvip";
-
-    resultBox.innerHTML =
-      "❌ System error. Please try again later.";
+    resultBox.className = "gv-result notvip";
+    resultBox.innerHTML = "❌ System error. Please try again later.";
 
   }
 }
 
+document
+  .getElementById("phoneInput")
+  .addEventListener("keypress", function(event){
+    if(event.key === "Enter"){
+      checkVIP();
+    }
+  });
+
+document
+  .getElementById("passwordInput")
+  .addEventListener("keypress", function(event){
+    if(event.key === "Enter"){
+      checkVIP();
+    }
+  });
+
+document
+  .getElementById("retailerCodeInput")
+  .addEventListener("keypress", function(event){
+    if(event.key === "Enter"){
+      checkVIP();
+    }
+  });
 </script>
 
 </body>
