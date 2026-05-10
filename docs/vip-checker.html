@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Gavisure VIP Checker</title>
+
+<style>
+
+body{
+  margin:0;
+  padding:0;
+  background:#f7f5ef;
+  font-family:Arial,sans-serif;
+}
+
+.gv-wrapper{
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding:24px;
+}
+
+.gv-card{
+  width:100%;
+  max-width:430px;
+  background:#fff;
+  border-radius:22px;
+  padding:32px;
+  box-shadow:0 12px 35px rgba(0,0,0,0.08);
+  border:1px solid #e6e0d4;
+}
+
+.gv-logo{
+  font-size:15px;
+  font-weight:700;
+  color:#486b43;
+  margin-bottom:12px;
+  letter-spacing:0.5px;
+}
+
+.gv-card h1{
+  margin:0;
+  font-size:28px;
+  color:#263b2b;
+}
+
+.gv-subtitle{
+  color:#6b6b6b;
+  font-size:14px;
+  margin-top:10px;
+  margin-bottom:28px;
+  line-height:1.6;
+}
+
+.gv-label{
+  display:block;
+  margin-bottom:8px;
+  font-size:14px;
+  color:#333;
+  font-weight:600;
+}
+
+.gv-input{
+  width:100%;
+  padding:15px;
+  font-size:16px;
+  border:1px solid #d6d0c5;
+  border-radius:12px;
+  box-sizing:border-box;
+}
+
+.gv-button{
+  width:100%;
+  margin-top:14px;
+  padding:15px;
+  background:#486b43;
+  border:none;
+  border-radius:12px;
+  color:white;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.gv-button:hover{
+  background:#395737;
+}
+
+.gv-result{
+  margin-top:18px;
+  padding:16px;
+  border-radius:14px;
+  font-size:15px;
+  line-height:1.8;
+  display:none;
+}
+
+.vip{
+  background:#e8f5e9;
+  color:#1b5e20;
+  border:1px solid #b7dfba;
+}
+
+.expired{
+  background:#fff8e1;
+  color:#7a5200;
+  border:1px solid #f0d98c;
+}
+
+.notvip{
+  background:#ffebee;
+  color:#8a1f1f;
+  border:1px solid #efb6b6;
+}
+
+.gv-note{
+  margin-top:18px;
+  font-size:12px;
+  color:#888;
+  line-height:1.6;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="gv-wrapper">
+
+  <div class="gv-card">
+
+    <div class="gv-logo">
+      Gavisure
+    </div>
+
+    <h1>VIP Checker</h1>
+
+    <div class="gv-subtitle">
+      For authorised Gavisure retail partners only.
+    </div>
+
+    <label class="gv-label">
+      Customer WhatsApp Number
+    </label>
+
+    <input
+      type="text"
+      id="phoneInput"
+      class="gv-input"
+      placeholder="Example: 60162559911"
+    >
+
+    <button
+      class="gv-button"
+      onclick="checkVIP()"
+    >
+      Check VIP Status
+    </button>
+
+    <div
+      id="resultBox"
+      class="gv-result"
+    ></div>
+
+    <div class="gv-note">
+      Please enter customer number in 601XXXXXXXX format without "+" or spaces.
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+const API_URL = "https://script.google.com/macros/s/AKfycbzfr_EeqtV0-uAx4T_dLFD1Z6HimwjcmYwGfUfEhxJcKkyixuhfdTqfGRcWXRugi70D/exec";
+
+async function checkVIP(){
+
+  const phone =
+    document.getElementById("phoneInput")
+    .value
+    .trim();
+
+  const resultBox =
+    document.getElementById("resultBox");
+
+  resultBox.style.display = "block";
+  resultBox.className = "gv-result";
+  resultBox.innerHTML = "Checking VIP status...";
+
+  if(!/^601\d{7,10}$/.test(phone)){
+
+    resultBox.className =
+      "gv-result notvip";
+
+    resultBox.innerHTML =
+      "❌ Invalid number format.";
+
+    return;
+  }
+
+  try{
+
+    const response =
+      await fetch(
+        `${API_URL}?phone=${encodeURIComponent(phone)}`
+      );
+
+    const data =
+      await response.json();
+
+    if(!data.success){
+
+      resultBox.className =
+        "gv-result notvip";
+
+      resultBox.innerHTML =
+        "❌ Unable to check VIP status.";
+
+      return;
+    }
+
+    if(data.vip_status === "VIP"){
+
+      resultBox.className =
+        "gv-result vip";
+
+      resultBox.innerHTML = `
+        <strong>✅ VIP Customer Confirmed</strong><br><br>
+
+        VIP Code:
+        ${data.vip_code || "-"}<br>
+
+        Birthday Month:
+        ${data.birthday_month || "-"}<br>
+
+        VIP Valid Until:
+        ${data.expiry_date || "-"}
+      `;
+
+      return;
+    }
+
+    if(data.vip_status === "EXPIRED"){
+
+      resultBox.className =
+        "gv-result expired";
+
+      resultBox.innerHTML = `
+        <strong>⚠️ VIP Expired</strong><br><br>
+
+        Please ask customer to renew VIP membership.
+      `;
+
+      return;
+    }
+
+    resultBox.className =
+      "gv-result notvip";
+
+    resultBox.innerHTML =
+      "❌ Not VIP Customer";
+
+  }catch(error){
+
+    resultBox.className =
+      "gv-result notvip";
+
+    resultBox.innerHTML =
+      "❌ System error.";
+  }
+}
+
+</script>
+
+</body>
+</html>
