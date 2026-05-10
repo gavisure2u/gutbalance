@@ -7,6 +7,7 @@
 <title>Gavisure VIP Checker</title>
 
 <style>
+
 body{
   margin:0;
   padding:0;
@@ -121,15 +122,19 @@ body{
   color:#888;
   line-height:1.6;
 }
+
 </style>
 </head>
 
 <body>
 
 <div class="gv-wrapper">
+
   <div class="gv-card">
 
-    <div class="gv-logo">Gavisure</div>
+    <div class="gv-logo">
+      Gavisure
+    </div>
 
     <h1>VIP Checker</h1>
 
@@ -155,49 +160,73 @@ body{
       Check VIP Status
     </button>
 
-    <div id="resultBox" class="gv-result"></div>
+    <div
+      id="resultBox"
+      class="gv-result"
+    ></div>
 
     <div class="gv-note">
       Please enter customer number in 601XXXXXXXX format without "+" or spaces.
     </div>
 
   </div>
+
 </div>
 
 <script>
+
 const API_URL = "https://script.google.com/macros/s/AKfycbzfr_EeqtV0-uAx4T_dLFD1Z6HimwjcmYwGfUfEhxJcKkyixuhfdTqfGRcWXRugi70D/exec";
 
 async function checkVIP(){
 
-  const phone = document.getElementById("phoneInput").value.trim();
-  const resultBox = document.getElementById("resultBox");
+  const phone =
+    document.getElementById("phoneInput")
+    .value
+    .trim();
+
+  const resultBox =
+    document.getElementById("resultBox");
 
   resultBox.style.display = "block";
   resultBox.className = "gv-result";
   resultBox.innerHTML = "Checking VIP status...";
 
   if(!/^601\d{7,10}$/.test(phone)){
-    resultBox.className = "gv-result notvip";
-    resultBox.innerHTML = "❌ Invalid number format. Please enter like 60162559911.";
+
+    resultBox.className =
+      "gv-result notvip";
+
+    resultBox.innerHTML =
+      "❌ Invalid number format.";
+
     return;
   }
 
   try{
 
-    const response = await fetch(
-      `${API_URL}?phone=${encodeURIComponent(phone)}`
-    );
+    const response =
+      await fetch(
+        `${API_URL}?phone=${encodeURIComponent(phone)}`
+      );
 
-    const data = await response.json();
+    const data =
+      await response.json();
 
     if(!data.success){
-      resultBox.className = "gv-result notvip";
-      resultBox.innerHTML = "❌ Unable to check VIP status.";
+
+      resultBox.className =
+        "gv-result notvip";
+
+      resultBox.innerHTML =
+        "❌ Unable to check VIP status.";
+
       return;
     }
 
     if(data.vip_status === "VIP"){
-      resultBox.className = "gv-result vip";
+
+      resultBox.className =
+        "gv-result vip";
 
       resultBox.innerHTML = `
         <strong>✅ VIP Customer Confirmed</strong><br><br>
@@ -215,14 +244,22 @@ async function checkVIP(){
         ${data.latest_purchase_date || "-"}<br>
 
         VIP Valid Until:
-        ${data.expiry_date || "-"}
+        ${data.expiry_date || "-"}<br>
+
+        Retailer:
+        ${data.retailer || "-"}<br>
+
+        Location:
+        ${data.location || "-"}
       `;
 
       return;
     }
 
     if(data.vip_status === "EXPIRED"){
-      resultBox.className = "gv-result expired";
+
+      resultBox.className =
+        "gv-result expired";
 
       resultBox.innerHTML = `
         <strong>⚠️ VIP Expired</strong><br><br>
@@ -242,16 +279,23 @@ async function checkVIP(){
       return;
     }
 
-    resultBox.className = "gv-result notvip";
-    resultBox.innerHTML = "❌ Not VIP Customer";
+    resultBox.className =
+      "gv-result notvip";
+
+    resultBox.innerHTML =
+      "❌ Not VIP Customer";
 
   }catch(error){
 
-    resultBox.className = "gv-result notvip";
-    resultBox.innerHTML = "❌ System error. Please try again later.";
+    resultBox.className =
+      "gv-result notvip";
+
+    resultBox.innerHTML =
+      "❌ System error. Please try again later.";
 
   }
 }
+
 </script>
 
 </body>
