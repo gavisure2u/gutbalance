@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gavisure – Member Registration</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f7f5ef;font-family:Arial,sans-serif;min-height:100vh}
+.gv-wrapper{min-height:100vh;display:flex;justify-content:center;align-items:flex-start;padding:24px}
+.gv-card{width:100%;max-width:560px;background:#fff;border-radius:22px;padding:32px;box-shadow:0 12px 35px rgba(0,0,0,0.08);border:1px solid #e6e0d4;margin:24px 0}
+.gv-logo{font-size:13px;font-weight:700;color:#486b43;margin-bottom:10px;letter-spacing:.5px}
+h1{font-size:26px;color:#263b2b;margin-bottom:6px}
+.subtitle{color:#6b6b6b;font-size:14px;margin-bottom:24px;line-height:1.6}
+.sec{font-size:11px;font-weight:700;color:#486b43;text-transform:uppercase;letter-spacing:1px;margin:22px 0 12px;padding-bottom:6px;border-bottom:1px solid #e6e0d4}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{margin-bottom:14px}
+label{display:block;margin-bottom:6px;font-size:13px;color:#333;font-weight:600}
+.req{color:#c0392b}
+input,select,textarea{width:100%;padding:13px 14px;font-size:15px;border:1px solid #d6d0c5;border-radius:10px;background:#fff;color:#222;outline:none;font-family:inherit}
+input:focus,select:focus,textarea:focus{border-color:#486b43;box-shadow:0 0 0 3px rgba(72,107,67,.12)}
+input[readonly]{background:#f5f3ee;color:#666;cursor:default}
+textarea{min-height:72px;resize:vertical}
+.btn{width:100%;margin-top:20px;padding:15px;background:#486b43;border:none;border-radius:12px;color:#fff;font-size:16px;font-weight:700;cursor:pointer}
+.btn:hover{background:#395737}
+.btn:disabled{background:#9ab89a;cursor:not-allowed}
+.btn-sm{padding:10px 18px;background:#486b43;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:600;cursor:pointer;white-space:nowrap}
+.btn-sm:hover{background:#395737}
+.btn-ghost{padding:4px 12px;background:none;border:1px solid #d6d0c5;border-radius:8px;font-size:12px;color:#666;cursor:pointer;float:right}
+.btn-ghost:hover{background:#f5f3ee}
+.phone-row{display:flex;gap:10px;align-items:flex-end;margin-bottom:14px}
+.phone-row input{flex:1;margin-bottom:0}
+.msg{padding:13px 16px;border-radius:10px;font-size:14px;line-height:1.6;display:none}
+.ok{background:#e8f5e9;color:#1b5e20;border:1px solid #b7dfba;display:block}
+.warn{background:#fff8e1;color:#7a5200;border:1px solid #f0d98c;display:block}
+.err{background:#ffebee;color:#8a1f1f;border:1px solid #efb6b6;display:block}
+.badge{display:inline-block;background:#e8f5e9;color:#1b5e20;border:1px solid #b7dfba;border-radius:8px;padding:6px 14px;font-size:15px;font-weight:700;letter-spacing:1px}
+@media(max-width:480px){.row2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div id="loginScreen" class="gv-wrapper">
+  <div class="gv-card">
+    <div class="gv-logo">Gavisure Admin</div>
+    <h1>Member Registration</h1>
+    <div class="subtitle">Internal tool. Authorised staff only.</div>
+    <div class="field">
+      <label>Admin Password <span class="req">*</span></label>
+      <input type="password" id="adminPwd" placeholder="Enter admin password">
+    </div>
+    <button class="btn" onclick="login()">Login</button>
+    <div id="loginMsg" class="msg" style="margin-top:14px"></div>
+  </div>
+</div>
+
+<!-- FORM SCREEN -->
+<div id="formScreen" class="gv-wrapper" style="display:none">
+  <div class="gv-card">
+    <div class="gv-logo">Gavisure Admin <button class="btn-ghost" onclick="logout()">Logout</button></div>
+    <h1>New Member</h1>
+    <div class="subtitle">Register a new Gavisure customer. Data syncs to Google Sheets &amp; Supabase.</div>
+
+    <!-- Phone lookup -->
+    <div class="sec">Step 1 — Customer Phone</div>
+    <div class="phone-row">
+      <input type="tel" id="phone" placeholder="601XXXXXXXX" maxlength="15">
+      <button class="btn-sm" onclick="lookupPhone()">Lookup</button>
+    </div>
+    <div id="lookupMsg" class="msg"></div>
+
+    <!-- Main form (shown after lookup) -->
+    <div id="mainForm" style="display:none">
+
+      <div class="sec">Step 2 — Customer Info</div>
+      <div class="row2">
+        <div class="field">
+          <label>Customer Name <span class="req">*</span></label>
+          <input type="text" id="customer_name" placeholder="Full name">
+        </div>
+        <div class="field">
+          <label>Birthday (optional)</label>
+          <input type="date" id="vip_birthday">
+        </div>
+      </div>
+
+      <div class="sec">Step 3 — Purchase Details</div>
+      <div class="row2">
+        <div class="field">
+          <label>Purchase Date <span class="req">*</span></label>
+          <input type="date" id="vip_start_date" onchange="calcExpiry()">
+        </div>
+        <div class="field">
+          <label>VIP Expiry (auto)</label>
+          <input type="text" id="vip_expiry_date" readonly placeholder="Auto-calculated">
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field">
+          <label>Last Purchase Date</label>
+          <input type="date" id="last_purchase_date">
+        </div>
+        <div class="field">
+          <label>VIP Status</label>
+          <select id="vip_status" onchange="updateVipCodeBox()">
+            <option value="VIP">VIP</option>
+            <option value="NONVIP">NONVIP</option>
+            <option value="EXPIRED">EXPIRED</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="sec">Step 4 — Sales Info</div>
+      <div class="row2">
+        <div class="field">
+          <label>Source Channel</label>
+          <select id="source_channel">
+            <option value="">-- Select --</option>
+            <option>Pharmacy</option>
+            <option>Online (Website)</option>
+            <option>WhatsApp</option>
+            <option>Social Media</option>
+            <option>Friend Referral</option>
+            <option>Roadshow / Event</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>State / Location</label>
+          <select id="location">
+            <option value="">-- Select --</option>
+            <option>Penang</option><option>Perak</option><option>Selangor</option>
+            <option>Kuala Lumpur</option><option>Melaka</option><option>Johor</option>
+            <option>Kedah</option><option>Kelantan</option><option>Terengganu</option>
+            <option>Pahang</option><option>Negeri Sembilan</option>
+            <option>Sabah</option><option>Sarawak</option><option>Other</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Retailer / Pharmacy Name</label>
+        <input type="text" id="retailer" placeholder="e.g. Smiles Pharmacy, Bayan Lepas">
+      </div>
+      <div class="field">
+        <label>Remarks (optional)</label>
+        <textarea id="remarks" placeholder="Any notes about this customer..."></textarea>
+      </div>
+
+      <div class="sec">VIP Code</div>
+      <div id="vipCodeBox" class="msg warn">VIP code will be auto-generated on submit.</div>
+
+      <button class="btn" id="submitBtn" onclick="submitForm()">Register Member</button>
+      <div id="submitMsg" class="msg" style="margin-top:14px"></div>
+
+      <div style="margin-top:16px;text-align:center">
+        <button style="background:none;border:none;color:#486b43;font-size:13px;cursor:pointer;text-decoration:underline" onclick="resetForm()">
+          Clear &amp; Register Another Customer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── CONFIG — replace after re-deploying Apps Script ───────────────────────
+const API_URL = "https://script.google.com/macros/s/AKfycbygeatu2KLV7Xzc5YlPUo9ZlMLhvKKZ3l8JtPLOkdrS1c1LkDXOykVQ6UGxu8ZLC3od/exec";
+// ───────────────────────────────────────────────────────────────────────────
+
+let adminPassword = "";
+let existingVipCode = null;
+
+// ── Auth ──────────────────────────────────────────────────────────────────
+async function login() {
+  const pwd = document.getElementById("adminPwd").value.trim();
+  if (!pwd) { showMsg("loginMsg", "err", "Please enter password."); return; }
+
+  const btn = document.querySelector("#loginScreen .btn");
+  setLoading(btn, true, "Verifying…");
+  try {
+    const data = await post({ action: "verify", password: pwd });
+    if (data.success) {
+      adminPassword = pwd;
+      sessionStorage.setItem("gv_admin_pwd", pwd);
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("formScreen").style.display = "";
+      setDefaultDates();
+    } else {
+      showMsg("loginMsg", "err", "❌ " + (data.message || "Wrong password."));
+    }
+  } catch { showMsg("loginMsg", "err", "❌ Connection error. Please try again."); }
+  finally { setLoading(btn, false, "Login"); }
+}
+
+function logout() {
+  adminPassword = "";
+  sessionStorage.removeItem("gv_admin_pwd");
+  document.getElementById("formScreen").style.display = "none";
+  document.getElementById("loginScreen").style.display = "";
+  document.getElementById("adminPwd").value = "";
+}
+
+// ── Phone Lookup ──────────────────────────────────────────────────────────
+async function lookupPhone() {
+  const phone = document.getElementById("phone").value.trim();
+  if (!/^601\d{7,10}$/.test(phone)) {
+    showMsg("lookupMsg", "err", "❌ Invalid format. Use 601XXXXXXXX (no + or spaces).");
+    return;
+  }
+  showMsg("lookupMsg", "warn", "Looking up…");
+  existingVipCode = null;
+
+  // Clear all previous form data before new lookup
+  ["customer_name","vip_birthday","vip_start_date","vip_expiry_date",
+   "last_purchase_date","retailer","remarks"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+  document.getElementById("vip_status").value = "VIP";
+  document.getElementById("source_channel").value = "";
+  document.getElementById("location").value = "";
+  document.getElementById("submitMsg").className = "msg";
+  document.getElementById("vipCodeBox").className = "msg warn";
+  document.getElementById("vipCodeBox").innerHTML = "VIP code will be auto-generated on submit (VIP only).";
+
+  try {
+    const data = await post({ action: "lookup", password: adminPassword, phone });
+    if (!data.success) { showMsg("lookupMsg", "err", "❌ " + data.message); return; }
+
+    if (data.found) {
+      existingVipCode = data.vip_code || null;
+      document.getElementById("customer_name").value = data.customer_name || "";
+      if (data.vip_birthday) {
+        // Convert DD.MM.YYYY → YYYY-MM-DD for date input
+        const parts = data.vip_birthday.split ? data.vip_birthday.split(".") : [];
+        if (parts.length === 3) document.getElementById("vip_birthday").value = `${parts[2]}-${parts[1]}-${parts[0]}`;
+      }
+      showMsg("lookupMsg", "warn",
+        `⚠️ <strong>Existing member found.</strong><br>` +
+        `VIP Code: <strong>${data.vip_code || "—"}</strong> | Status: ${data.vip_status}<br>` +
+        `This will record a new purchase for this customer using their existing VIP code.`
+      );
+      if (existingVipCode) {
+        document.getElementById("vipCodeBox").className = "msg ok";
+        document.getElementById("vipCodeBox").innerHTML = `Existing VIP code: <span class="badge">${existingVipCode}</span>`;
+      }
+    } else {
+      showMsg("lookupMsg", "ok", "✅ New customer — proceed to fill in details.");
+      document.getElementById("vipCodeBox").className = "msg warn";
+      document.getElementById("vipCodeBox").innerHTML = "VIP code will be auto-generated on submit (VIP only).";
+    }
+    document.getElementById("mainForm").style.display = "";
+    setDefaultDates();
+    updateVipCodeBox();
+  } catch { showMsg("lookupMsg", "err", "❌ Lookup failed. Check your connection."); }
+}
+
+// ── Date helpers ──────────────────────────────────────────────────────────
+function setDefaultDates() {
+  const today = new Date().toISOString().split("T")[0];
+  if (!document.getElementById("vip_start_date").value)
+    document.getElementById("vip_start_date").value = today;
+  if (!document.getElementById("last_purchase_date").value)
+    document.getElementById("last_purchase_date").value = today;
+  calcExpiry();
+}
+
+function calcExpiry() {
+  const v = document.getElementById("vip_start_date").value;
+  if (!v) { document.getElementById("vip_expiry_date").value = ""; return; }
+  const d = new Date(v);
+  d.setFullYear(d.getFullYear() + 1);
+  document.getElementById("vip_expiry_date").value = fmtDot(d);
+}
+
+function fmtDot(d) {
+  return `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()}`;
+}
+function fmtDate(iso) {
+  if (!iso) return "";
+  const [y,m,d] = iso.split("-");
+  return `${d}.${m}.${y}`;
+}
+function pad(n) { return n < 10 ? "0"+n : ""+n; }
+
+function updateVipCodeBox() {
+  const status = document.getElementById("vip_status").value;
+  const box = document.getElementById("vipCodeBox");
+  if (status !== "VIP") {
+    box.className = "msg err";
+    box.innerHTML = "No VIP code will be generated for NONVIP / EXPIRED status.";
+  } else if (existingVipCode) {
+    box.className = "msg ok";
+    box.innerHTML = `Existing VIP code: <span class="badge">${existingVipCode}</span>`;
+  } else {
+    box.className = "msg warn";
+    box.innerHTML = "VIP code will be auto-generated on submit (VIP only).";
+  }
+}
+
+// ── Submit ────────────────────────────────────────────────────────────────
+async function submitForm() {
+  const phone        = document.getElementById("phone").value.trim();
+  const customerName = document.getElementById("customer_name").value.trim();
+  const startDate    = document.getElementById("vip_start_date").value;
+  const expiryDate   = document.getElementById("vip_expiry_date").value;
+  const lastPurchase = document.getElementById("last_purchase_date").value;
+  const birthdayRaw  = document.getElementById("vip_birthday").value;
+  const vipStatus    = document.getElementById("vip_status").value;
+  const srcChannel   = document.getElementById("source_channel").value;
+  const retailer     = document.getElementById("retailer").value.trim();
+  const location     = document.getElementById("location").value;
+  const remarks      = document.getElementById("remarks").value.trim();
+
+  if (!phone || !customerName || !startDate) {
+    showMsg("submitMsg", "err", "❌ Phone, customer name, and purchase date are required.");
+    return;
+  }
+
+  // Format birthday: YYYY-MM-DD → DD.MM.YYYY
+  let birthday = "";
+  if (birthdayRaw) {
+    const [y,m,d] = birthdayRaw.split("-");
+    birthday = `${d}.${m}.${y}`;
+  }
+
+  const btn = document.getElementById("submitBtn");
+  setLoading(btn, true, "Registering…");
+
+  const payload = {
+    action: "register",
+    password: adminPassword,
+    phone,
+    customer_name: customerName,
+    vip_birthday: birthday,
+    vip_status: vipStatus,
+    vip_start_date: fmtDate(startDate),
+    vip_expiry_date: expiryDate,
+    last_purchase_date: fmtDate(lastPurchase || startDate),
+    source_channel: srcChannel,
+    retailer,
+    location,
+    remarks,
+    vip_code: vipStatus === "VIP" ? (existingVipCode || null) : "SKIP"
+  };
+
+  try {
+    const data = await post(payload);
+    if (data.success) {
+      const syncNote = data.supabase_synced === false
+        ? `<br><small style="color:#7a5200">⚠️ Google Sheets saved. Supabase sync failed — check Script Properties.</small>`
+        : "";
+      if (data.vip_code) {
+        document.getElementById("vipCodeBox").className = "msg ok";
+        document.getElementById("vipCodeBox").innerHTML = `VIP Code assigned: <span class="badge">${data.vip_code}</span>`;
+      } else {
+        document.getElementById("vipCodeBox").className = "msg err";
+        document.getElementById("vipCodeBox").innerHTML = "No VIP code assigned (NONVIP / EXPIRED).";
+      }
+      showMsg("submitMsg", "ok", `✅ Member registered successfully!${syncNote}`);
+    } else {
+      showMsg("submitMsg", "err", "❌ " + (data.message || "Registration failed. Please try again."));
+    }
+  } catch { showMsg("submitMsg", "err", "❌ Connection error. Please try again."); }
+  finally { setLoading(btn, false, "Register Member"); }
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────
+async function post(data) {
+  const r = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify(data)
+  });
+  return r.json();
+}
+
+function showMsg(id, type, html) {
+  const el = document.getElementById(id);
+  el.className = "msg " + type;
+  el.innerHTML = html;
+}
+
+function setLoading(btn, loading, label) {
+  btn.disabled = loading;
+  btn.textContent = label;
+}
+
+function resetForm() {
+  ["customer_name","vip_birthday","vip_start_date","vip_expiry_date",
+   "last_purchase_date","retailer","remarks"].forEach(id => {
+    document.getElementById(id).value = "";
+  });
+  document.getElementById("vip_status").value = "VIP";
+  document.getElementById("source_channel").value = "";
+  document.getElementById("location").value = "";
+  document.getElementById("phone").value = "";
+  document.getElementById("lookupMsg").className = "msg";
+  document.getElementById("submitMsg").className = "msg";
+  document.getElementById("vipCodeBox").className = "msg warn";
+  document.getElementById("vipCodeBox").innerHTML = "VIP code will be auto-generated on submit.";
+  document.getElementById("mainForm").style.display = "none";
+  existingVipCode = null;
+  setDefaultDates();
+}
+
+// ── Keyboard shortcuts ────────────────────────────────────────────────────
+document.getElementById("adminPwd").addEventListener("keypress", e => {
+  if (e.key === "Enter") login();
+});
+
+// ── Auto-restore session ──────────────────────────────────────────────────
+window.addEventListener("load", () => {
+  const saved = sessionStorage.getItem("gv_admin_pwd");
+  if (saved) {
+    adminPassword = saved;
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("formScreen").style.display = "";
+    setDefaultDates();
+  }
+});
+</script>
+</body>
+</html>
